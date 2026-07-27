@@ -46,17 +46,7 @@ export default function ContactPage() {
                   </div>
                 </div>
 
-                <div className="flex items-start">
-                  <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center border border-gray-200 shadow-sm shrink-0 mr-4">
-                    <Mail className="w-5 h-5 text-brand-primary" />
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-1">Email Us</h4>
-                    <a href={`mailto:${BUSINESS_DETAILS.email}`} className="text-lg font-semibold text-gray-900 hover:text-brand-primary transition-colors">
-                      {BUSINESS_DETAILS.email}
-                    </a>
-                  </div>
-                </div>
+              
 
                 <div className="flex items-start">
                   <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center border border-gray-200 shadow-sm shrink-0 mr-4">
