@@ -1,5 +1,5 @@
 import React from "react";
-import { Phone, Mail, MapPin, Clock, Instagram, Facebook } from "lucide-react";
+import { Phone, MapPin, Clock, Instagram, Facebook } from "lucide-react";
 import { BUSINESS_DETAILS } from "@/lib/constants";
 import { StepForm } from "@/components/forms/StepForm";
 
@@ -46,8 +46,6 @@ export default function ContactPage() {
                   </div>
                 </div>
 
-              
-
                 <div className="flex items-start">
                   <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center border border-gray-200 shadow-sm shrink-0 mr-4">
                     <MapPin className="w-5 h-5 text-brand-primary" />
@@ -55,7 +53,7 @@ export default function ContactPage() {
                   <div>
                     <h4 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-1">Visit Office</h4>
                     <p className="text-lg font-medium text-gray-900 leading-relaxed max-w-xs">
-                      {BUSINESS_DETAILS.address}
+                      {BUSINESS_DETAILS.siteOffice}
                     </p>
                   </div>
                 </div>
