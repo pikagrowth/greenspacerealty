@@ -4,7 +4,7 @@ export const BUSINESS_DETAILS = {
   siteOffice: "Shravan Siddhant, Plot No. 224A, Old Panvel, Navi Mumbai, Panvel 410206",
   headOffice: "Shop No 7, Plot 48, Sector 4, Karanjade, Panvel, Maharashtra 410206",
   phone: "+91 92092 78867",
-  email: "info@greenspacerealty.com",
+  email: "sales@greenspacerealty.com",
   tagline: "Building Trust, Creating Value",
   mahaReraNumber: "[PENDING-FROM-CLIENT: MahaRERA Agent Number]",
   inventory: {
