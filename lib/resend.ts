@@ -1,10 +1,15 @@
 import { Resend } from 'resend';
 import { LeadData } from './types';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Helper function to instantiate Resend lazily at runtime, preventing build-time crash
+function getResendClient() {
+  const apiKey = process.env.RESEND_API_KEY || 're_dummy_key_for_build';
+  return new Resend(apiKey);
+}
 
 // ---------- HOT LEAD — instant alert ----------
 export async function sendHotLeadEmail(lead: LeadData) {
+  const resend = getResendClient();
   const isBuilder = lead.enquiryType === 'seller-builder';
   const badgeTitle = isBuilder ? '🏗️ New Builder/Mandate Lead' : '🔥 New Hot Lead';
   
@@ -56,6 +61,7 @@ export async function sendHotLeadEmail(lead: LeadData) {
 
 // ---------- NURTURE — daily digest (batch these, don't send one-by-one) ----------
 export async function sendNurtureDigestEmail(leads: LeadData[]) {
+  const resend = getResendClient();
   const rows = leads.map((lead, i) => `
     <tr style="background:${i % 2 === 0 ? '#ffffff' : '#FAF8F3'};">
       <td style="padding:10px; font-size:13px; color:#222420;">${lead.name}</td>
