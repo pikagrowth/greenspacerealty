@@ -85,7 +85,7 @@ export default function TermsConditionsPage() {
             <li><strong>{BUSINESS_DETAILS.name}</strong></li>
             <li>Email: {BUSINESS_DETAILS.email}</li>
             <li>Phone: {BUSINESS_DETAILS.phone}</li>
-            <li>Address: {BUSINESS_DETAILS.address}</li>
+            <li>Address: {(BUSINESS_DETAILS as any).address || BUSINESS_DETAILS.headOffice || BUSINESS_DETAILS.siteOffice}</li>
           </ul>
 
         </div>
