@@ -41,7 +41,9 @@ export async function POST(req: Request) {
     };
 
     // 2. Run scoring logic to determine intent level and target Google Sheet tab
-    const { value: score, tab } = determineIntentScore(leadData);
+    const scoreResult: any = determineIntentScore(leadData);
+    const score = scoreResult?.score ?? scoreResult?.value ?? scoreResult?.intent ?? scoreResult?.level ?? "MEDIUM";
+    const tab = scoreResult?.tab ?? "General Leads";
 
     const sheetPayload = {
       ...leadData,
