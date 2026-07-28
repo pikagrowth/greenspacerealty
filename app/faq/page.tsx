@@ -49,9 +49,11 @@ export default function FAQPage() {
                     {category}
                   </h2>
                   <Accordion items={categoryFaqs.map(faq => ({
+                    question: faq.question,
+                    answer: faq.answer,
                     title: faq.question,
                     content: faq.answer
-                  }))} />
+                  })) as any} />
                 </div>
               );
             })}
