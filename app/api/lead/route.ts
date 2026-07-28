@@ -4,6 +4,24 @@ import { sendHotLeadEmail } from "@/lib/resend";
 import { sendWhatsAppAlert } from "@/lib/whatsapp";
 import { LeadData } from "@/lib/types";
 
+// Helper function to format lead payload into a clean WhatsApp text message
+function formatWhatsAppMessage(payload: Record<string, any>): string {
+  return [
+    `🔥 *NEW HOT LEAD RECEIVED* 🔥`,
+    `--------------------------------`,
+    `👤 *Name:* ${payload.name || "N/A"}`,
+    `📞 *Mobile:* ${payload.mobile || "N/A"}`,
+    `📧 *Email:* ${payload.email || "N/A"}`,
+    `🏷️ *Enquiry Type:* ${payload.enquiryType || "N/A"}`,
+    `🏢 *Unit Type:* ${payload.unitType || "N/A"}`,
+    `💰 *Budget:* ${payload.budget || "N/A"}`,
+    `⏳ *Timeline:* ${payload.timeline || "N/A"}`,
+    `📍 *Source:* ${payload.source || "N/A"}`,
+    `📁 *Sheet Tab:* ${payload.tab || "N/A"}`,
+    `💬 *Message:* ${payload.message || "N/A"}`,
+  ].join("\n");
+}
+
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -78,9 +96,11 @@ export async function POST(req: Request) {
 
     if (isHotLead) {
       try {
+        const whatsAppMessage = formatWhatsAppMessage(sheetPayload);
+
         await Promise.allSettled([
           sendHotLeadEmail(sheetPayload),
-          sendWhatsAppAlert(sheetPayload),
+          sendWhatsAppAlert(whatsAppMessage),
         ]);
         console.log("🟢 Real-time Hot Lead notifications (Email + WhatsApp) dispatched successfully.");
       } catch (alertError) {
