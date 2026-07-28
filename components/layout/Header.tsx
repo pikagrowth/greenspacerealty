@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { BUSINESS_DETAILS } from "@/lib/constants";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 
 export const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -31,7 +32,7 @@ export const Header = () => {
   ];
 
   return (
-    <header className="fixed top-0 w-full bg-white/95 backdrop-blur-sm z-50 border-b border-gray-100 shadow-sm">
+    <header className="fixed top-0 w-full bg-white/95 dark:bg-gray-950/95 backdrop-blur-sm z-50 border-b border-gray-100 dark:border-gray-800 shadow-sm transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
@@ -45,7 +46,7 @@ export const Header = () => {
               />
             </div>
             <div>
-              <h1 className="font-heading font-bold text-xl text-brand-primary leading-tight">
+              <h1 className="font-heading font-bold text-xl text-brand-primary dark:text-brand-accent leading-tight">
                 Greenspace<br/>Realty
               </h1>
             </div>
@@ -59,16 +60,16 @@ export const Header = () => {
                   <>
                     <Link
                       href={link.href}
-                      className="flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-brand-primary transition-colors py-8"
+                      className="flex items-center gap-1 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-brand-primary dark:hover:text-brand-accent transition-colors py-8"
                     >
                       {link.name}
                       <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-200" />
                     </Link>
                     {/* Desktop Dropdown */}
-                    <div className="absolute top-full left-0 -mt-2 w-64 bg-white border border-gray-100 shadow-xl rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+                    <div className="absolute top-full left-0 -mt-2 w-64 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-xl rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
                       <Link 
                         href={link.href}
-                        className="px-4 py-2 text-sm font-medium text-brand-primary hover:bg-gray-50 border-b border-gray-50"
+                        className="px-4 py-2 text-sm font-medium text-brand-primary dark:text-brand-accent hover:bg-gray-50 dark:hover:bg-gray-800 border-b border-gray-50 dark:border-gray-800"
                       >
                         Services Overview
                       </Link>
@@ -76,7 +77,7 @@ export const Header = () => {
                         <Link
                           key={sub.name}
                           href={sub.href}
-                          className="px-4 py-2 text-sm text-gray-600 hover:text-brand-primary hover:bg-gray-50 transition-colors"
+                          className="px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-brand-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
                         >
                           {sub.name}
                         </Link>
@@ -86,32 +87,38 @@ export const Header = () => {
                 ) : (
                   <Link 
                     href={link.href}
-                    className="text-sm font-medium text-gray-600 hover:text-brand-primary transition-colors py-8"
+                    className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-brand-primary dark:hover:text-brand-accent transition-colors py-8"
                   >
                     {link.name}
                   </Link>
                 )}
               </div>
             ))}
-            <Button size="sm" onClick={() => window.location.href = '#enquire'} className="ml-2">
-              Enquire Now
-            </Button>
+            <div className="flex items-center gap-4 ml-2">
+              <ThemeToggle />
+              <Button size="sm" onClick={() => window.location.href = '#enquire'}>
+                Enquire Now
+              </Button>
+            </div>
           </nav>
 
-          {/* Mobile Menu Button */}
-          <button 
-            className="lg:hidden p-2 text-gray-600 relative z-50"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          {/* Mobile Right Section: Theme Toggle + Menu Button */}
+          <div className="flex items-center gap-3 lg:hidden relative z-50">
+            <ThemeToggle />
+            <button 
+              className="p-2 text-gray-600 dark:text-gray-300 bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-100 dark:border-gray-800"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Mobile Nav */}
       <div 
-        className={`lg:hidden fixed inset-0 top-20 bg-white z-40 transition-transform duration-300 ease-in-out overflow-y-auto ${
+        className={`lg:hidden fixed inset-0 top-20 bg-white dark:bg-gray-950 z-40 transition-transform duration-300 ease-in-out overflow-y-auto ${
           isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -122,12 +129,12 @@ export const Header = () => {
                 <>
                   <button
                     onClick={() => setIsMobileServicesOpen(!isMobileServicesOpen)}
-                    className="flex items-center justify-between text-base font-medium text-gray-900 p-3 hover:bg-gray-50 rounded-lg w-full text-left"
+                    className="flex items-center justify-between text-base font-medium text-gray-900 dark:text-white p-3 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-lg w-full text-left"
                   >
                     {link.name}
                     <ChevronDown 
                       size={18} 
-                      className={`text-gray-500 transition-transform duration-200 ${isMobileServicesOpen ? "rotate-180" : ""}`} 
+                      className={`text-gray-500 dark:text-gray-400 transition-transform duration-200 ${isMobileServicesOpen ? "rotate-180" : ""}`} 
                     />
                   </button>
                   <div 
@@ -135,11 +142,11 @@ export const Header = () => {
                       isMobileServicesOpen ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
                     }`}
                   >
-                    <div className="pl-6 flex flex-col gap-1 border-l-2 border-gray-100 ml-4 py-2">
+                    <div className="pl-6 flex flex-col gap-1 border-l-2 border-gray-100 dark:border-gray-800 ml-4 py-2">
                       <Link 
                         href={link.href}
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className="text-sm font-semibold text-brand-primary p-2"
+                        className="text-sm font-semibold text-brand-primary dark:text-brand-accent p-2"
                       >
                         Services Overview
                       </Link>
@@ -148,7 +155,7 @@ export const Header = () => {
                           key={sub.name}
                           href={sub.href}
                           onClick={() => setIsMobileMenuOpen(false)}
-                          className="text-sm font-medium text-gray-600 p-2 hover:text-brand-primary"
+                          className="text-sm font-medium text-gray-600 dark:text-gray-400 p-2 hover:text-brand-primary dark:hover:text-white"
                         >
                           {sub.name}
                         </Link>
@@ -160,14 +167,14 @@ export const Header = () => {
                 <Link 
                   href={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-base font-medium text-gray-900 p-3 hover:bg-gray-50 rounded-lg"
+                  className="text-base font-medium text-gray-900 dark:text-white p-3 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-lg"
                 >
                   {link.name}
                 </Link>
               )}
             </div>
           ))}
-          <div className="mt-4 pt-4 border-t border-gray-100">
+          <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
             <Button 
               className="w-full" 
               onClick={() => {

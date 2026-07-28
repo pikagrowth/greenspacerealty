@@ -6,7 +6,7 @@ import { BUSINESS_DETAILS } from "@/lib/constants";
 
 export const Footer = () => {
   return (
-    <footer className="bg-brand-primary text-white pt-16 pb-8 border-t-4 border-brand-accent">
+    <footer className="bg-brand-primary text-white pt-16 pb-8 border-t-4 border-brand-accent transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           
@@ -70,7 +70,9 @@ export const Footer = () => {
               <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 block">Head Office</span>
               <div className="flex items-start gap-3 text-sm text-gray-300">
                 <MapPin size={18} className="shrink-0 mt-0.5 text-brand-accent" />
-                <p>{BUSINESS_DETAILS.headOffice}</p>
+                <a href="https://share.google/TqCgox1qDs5G2VUyA" target="_blank" rel="noreferrer" className="hover:text-white transition-colors leading-relaxed">
+                  {BUSINESS_DETAILS.headOffice}
+                </a>
               </div>
             </div>
 
@@ -78,17 +80,27 @@ export const Footer = () => {
               <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 block">Site Office</span>
               <div className="flex items-start gap-3 text-sm text-gray-300">
                 <MapPin size={18} className="shrink-0 mt-0.5 text-brand-accent" />
-                <p>{BUSINESS_DETAILS.siteOffice}</p>
+                <a href="https://share.google/zmFlpkfKeCxi2PdgW" target="_blank" rel="noreferrer" className="hover:text-white transition-colors leading-relaxed">
+                  {BUSINESS_DETAILS.siteOffice}
+                </a>
               </div>
             </div>
 
             <div>
               <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 block">Contact</span>
-              <div className="flex items-center gap-3 text-sm text-gray-300 mb-2">
-                <Phone size={18} className="shrink-0 text-brand-accent" />
-                <a href={`tel:${BUSINESS_DETAILS.phone.replace(/\s+/g, '')}`} className="hover:text-white transition-colors">
-                  {BUSINESS_DETAILS.phone}
-                </a>
+              <div className="flex flex-col gap-3">
+                <div className="flex items-center gap-3 text-sm text-gray-300">
+                  <Phone size={18} className="shrink-0 text-brand-accent" />
+                  <a href={`tel:${BUSINESS_DETAILS.phone.replace(/\s+/g, '')}`} className="hover:text-white transition-colors">
+                    {BUSINESS_DETAILS.phone}
+                  </a>
+                </div>
+                <div className="flex items-center gap-3 text-sm text-gray-300">
+                  <Mail size={18} className="shrink-0 text-brand-accent" />
+                  <a href={`mailto:${BUSINESS_DETAILS.email}`} className="hover:text-white transition-colors break-all">
+                    {BUSINESS_DETAILS.email}
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -110,7 +122,8 @@ export const Footer = () => {
             rel="noreferrer"
             className="flex items-center gap-2 text-sm text-gray-300 bg-white/5 hover:bg-white/10 transition-colors px-4 py-2.5 rounded-lg border border-white/10 group"
           >
-            <span>MahaRERA Reg No: <strong className="text-white">{("mahaReraNumber" in BUSINESS_DETAILS) ? (BUSINESS_DETAILS as any).mahaReraNumber : "[PENDING-FROM-CLIENT: MahaRERA Agent Number]"}</strong></span>
+            {/* UPDATE REQUIRED: Replace 'A52XXXXXXX' with the client's actual MahaRERA Agent Number once provided */}
+            <span>MahaRERA Reg No: <strong className="text-white">{("mahaReraNumber" in BUSINESS_DETAILS) ? (BUSINESS_DETAILS as any).mahaReraNumber : "A52XXXXXXX"}</strong></span>
             <ExternalLink size={14} className="text-gray-400 group-hover:text-white transition-colors" />
           </a>
         </div>

@@ -1,307 +1,269 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Card } from "@/components/ui/Card";
+import { ArrowRight, ArrowLeft, Home, Wallet, TrendingUp, CheckCircle2 } from "lucide-react";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
-import { RadioGroup } from "@/components/ui/RadioGroup";
-import { ArrowRight, ArrowLeft } from "lucide-react";
-import { EnquiryType } from "@/lib/types";
 
 export const StepForm = () => {
-  const router = useRouter();
-  const [step, setStep] = useState<1 | 2>(1);
+  const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState("");
-
+  const [isSuccess, setIsSuccess] = useState(false);
+  
   const [formData, setFormData] = useState({
-    enquiryType: "buyer" as EnquiryType,
-    name: "",
-    mobile: "",
-    email: "",
+    enquiryType: "",
     unitType: "",
     budget: "",
     timeline: "",
-    message: ""
+    name: "",
+    mobile: "",
+    email: "",
+    message: "",
   });
 
-  const handleNext = () => {
-    if (!formData.name || !formData.mobile) {
-      setError("Please fill in your name and mobile number.");
-      return;
-    }
-    if (formData.mobile.length < 10) {
-      setError("Please enter a valid 10-digit mobile number.");
-      return;
-    }
-    setError("");
-    
-    // For consultation, we can skip specific budgets/units and just show a message box in step 2
-    setStep(2);
-  };
+  const nextStep = () => setStep((prev) => Math.min(prev + 1, 3));
+  const prevStep = () => setStep((prev) => Math.max(prev - 1, 1));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Basic validation for Step 2 depending on enquiry type
-    if (formData.enquiryType === 'buyer' && (!formData.unitType || !formData.budget || !formData.timeline)) {
-      setError("Please select all options to proceed.");
-      return;
-    }
-    if (formData.enquiryType === 'seller-builder' && !formData.message) {
-      setError("Please provide your project details.");
-      return;
-    }
-    
     setIsSubmitting(true);
-    setError("");
 
     try {
       const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...formData, source: "step-form" }),
+        body: JSON.stringify({
+          ...formData,
+          source: "website-step-form"
+        }),
       });
 
       if (res.ok) {
-        router.push("/thank-you");
-      } else {
-        setError("Something went wrong. Please try again or call us directly.");
+        setIsSuccess(true);
       }
-    } catch (err) {
-      setError("Network error. Please check your connection and try again.");
+    } catch (error) {
+      console.error("Form submission error:", error);
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const renderStepTwoFields = () => {
-    switch (formData.enquiryType) {
-      case "seller-builder":
-        return (
-          <>
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Project Name & Location *</label>
-              <textarea 
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-brand-primary outline-none transition-all"
-                rows={2}
-                placeholder="e.g., Greenspace Heights in Panvel"
-                value={formData.message}
-                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                required
-              />
-            </div>
-            <Input
-              label="Configuration / Scope"
-              placeholder="e.g., 80 Flats, 1 & 2 BHK"
-              value={formData.unitType}
-              onChange={(e) => setFormData({ ...formData, unitType: e.target.value })}
-            />
-            <RadioGroup
-              label="Project Status *"
-              name="timeline"
-              value={formData.timeline}
-              onChange={(val) => setFormData({ ...formData, timeline: val })}
-              options={[
-                { label: "Upcoming / Pre-launch", value: "Upcoming" },
-                { label: "Ongoing Construction", value: "Ongoing" },
-                { label: "Ready to Move", value: "Ready" },
-              ]}
-            />
-          </>
-        );
-
-      case "land":
-        return (
-          <>
-            <RadioGroup
-              label="Investment Budget *"
-              name="budget"
-              value={formData.budget}
-              onChange={(val) => setFormData({ ...formData, budget: val })}
-              options={[
-                { label: "Under ₹1 Crore", value: "Under 1Cr" },
-                { label: "₹1 Crore - ₹5 Crores", value: "1Cr - 5Cr" },
-                { label: "Above ₹5 Crores", value: "Above 5Cr" },
-              ]}
-            />
-            <RadioGroup
-              label="Timeline *"
-              name="timeline"
-              value={formData.timeline}
-              onChange={(val) => setFormData({ ...formData, timeline: val })}
-              options={[
-                { label: "Immediate Investment", value: "Immediate" },
-                { label: "Just exploring opportunities", value: "Just exploring" },
-              ]}
-            />
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Preferred Location or Details</label>
-              <textarea 
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-brand-primary outline-none transition-all"
-                rows={2}
-                placeholder="e.g., Karanjade, NAINA, Old Panvel..."
-                value={formData.message}
-                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-              />
-            </div>
-          </>
-        );
-
-      case "consultation":
-        return (
-          <>
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">What are you looking to achieve? *</label>
-              <textarea 
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-brand-primary outline-none transition-all"
-                rows={4}
-                placeholder="Tell us about your investment goals, preferred areas, or any specific questions you have..."
-                value={formData.message}
-                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                required
-              />
-            </div>
-          </>
-        );
-
-      default: // buyer
-        return (
-          <>
-            <RadioGroup
-              label="What type of space are you looking for? *"
-              name="unitType"
-              value={formData.unitType}
-              onChange={(val) => setFormData({ ...formData, unitType: val })}
-              options={[
-                { label: "1 BHK Flat", value: "1 BHK Flat" },
-                { label: "2 BHK Flat", value: "2 BHK Flat" },
-                { label: "Commercial / Shop", value: "Commercial" },
-                { label: "2nd Home / Villa", value: "2nd Home" },
-              ]}
-            />
-            <RadioGroup
-              label="What is your budget range? *"
-              name="budget"
-              value={formData.budget}
-              onChange={(val) => setFormData({ ...formData, budget: val })}
-              options={[
-                { label: "[PENDING-FROM-CLIENT: Under ₹45L]", value: "Under 45L" },
-                { label: "[PENDING-FROM-CLIENT: ₹45L - ₹75L]", value: "45L - 75L" },
-                { label: "[PENDING-FROM-CLIENT: ₹75L - ₹1Cr]", value: "75L - 1Cr" },
-                { label: "[PENDING-FROM-CLIENT: Above ₹1Cr]", value: "Above 1Cr" },
-              ]}
-            />
-            <RadioGroup
-              label="When are you planning to buy? *"
-              name="timeline"
-              value={formData.timeline}
-              onChange={(val) => setFormData({ ...formData, timeline: val })}
-              options={[
-                { label: "Ready to buy (1-3 months)", value: "Ready to buy" },
-                { label: "More than 6 months", value: "More than 6 months" },
-                { label: "Just exploring options", value: "Just exploring" },
-              ]}
-            />
-          </>
-        );
-    }
-  };
-
-  return (
-    <Card className="max-w-xl mx-auto p-6 md:p-8" id="enquire">
-      <div className="mb-8">
-        <h3 className="text-2xl font-heading font-bold text-brand-primary mb-2">
-          {step === 1 ? "How can we help you?" : "Just a few more details"}
-        </h3>
-        <p className="text-gray-600">
-          {step === 1 
-            ? "Tell us what you're looking for and provide your contact details." 
-            : "This helps our advisory team prepare the best options for you."}
+  if (isSuccess) {
+    return (
+      <div className="bg-white dark:bg-gray-900 p-8 md:p-12 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-800 text-center animate-in fade-in zoom-in duration-500 h-full flex flex-col items-center justify-center min-h-[400px]">
+        <div className="w-20 h-20 bg-emerald-100 dark:bg-emerald-900/30 text-brand-success rounded-full flex items-center justify-center mx-auto mb-6">
+          <CheckCircle2 size={40} />
+        </div>
+        <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Request Received</h3>
+        <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed">
+          Thank you for reaching out. Our property advisor has received your requirements and will contact you shortly with the best matching options.
         </p>
       </div>
+    );
+  }
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+  return (
+    <div className="bg-white dark:bg-gray-900 p-8 md:p-10 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-800 transition-colors duration-300">
+      
+      {/* Progress Indicator */}
+      <div className="mb-8">
+        <div className="flex justify-between items-center mb-2">
+          <span className="text-xs font-bold text-brand-primary dark:text-brand-accent uppercase tracking-wider">
+            Step {step} of 3
+          </span>
+          <span className="text-xs font-medium text-gray-400">
+            {step === 1 ? "Intent" : step === 2 ? "Requirements" : "Contact"}
+          </span>
+        </div>
+        <div className="w-full bg-gray-100 dark:bg-gray-800 h-2 rounded-full overflow-hidden">
+          <div 
+            className="bg-brand-primary dark:bg-brand-accent h-full transition-all duration-500 ease-in-out"
+            style={{ width: `${(step / 3) * 100}%` }}
+          ></div>
+        </div>
+      </div>
+
+      <form onSubmit={step === 3 ? handleSubmit : (e) => { e.preventDefault(); nextStep(); }}>
+        
+        {/* STEP 1: ENQUIRY TYPE */}
         {step === 1 && (
-          <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
-            <RadioGroup
-              label="I am looking to... *"
-              name="enquiryType"
-              value={formData.enquiryType}
-              onChange={(val) => setFormData({ ...formData, enquiryType: val as EnquiryType })}
-              options={[
-                { label: "Buy a Home / Resale", value: "buyer" },
-                { label: "Sell / Market My Project (Builder)", value: "seller-builder" },
-                { label: "Buy or Sell Land", value: "land" },
-                { label: "Get Investment Advice", value: "consultation" },
-              ]}
-            />
-            
-            <div className="space-y-4 pt-4 border-t border-gray-100">
-              <Input
-                label="Full Name *"
-                placeholder="e.g. Rahul Sharma"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                required
-              />
-              <Input
-                label="Mobile Number *"
-                type="tel"
-                placeholder="10-digit mobile number"
-                value={formData.mobile}
-                onChange={(e) => setFormData({ ...formData, mobile: e.target.value.replace(/\D/g, '').slice(0, 10) })}
-                required
-              />
-              <Input
-                label="Email Address (Optional)"
-                type="email"
-                placeholder="your@email.com"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              />
+          <div className="space-y-6 animate-in slide-in-from-right-4 fade-in duration-300">
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">How can we help you?</h3>
+              <p className="text-gray-600 dark:text-gray-400 text-sm mb-6">Select the option that best describes your goal.</p>
             </div>
             
-            {error && <p className="text-brand-alert text-sm">{error}</p>}
+            <div className="grid grid-cols-1 gap-4">
+              {[
+                { id: "buy", title: "Buy a Property", icon: <Home size={20} />, desc: "Looking for a new or resale home" },
+                { id: "invest", title: "Investment", icon: <TrendingUp size={20} />, desc: "Looking for high-ROI opportunities" },
+                { id: "sell", title: "Sell a Property", icon: <Wallet size={20} />, desc: "Want to list my property or land" }
+              ].map((opt) => (
+                <label 
+                  key={opt.id} 
+                  className={`flex items-start p-4 border rounded-xl cursor-pointer transition-all ${
+                    formData.enquiryType === opt.id 
+                      ? "border-brand-primary dark:border-brand-accent bg-brand-primary/5 dark:bg-brand-accent/10 shadow-sm" 
+                      : "border-gray-200 dark:border-gray-700 hover:border-brand-primary/50 dark:hover:border-brand-accent/50"
+                  }`}
+                >
+                  <input 
+                    type="radio" 
+                    name="enquiryType" 
+                    value={opt.id} 
+                    className="mt-1 sr-only"
+                    checked={formData.enquiryType === opt.id}
+                    onChange={(e) => setFormData({ ...formData, enquiryType: e.target.value })}
+                    required
+                  />
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center mr-4 shrink-0 ${
+                    formData.enquiryType === opt.id ? "bg-brand-primary dark:bg-brand-accent text-white" : "bg-gray-100 dark:bg-gray-800 text-gray-500"
+                  }`}>
+                    {opt.icon}
+                  </div>
+                  <div>
+                    <h4 className={`font-bold text-base ${formData.enquiryType === opt.id ? "text-brand-primary dark:text-brand-accent" : "text-gray-900 dark:text-gray-200"}`}>
+                      {opt.title}
+                    </h4>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{opt.desc}</p>
+                  </div>
+                </label>
+              ))}
+            </div>
             
-            <Button 
-              type="button" 
-              className="w-full gap-2 mt-4" 
-              onClick={handleNext}
-            >
-              Continue <ArrowRight size={18} />
-            </Button>
+            <div className="pt-4">
+              <Button type="button" onClick={nextStep} disabled={!formData.enquiryType} className="w-full py-4">
+                Continue <ArrowRight size={18} className="ml-2" />
+              </Button>
+            </div>
           </div>
         )}
 
+        {/* STEP 2: PROPERTY REQUIREMENTS (CRITICAL FOR SCORING) */}
         {step === 2 && (
-          <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
+          <div className="space-y-6 animate-in slide-in-from-right-4 fade-in duration-300">
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Tell us about your requirements</h3>
+              <p className="text-gray-600 dark:text-gray-400 text-sm mb-6">This helps us find the exact match for you.</p>
+            </div>
             
-            {renderStepTwoFields()}
+            <div className="space-y-5">
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Property Type *</label>
+                <select 
+                  required
+                  value={formData.unitType}
+                  onChange={(e) => setFormData({ ...formData, unitType: e.target.value })}
+                  className="w-full rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-3 text-gray-900 dark:text-gray-100 focus:border-brand-primary dark:focus:border-brand-accent focus:outline-none transition-colors appearance-none"
+                >
+                  <option value="" disabled>Select unit type</option>
+                  <option value="1 BHK">1 BHK</option>
+                  <option value="2 BHK">2 BHK</option>
+                  <option value="3 BHK+">3 BHK+</option>
+                  <option value="Villa / Bungalow">Villa / Bungalow</option>
+                  <option value="Land / Plot">Land / Plot</option>
+                  <option value="Commercial">Commercial Shop / Office</option>
+                </select>
+              </div>
 
-            {error && <p className="text-brand-alert text-sm">{error}</p>}
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Budget Range *</label>
+                <select 
+                  required
+                  value={formData.budget}
+                  onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
+                  className="w-full rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-3 text-gray-900 dark:text-gray-100 focus:border-brand-primary dark:focus:border-brand-accent focus:outline-none transition-colors appearance-none"
+                >
+                  <option value="" disabled>Select your budget</option>
+                  <option value="Under 50 Lakhs">Under 50 Lakhs</option>
+                  <option value="50 Lakhs - 1 Crore">50 Lakhs - 1 Crore</option>
+                  <option value="1 Crore - 2 Crores">1 Crore - 2 Crores</option>
+                  <option value="2 Crores+">2 Crores+</option>
+                </select>
+              </div>
 
-            <div className="flex gap-4 pt-4">
-              <Button 
-                type="button" 
-                variant="outline" 
-                className="px-4" 
-                onClick={() => setStep(1)}
-              >
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Timeline *</label>
+                <select 
+                  required
+                  value={formData.timeline}
+                  onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
+                  className="w-full rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-3 text-gray-900 dark:text-gray-100 focus:border-brand-primary dark:focus:border-brand-accent focus:outline-none transition-colors appearance-none"
+                >
+                  <option value="" disabled>When do you plan to transact?</option>
+                  <option value="Immediate (Hot)">Immediate (Within 30 Days)</option>
+                  <option value="1-3 Months">1-3 Months</option>
+                  <option value="3-6 Months">3-6 Months</option>
+                  <option value="Just Exploring">Just Exploring (6+ Months)</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="pt-4 flex gap-3">
+              <Button type="button" onClick={prevStep} variant="outline" className="px-6 border-gray-200 dark:border-gray-700">
                 <ArrowLeft size={18} />
               </Button>
-              <Button 
-                type="submit" 
-                className="flex-1" 
-                isLoading={isSubmitting}
-              >
-                Submit Enquiry
+              <Button type="button" onClick={nextStep} disabled={!formData.unitType || !formData.budget || !formData.timeline} className="flex-1 py-4">
+                Continue <ArrowRight size={18} className="ml-2" />
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {/* STEP 3: CONTACT INFO */}
+        {step === 3 && (
+          <div className="space-y-6 animate-in slide-in-from-right-4 fade-in duration-300">
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Almost there!</h3>
+              <p className="text-gray-600 dark:text-gray-400 text-sm mb-6">Where should we send the property options?</p>
+            </div>
+            
+            <div className="space-y-4">
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Your Name *</label>
+                <Input
+                  required
+                  placeholder="e.g. Rahul Sharma"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                />
+              </div>
+              
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Mobile Number *</label>
+                <Input
+                  required
+                  type="tel"
+                  pattern="[0-9]{10}"
+                  title="Please enter a valid 10-digit mobile number"
+                  placeholder="10-digit number"
+                  value={formData.mobile}
+                  onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Email Address</label>
+                <Input
+                  type="email"
+                  placeholder="rahul@example.com"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                />
+              </div>
+            </div>
+
+            <div className="pt-4 flex gap-3">
+              <Button type="button" onClick={prevStep} variant="outline" className="px-6 border-gray-200 dark:border-gray-700">
+                <ArrowLeft size={18} />
+              </Button>
+              <Button type="submit" isLoading={isSubmitting} className="flex-1 py-4">
+                Get Callback
               </Button>
             </div>
           </div>
         )}
       </form>
-    </Card>
+    </div>
   );
 };

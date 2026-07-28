@@ -60,22 +60,25 @@ export const QuickPopupForm = () => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed bottom-24 right-4 md:bottom-28 md:right-6 z-40 w-[calc(100%-2rem)] md:w-80 animate-in slide-in-from-bottom-10 fade-in duration-500">
-      <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden relative">
+    <div className="fixed bottom-24 right-4 md:bottom-28 md:right-6 z-[100] pointer-events-auto w-[calc(100%-2rem)] md:w-80 animate-in slide-in-from-bottom-10 fade-in duration-500 drop-shadow-2xl">
+      <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden relative pointer-events-auto flex flex-col">
+        
+        {/* Improved Close Button hit area and z-index */}
         <button 
           onClick={handleClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors z-10"
+          type="button"
+          className="absolute top-3 right-3 text-white/80 hover:text-white transition-colors z-50 cursor-pointer p-1.5 bg-black/10 hover:bg-black/20 rounded-full"
           aria-label="Close popup"
         >
-          <X size={20} />
+          <X size={18} />
         </button>
         
-        <div className="p-5 bg-brand-primary text-white">
-          <h3 className="font-heading font-bold text-lg mb-1 pr-6">Looking for a property or expert advice?</h3>
+        <div className="p-5 bg-brand-primary text-white relative z-10 pointer-events-none">
+          <h3 className="font-heading font-bold text-lg mb-1 pr-8">Looking for a property or expert advice?</h3>
           <p className="text-xs text-brand-accent">Drop your number, our advisor will call you back.</p>
         </div>
 
-        <div className="p-5">
+        <div className="p-5 relative z-20 bg-white pointer-events-auto">
           {isSuccess ? (
             <div className="text-center py-4">
               <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3">
@@ -85,22 +88,26 @@ export const QuickPopupForm = () => {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
-              <Input
-                placeholder="Your Name"
-                required
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              />
-              <Input
-                placeholder="Mobile Number"
-                type="tel"
-                required
-                pattern="[0-9]{10}"
-                title="Please enter a valid 10-digit mobile number"
-                value={formData.mobile}
-                onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
-              />
-              <Button type="submit" className="w-full text-sm py-2.5" isLoading={isSubmitting}>
+              <div className="pointer-events-auto">
+                <Input
+                  placeholder="Your Name"
+                  required
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                />
+              </div>
+              <div className="pointer-events-auto">
+                <Input
+                  placeholder="Mobile Number"
+                  type="tel"
+                  required
+                  pattern="[0-9]{10}"
+                  title="Please enter a valid 10-digit mobile number"
+                  value={formData.mobile}
+                  onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
+                />
+              </div>
+              <Button type="submit" className="w-full text-sm py-2.5 pointer-events-auto cursor-pointer" isLoading={isSubmitting}>
                 Get Callback
               </Button>
             </form>

@@ -3,9 +3,13 @@ import { ThankYouRedirect } from "@/components/forms/ThankYouRedirect";
 
 export const metadata = {
   title: "Thank You | Greenspace Realty",
-  description: "We have received your details. Our advisor will reach out to you shortly.",
+  description: "Thank you for reaching out to Greenspace Realty. Our team will contact you shortly.",
 };
 
 export default function ThankYouPage() {
-  return <ThankYouRedirect />;
+  return (
+    <div className="w-full flex-1 flex flex-col pt-20">
+      <ThankYouRedirect />
+    </div>
+  );
 }

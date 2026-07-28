@@ -1,128 +1,133 @@
 import React from "react";
-import { Building2, Target, Users, BarChart3, ArrowDownToLine, Handshake, CheckCircle2 } from "lucide-react";
+import { Building2, TrendingUp, Users, Target, BarChart, ArrowRight, ShieldCheck } from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { StepForm } from "@/components/forms/StepForm";
+import { BuilderForm } from "@/components/forms/BuilderForm";
 
 export const metadata = {
   title: "Partner With Us | Sole Selling Mandates",
-  description: "Appoint Greenspace Realty as your exclusive sales and marketing partner. We handle lead generation and conversions so builders can focus on construction.",
+  description: "Greenspace Realty partners with developers in Panvel and Navi Mumbai to take over the complete marketing and sales lifecycle for maximum ROI.",
 };
 
 export default function PartnerWithUsPage() {
-  const benefits = [
+  const steps = [
     {
-      title: "Zero Marketing Overheads",
-      description: "We take over the complete marketing lifecycle. From branding to ad spends, we bear the initial cost of lead generation.",
-      icon: <ArrowDownToLine className="w-6 h-6 text-brand-primary" />
+      title: "Project Feasibility & Site Visit",
+      description: "We analyze your project's location, configuration, and target demographic to set realistic, data-driven sales expectations.",
+      icon: <Building2 className="w-6 h-6 text-brand-primary dark:text-brand-accent" />
     },
     {
-      title: "Faster Inventory Liquidation",
-      description: "Our dedicated sales team and existing database of high-intent buyers ensure your project reaches the right audience immediately.",
-      icon: <Target className="w-6 h-6 text-brand-primary" />
+      title: "Custom Marketing Strategy",
+      description: "We design a high-impact digital and offline marketing plan, positioning your project against local competitors to highlight its unique USPs.",
+      icon: <Target className="w-6 h-6 text-brand-primary dark:text-brand-accent" />
     },
     {
-      title: "Professional Representation",
-      description: "We act as your in-house sales team, providing a premium, transparent experience to your buyers that enhances your brand equity.",
-      icon: <Handshake className="w-6 h-6 text-brand-primary" />
-    }
-  ];
-
-  const processSteps = [
-    {
-      step: "01",
-      title: "Site Visit & Analysis",
-      description: "We evaluate your project's USPs, target demographic, and competitive pricing in the local micro-market."
+      title: "Aggressive Lead Generation",
+      description: "Utilizing our existing database and targeted digital ads, we generate high-intent buyer leads specifically for your inventory.",
+      icon: <Users className="w-6 h-6 text-brand-primary dark:text-brand-accent" />
     },
     {
-      step: "02",
-      title: "Marketing Strategy",
-      description: "Development of a tailored digital and on-ground marketing plan, completely funded and executed by our team."
+      title: "Site Operations & Conversion",
+      description: "Our trained sales professionals station at your site, conducting tours, handling objections, and closing deals with builder-grade professionalism.",
+      icon: <TrendingUp className="w-6 h-6 text-brand-primary dark:text-brand-accent" />
     },
     {
-      step: "03",
-      title: "Lead Generation",
-      description: "Deploying targeted campaigns to our verified database and generating fresh, high-intent buyer leads."
-    },
-    {
-      step: "04",
-      title: "Site Visits & Conversion",
-      description: "Our professional advisory team handles property tours, negotiations, and final sales closures."
-    },
-    {
-      step: "05",
       title: "Transparent Reporting",
-      description: "You receive weekly data-driven reports on lead velocity, footfalls, and conversion metrics."
+      description: "You receive weekly MIS reports detailing walk-ins, follow-ups, and closures. You maintain complete visibility over the sales pipeline.",
+      icon: <BarChart className="w-6 h-6 text-brand-primary dark:text-brand-accent" />
     }
   ];
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full bg-white dark:bg-gray-950 pb-24 transition-colors duration-300">
+      
       {/* Hero Section */}
-      <section className="py-20 bg-brand-primary text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/images/brand/pattern.png')] opacity-10 mix-blend-overlay pointer-events-none"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 bg-brand-accent/20 rounded-full blur-3xl -mr-20 -mt-20"></div>
+      <section className="py-24 bg-brand-primary text-white relative overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="/images/brand/hero-poster.jpg" 
+            alt="Real Estate Development" 
+            className="w-full h-full object-cover opacity-20 grayscale mix-blend-overlay"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-brand-primary/80 to-brand-primary"></div>
+        </div>
         
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-sm font-medium mb-6 backdrop-blur-sm">
-              <Building2 size={16} /> B2B Builder Partnerships
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+          <div className="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-brand-accent/20 border border-brand-accent/40 text-brand-accent font-semibold text-sm mb-6 backdrop-blur-sm">
+            Exclusive B2B Mandates
+          </div>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 tracking-tight">
+            You Build. We Sell.
+          </h1>
+          <p className="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed">
+            Stop worrying about marketing budgets, dead leads, and unmotivated brokers. Greenspace Realty acts as your dedicated outsourced sales arm, driving volume and protecting your brand equity.
+          </p>
+        </div>
+      </section>
+
+      {/* Why Choose Us for Mandates */}
+      <section className="py-24 bg-gray-50 dark:bg-gray-900/50 border-b border-gray-100 dark:border-gray-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+                The Sole-Selling Advantage
+              </h2>
+              <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
+                When you partner with us on a sole-selling mandate, you aren't just hiring a broker—you are integrating a high-performance sales engine directly into your project. 
+              </p>
+              
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center shrink-0 shadow-sm border border-gray-100 dark:border-gray-700">
+                    <ShieldCheck className="w-6 h-6 text-brand-success" />
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Zero Brand Dilution</h4>
+                    <p className="text-gray-600 dark:text-gray-400">Multiple brokers marketing the same property creates price wars and cheapens your brand. We control the narrative and maintain pricing integrity.</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center shrink-0 shadow-sm border border-gray-100 dark:border-gray-700">
+                    <TrendingUp className="w-6 h-6 text-brand-success" />
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Predictable Cash Flow</h4>
+                    <p className="text-gray-600 dark:text-gray-400">Our structured marketing funnels ensure a steady stream of site visits, leading to predictable conversions and cash flow for your construction milestones.</p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 tracking-tight">
-              You Build the Future. <br className="hidden md:block" />
-              <span className="text-brand-accent">We'll Sell It.</span>
-            </h1>
-            <p className="text-lg md:text-xl text-gray-200 leading-relaxed mb-8">
-              Appoint Greenspace Realty as your exclusive Sole Selling Partner. We take over your entire sales and marketing operation, allowing you to focus 100% on construction and timely delivery.
-            </p>
+            
+            {/* The Builder Form */}
+            <div className="relative" id="builder-form">
+              <div className="absolute inset-0 bg-brand-primary/5 dark:bg-brand-accent/5 transform rotate-3 rounded-3xl -z-10"></div>
+              <BuilderForm />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Benefits Section */}
-      <section className="py-24 bg-white">
+      {/* Our Process Execution */}
+      <section className="py-24 bg-white dark:bg-gray-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading 
-            title="Why Appoint Us?" 
-            subtitle="Selling real estate today requires more than just putting up a hoarding. It requires a dedicated, data-driven sales engine."
+            title="How We Execute a Mandate" 
+            subtitle="A transparent, aggressive, and systematic approach to liquidating your inventory."
             className="mb-16"
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {benefits.map((benefit, idx) => (
-              <div key={idx} className="bg-gray-50 p-8 rounded-2xl border border-gray-100 hover:border-brand-primary/30 hover:shadow-lg transition-all group">
-                <div className="w-14 h-14 bg-white rounded-xl shadow-sm border border-gray-200 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  {benefit.icon}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {steps.map((step, idx) => (
+              <div key={idx} className="relative p-8 bg-gray-50 dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 hover:shadow-md transition-shadow group">
+                <div className="text-6xl font-black text-gray-100 dark:text-gray-800 absolute top-4 right-6 pointer-events-none group-hover:scale-110 transition-transform">
+                  0{idx + 1}
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">{benefit.title}</h3>
-                <p className="text-gray-600 leading-relaxed">
-                  {benefit.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Process Section */}
-      <section className="py-24 bg-gray-900 text-white relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 tracking-tight">The Mandate Process</h2>
-            <p className="text-gray-400 max-w-2xl mx-auto text-lg">A structured, accountable approach to liquidating your inventory.</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-            {processSteps.map((step, idx) => (
-              <div key={idx} className="relative flex flex-col items-center text-center">
-                <div className="w-16 h-16 rounded-full bg-brand-primary flex items-center justify-center text-xl font-bold text-brand-accent mb-6 shadow-lg z-10 border-4 border-gray-900">
-                  {step.step}
+                <div className="w-14 h-14 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 flex items-center justify-center mb-6 relative z-10">
+                  {step.icon}
                 </div>
-                {/* Connecting Line */}
-                {idx !== processSteps.length - 1 && (
-                  <div className="hidden md:block absolute top-8 left-[50%] w-full h-[2px] bg-brand-primary/30 -z-0"></div>
-                )}
-                <h4 className="text-lg font-bold mb-2">{step.title}</h4>
-                <p className="text-sm text-gray-400 leading-relaxed px-2">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 relative z-10">{step.title}</h3>
+                <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm relative z-10">
                   {step.description}
                 </p>
               </div>
@@ -131,41 +136,6 @@ export default function PartnerWithUsPage() {
         </div>
       </section>
 
-      {/* Builder Form Section */}
-      <section className="py-24 bg-gray-50 border-t border-gray-200 relative">
-        <div className="absolute inset-0 bg-brand-primary/5 mix-blend-multiply pointer-events-none"></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex flex-col lg:flex-row gap-16 items-center">
-            
-            <div className="lg:w-1/2">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight mb-6">
-                Let's Discuss Your Next Project
-              </h2>
-              <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                Fill out the details of your upcoming or ongoing project. Our B2B partnership team will review your requirements and schedule a site visit to discuss a potential sole-selling mandate.
-              </p>
-              
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-center text-gray-700 font-medium">
-                  <CheckCircle2 className="w-5 h-5 text-brand-primary mr-3" /> Dedicated Account Manager
-                </li>
-                <li className="flex items-center text-gray-700 font-medium">
-                  <CheckCircle2 className="w-5 h-5 text-brand-primary mr-3" /> Comprehensive Market Feasibility Report
-                </li>
-                <li className="flex items-center text-gray-700 font-medium">
-                  <CheckCircle2 className="w-5 h-5 text-brand-primary mr-3" /> Performance-Based Remuneration
-                </li>
-              </ul>
-            </div>
-
-            <div className="lg:w-1/2 w-full">
-              {/* Reusing the StepForm - it has a native 'seller-builder' flow built in */}
-              <StepForm />
-            </div>
-
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

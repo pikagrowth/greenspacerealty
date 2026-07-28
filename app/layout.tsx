@@ -7,6 +7,7 @@ import { Footer } from "@/components/layout/Footer";
 import { ChatWidget } from "@/components/chat/ChatWidget";
 import { QuickPopupForm } from "@/components/home/QuickPopupForm";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { ThemeProvider } from "@/components/theme/ThemeProvider";
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -51,16 +52,35 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className={`${inter.variable} ${playfair.variable} font-body bg-gray-50 text-gray-900 antialiased flex flex-col min-h-screen`}>
-        <JsonLd />
-        <Header />
-        <main className="flex-1 flex flex-col pt-20">
-          {children}
-        </main>
-        <Footer />
-        <ChatWidget />
-        <QuickPopupForm />
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+      <head>
+        {/* Anti-Flicker Script: Runs before React hydrates to prevent white-flash if dark mode is saved */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                if (localStorage.getItem('greenspace_theme') === 'dark') {
+                  document.documentElement.classList.add('dark');
+                } else {
+                  document.documentElement.classList.remove('dark');
+                }
+              } catch (_) {}
+            `,
+          }}
+        />
+      </head>
+      {/* Added dark mode base colors to the body */}
+      <body className={`${inter.variable} ${playfair.variable} font-body bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 antialiased flex flex-col min-h-screen transition-colors duration-300`}>
+        <ThemeProvider>
+          <JsonLd />
+          <Header />
+          <main className="flex-1 flex flex-col pt-20">
+            {children}
+          </main>
+          <Footer />
+          <ChatWidget />
+          <QuickPopupForm />
+        </ThemeProvider>
       </body>
     </html>
   );

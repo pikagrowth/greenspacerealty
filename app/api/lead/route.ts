@@ -1,52 +1,97 @@
 import { NextResponse } from "next/server";
+import { determineIntentScore } from "@/lib/scoring";
+import { sendHotLeadEmail } from "@/lib/resend";
+import { sendWhatsAppAlert } from "@/lib/whatsapp";
+import { LeadData } from "@/lib/types";
 
-export async function POST(request: Request) {
+export async function POST(req: Request) {
   try {
-    const body = await request.json();
-    const { name, mobile, email, enquiryType, unitType, budget, timeline, message, source, tab } = body;
+    const body = await req.json();
+    
+    const {
+      name = "",
+      mobile,
+      email = "",
+      enquiryType = "general",
+      unitType = "",
+      budget = "",
+      timeline = "",
+      message = "",
+      source = "website",
+    } = body;
 
-    // Basic validation
-    if (!name || !mobile) {
+    // 1. Validate required fields
+    if (!mobile) {
       return NextResponse.json(
-        { error: "Name and mobile number are required." },
+        { error: "Mobile number is required" },
         { status: 400 }
       );
     }
 
-    // Log lead data (Can be extended to integrate with Google Sheets API or CRM webhook via env)
-    console.log("New Lead Received:", {
-      timestamp: new Date().toISOString(),
+    const leadData: LeadData = {
       name,
       mobile,
-      email: email || "N/A",
-      enquiryType: enquiryType || "general",
-      unitType: unitType || "N/A",
-      budget: budget || "N/A",
-      timeline: timeline || "N/A",
-      message: message || "N/A",
-      source: source || "website",
-      tab: tab || "Leads"
-    });
+      email,
+      enquiryType,
+      unitType,
+      budget,
+      timeline,
+      message,
+      source,
+    };
 
-    // Optional webhook forwarding if configured
-    if (process.env.GOOGLE_SHEETS_WEBHOOK_URL) {
+    // 2. Run scoring logic to determine intent level and target Google Sheet tab
+    const { score, tab } = determineIntentScore(leadData);
+
+    const sheetPayload = {
+      ...leadData,
+      tab,
+    };
+
+    // 3. Send Lead to Google Sheets via Webhook
+    const scriptUrl = process.env.GOOGLE_SHEET_WEBAPP_URL;
+    if (scriptUrl) {
       try {
-        await fetch(process.env.GOOGLE_SHEETS_WEBHOOK_URL, {
+        await fetch(scriptUrl, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(sheetPayload),
         });
+        console.log(`🟢 Lead logged to Google Sheet Tab: [${tab}] (Score: ${score})`);
       } catch (sheetError) {
-        console.error("Failed to forward lead to webhook:", sheetError);
+        console.error("🔴 Error logging lead to Google Sheets:", sheetError);
+      }
+    } else {
+      console.warn("⚠️ GOOGLE_SHEET_WEBAPP_URL missing in environment variables.");
+    }
+
+    // 4. Instant Real-Time Notifications for Hot Leads & Builder Mandates
+    const isHotLead = 
+      score === "HIGH" || 
+      enquiryType === "seller-builder" || 
+      tab === "Hot Leads" || 
+      tab === "Builder Leads";
+
+    if (isHotLead) {
+      try {
+        await Promise.allSettled([
+          sendHotLeadEmail(sheetPayload),
+          sendWhatsAppAlert(sheetPayload),
+        ]);
+        console.log("🟢 Real-time Hot Lead notifications (Email + WhatsApp) dispatched successfully.");
+      } catch (alertError) {
+        console.error("🔴 Error dispatching real-time notifications:", alertError);
       }
     }
 
     return NextResponse.json(
-      { success: true, message: "Lead submitted successfully." },
+      { message: "Lead submitted successfully", success: true },
       { status: 200 }
     );
   } catch (error) {
-    console.error("Lead API Error:", error);
+    console.error("🔴 Fatal error in lead API route:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }
