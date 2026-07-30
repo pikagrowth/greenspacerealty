@@ -1,3 +1,4 @@
+// lib/sheets.ts
 import { LeadData } from "./types";
 
 export async function sendLeadToSheet(lead: LeadData): Promise<boolean> {
@@ -9,13 +10,20 @@ export async function sendLeadToSheet(lead: LeadData): Promise<boolean> {
   }
 
   try {
+    // v2 Update: We force the physical 'tab' to 'Leads' for the Apps Script,
+    // and pass the scored priority as 'leadPriority' for the new column.
+    const payload = {
+      ...lead,
+      tab: 'Leads',
+      leadPriority: lead.leadPriority || 'Low Intent'
+    };
+
     const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      // The Apps Script expects JSON payload with a 'tab' property
-      body: JSON.stringify(lead),
+      body: JSON.stringify(payload),
     });
 
     const result = await response.json();

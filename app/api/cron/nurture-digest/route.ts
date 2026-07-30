@@ -1,3 +1,4 @@
+// app/api/cron/nurture-digest/route.ts
 import { NextResponse } from 'next/server';
 import { getAndClearNurtureLeads } from '@/lib/sheets';
 import { sendNurtureDigestEmail } from '@/lib/resend';

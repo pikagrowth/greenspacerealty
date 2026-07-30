@@ -24,3 +24,22 @@
 - [ ] Receive finalized RERA registration number and update `Footer.tsx`.
 - [ ] Receive accurate real estate pricing bands and inject them into `lib/scoring.ts`.
 - [ ] Setup Resend Custom Domain records once the `greenspacerealty.in` domain is purchased and propagated.
+
+---
+
+## v2 Redesign & Bug-Fix Update
+
+### Architecture & Infrastructure Decisions
+- **Stack / Hosting:** Kept unchanged (Next.js 14, Tailwind, Vercel, same domain).
+- **Lead Storage (Critical Change):** Moved from 5 separate tabs to **ONE Google Sheet, ONE tab** called `Leads`. A new `Lead Priority` column is now used alongside conditional formatting colors instead of physical tab routing.
+- **Lead Delivery:** Google Apps Script Web App remains the method, but requires redeployment to support the single-tab schema. Resend continues to handle emails (routing alerts to `RESEND_TO_EMAIL`).
+- **WhatsApp:** **Disabled, not deleted.** The `lib/whatsapp.ts` file remains but the API call inside `route.ts` is commented out. No API calls to Green API will fire.
+- **Images/Video:** Utilized Cloudinary for the new hero video and brochure PDF. To avoid adding SDKs/packages, we strictly use plain Cloudinary URLs via `.env.local` variables. The hero video relies on `<source media="...">` to switch between a full-res desktop version and a smaller `q_auto,w_640` mobile version.
+- **Dark Mode:** Implemented a full dark-mode palette at the Tailwind config level, applied site-wide component by component.
+
+### Form & Logic Decisions
+- **Forms:** Expanded from 3 to 5 distinct forms. Each posts to the single `/api/lead` route with a unique `source` identifier: `hero-quick-form`, `website-step-form`, `builder-mandate-form`, **NEW** `brochure-download-form`, **NEW** `site-visit-form`.
+- **Brochure Gate:** Added a new global modal (`BrochureGateForm.tsx`) requiring Name + Mobile. Successful submission opens the Cloudinary PDF URL.
+- **Site Visit Form:** Added a form (`SiteVisitForm.tsx`) requesting preferred visit date, mapped dynamically to the specific project being viewed.
+- **Dead Code Cleanup:** Deleted `components/home/Hero.tsx` as it was no longer imported or used.
+- **Critical Bug Fix:** Rewrote the lead scoring logic in `/api/lead/route.ts`. The old code incorrectly destructured values. The new flow calls `determineIntentScore` followed by `determineSheetTab`, passing the correct intent string to the single-tab sheet as `leadPriority`.

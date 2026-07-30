@@ -4,11 +4,11 @@
 
 @layer base {
   body {
-    @apply bg-brand-bg text-brand-text;
+    @apply bg-brand-bg text-brand-text dark:bg-brand-bgDark dark:text-brand-textDark transition-colors duration-300;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-heading text-brand-primary;
+    @apply font-heading text-brand-primary dark:text-brand-primaryDark transition-colors duration-300;
   }
 }
 

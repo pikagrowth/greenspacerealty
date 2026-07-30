@@ -1,3 +1,4 @@
+// app/thank-you/page.tsx
 import React from "react";
 import { ThankYouRedirect } from "@/components/forms/ThankYouRedirect";
 
@@ -8,7 +9,7 @@ export const metadata = {
 
 export default function ThankYouPage() {
   return (
-    <div className="w-full flex-1 flex flex-col pt-20">
+    <div className="w-full flex-1 flex flex-col pt-20 bg-brand-bg dark:bg-brand-bgDark transition-colors duration-300">
       <ThankYouRedirect />
     </div>
   );

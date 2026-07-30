@@ -1,7 +1,8 @@
+// components/home/QuickPopupForm.tsx
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { X } from "lucide-react";
+import { X, CheckCircle2 } from "lucide-react";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 
@@ -61,7 +62,7 @@ export const QuickPopupForm = () => {
 
   return (
     <div className="fixed bottom-24 right-4 md:bottom-28 md:right-6 z-[100] pointer-events-auto w-[calc(100%-2rem)] md:w-80 animate-in slide-in-from-bottom-10 fade-in duration-500 drop-shadow-2xl">
-      <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden relative pointer-events-auto flex flex-col">
+      <div className="bg-white dark:bg-[#161917] rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800 overflow-hidden relative pointer-events-auto flex flex-col transition-colors duration-300">
         
         {/* Improved Close Button hit area and z-index */}
         <button 
@@ -73,18 +74,18 @@ export const QuickPopupForm = () => {
           <X size={18} />
         </button>
         
-        <div className="p-5 bg-brand-primary text-white relative z-10 pointer-events-none">
+        <div className="p-5 bg-brand-primary dark:bg-brand-primaryDark text-white relative z-10 pointer-events-none transition-colors duration-300">
           <h3 className="font-heading font-bold text-lg mb-1 pr-8">Looking for a property or expert advice?</h3>
-          <p className="text-xs text-brand-accent">Drop your number, our advisor will call you back.</p>
+          <p className="text-xs text-brand-accent dark:text-brand-bgDark font-medium">Drop your number for a quick, no-pressure chat.</p>
         </div>
 
-        <div className="p-5 relative z-20 bg-white pointer-events-auto">
+        <div className="p-5 relative z-20 bg-white dark:bg-[#161917] pointer-events-auto transition-colors duration-300">
           {isSuccess ? (
             <div className="text-center py-4">
-              <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
+              <div className="w-12 h-12 bg-brand-success/10 dark:bg-brand-successDark/20 text-brand-success dark:text-brand-successDark rounded-full flex items-center justify-center mx-auto mb-3 transition-colors">
+                <CheckCircle2 size={24} />
               </div>
-              <p className="font-medium text-gray-900">Got it! We'll call you shortly.</p>
+              <p className="font-medium text-gray-900 dark:text-white transition-colors">Got it! We'll call you shortly.</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -108,7 +109,7 @@ export const QuickPopupForm = () => {
                 />
               </div>
               <Button type="submit" className="w-full text-sm py-2.5 pointer-events-auto cursor-pointer" isLoading={isSubmitting}>
-                Get Callback
+                Get a Callback in 30 Mins
               </Button>
             </form>
           )}

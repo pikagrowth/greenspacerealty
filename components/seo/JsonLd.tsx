@@ -1,3 +1,4 @@
+// components/seo/JsonLd.tsx
 import React from "react";
 import { BUSINESS_DETAILS } from "@/lib/constants";
 

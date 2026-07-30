@@ -1,4 +1,6 @@
-export type EnquiryType = 'buyer' | 'seller-builder' | 'land' | 'consultation' | 'general';
+// lib/types.ts
+
+export type EnquiryType = 'buyer' | 'seller-builder' | 'land' | 'consultation' | 'general' | 'brochure-download' | 'site-visit';
 
 export type LeadData = {
   name: string;
@@ -10,7 +12,9 @@ export type LeadData = {
   timeline?: string;
   message?: string;
   source: string;
-  tab?: string;
+  leadPriority?: string;
+  preferredVisitDate?: string;
+  tab?: string; // Maintained temporarily to prevent undefined errors before routing logic is fully swapped
 };
 
 export type IntentScore = 'HIGH' | 'NURTURE' | 'LOW';

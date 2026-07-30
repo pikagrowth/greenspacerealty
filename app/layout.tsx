@@ -1,3 +1,4 @@
+// app/layout.tsx
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
@@ -69,8 +70,8 @@ export default function RootLayout({
           }}
         />
       </head>
-      {/* Added dark mode base colors to the body */}
-      <body className={`${inter.variable} ${playfair.variable} font-body bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 antialiased flex flex-col min-h-screen transition-colors duration-300`}>
+      {/* Added dark mode base colors to the body utilizing brand variables */}
+      <body className={`${inter.variable} ${playfair.variable} font-body bg-brand-bg dark:bg-brand-bgDark text-brand-text dark:text-brand-textDark antialiased flex flex-col min-h-screen transition-colors duration-300`}>
         <ThemeProvider>
           <JsonLd />
           <Header />

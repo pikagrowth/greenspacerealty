@@ -1,5 +1,14 @@
+// lib/constants.ts
+
+export const CLOUDINARY_URLS = {
+  heroVideoDesktop: process.env.NEXT_PUBLIC_HERO_VIDEO_DESKTOP_URL || '',
+  heroVideoMobile: process.env.NEXT_PUBLIC_HERO_VIDEO_MOBILE_URL || '',
+  brochurePdf: process.env.NEXT_PUBLIC_BROCHURE_PDF_URL || '',
+} as const;
+
 export const BUSINESS_DETAILS = {
-  name: "Greenspace Realty", // ⚠️ Logo art says "Reality" — confirm spelling with client before final launch
+  // ⚠️ DEVELOPER ACTION REQUIRED: Logo art says "Reality" — YOU MUST confirm spelling ('Realty' vs 'Reality') directly with Krishna before final launch. Do not guess.
+  name: "Greenspace Realty", 
   owner: "Krishna Patil",
   siteOffice: "Shravan Siddhant, Plot No. 224A, Old Panvel, Navi Mumbai, Panvel 410206",
   headOffice: "Shop No 7, Plot 48, Sector 4, Karanjade, Panvel, Maharashtra 410206",

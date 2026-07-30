@@ -1,3 +1,7 @@
+// lib/whatsapp.ts
+
+// Currently not called anywhere. Kept for future re-enable.
+
 export async function sendWhatsAppAlert(message: string): Promise<void> {
   // Using the existing CALLMEBOT_PHONE or a new WHATSAPP_PHONE to prevent breaking changes
   const phone = process.env.WHATSAPP_PHONE || process.env.CALLMEBOT_PHONE;

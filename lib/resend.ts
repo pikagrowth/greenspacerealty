@@ -1,3 +1,4 @@
+// lib/resend.ts
 import { Resend } from 'resend';
 import { LeadData } from './types';
 
@@ -40,10 +41,6 @@ export async function sendHotLeadEmail(lead: LeadData) {
                 ${lead.message ? `<tr style="background:#FAF8F3;"><td style="color:#666; font-size:13px;">Message</td><td style="color:#222420; font-size:14px;">${lead.message}</td></tr>` : ''}
                 <tr><td style="color:#666; font-size:13px;">Source</td><td style="color:#222420; font-size:14px;">${lead.source}</td></tr>
               </table>
-              <a href="https://wa.me/${lead.mobile.replace(/\D/g,'')}"
-                 style="display:block; text-align:center; margin-top:20px; background:#3E7B5C; color:#ffffff; text-decoration:none; padding:12px; border-radius:8px; font-size:14px; font-weight:bold;">
-                Message on WhatsApp →
-              </a>
             </td>
           </tr>
         </table>
@@ -55,6 +52,87 @@ export async function sendHotLeadEmail(lead: LeadData) {
     from: 'Greenspace Realty <onboarding@resend.dev>', // TODO: Update once domain is verified
     to: process.env.RESEND_TO_EMAIL!,
     subject: `${isBuilder ? '🏗️ Builder Mandate Lead' : '🔥 Hot Lead'}: ${lead.name}`,
+    html,
+  });
+}
+
+// ---------- SITE VISIT — instant alert ----------
+export async function sendSiteVisitEmail(lead: LeadData) {
+  const resend = getResendClient();
+  
+  const html = `
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#FAF8F3; padding:24px 0; font-family: Arial, sans-serif;">
+    <tr>
+      <td align="center">
+        <table width="480" cellpadding="0" cellspacing="0" style="background:#ffffff; border-radius:12px; overflow:hidden; border:1px solid #eee;">
+          <tr>
+            <td style="background:#1F4D3A; padding:20px 24px;">
+              <span style="color:#C9A24B; font-size:12px; font-weight:bold; letter-spacing:1px;">GREENSPACE REALTY</span><br/>
+              <span style="color:#ffffff; font-size:20px; font-weight:bold;">📅 New Site Visit Request</span>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:24px;">
+              <p style="margin:0 0 16px; color:#222420; font-size:14px;">
+                A prospect has requested a site visit for a project. Please call to confirm their timing.
+              </p>
+              <table width="100%" cellpadding="8" cellspacing="0" style="border-collapse:collapse;">
+                <tr><td style="color:#666; font-size:13px; width:110px;">Name</td><td style="color:#222420; font-size:14px; font-weight:bold;">${lead.name}</td></tr>
+                <tr style="background:#FAF8F3;"><td style="color:#666; font-size:13px;">Mobile</td><td style="color:#222420; font-size:14px; font-weight:bold;">${lead.mobile}</td></tr>
+                <tr><td style="color:#666; font-size:13px;">Project</td><td style="color:#222420; font-size:14px; font-weight:bold;">${lead.unitType || 'Not Specified'}</td></tr>
+                <tr style="background:#FAF8F3;"><td style="color:#666; font-size:13px;">Pref. Date</td><td style="color:#222420; font-size:14px; color:#B85C38; font-weight:bold;">${lead.preferredVisitDate || 'ASAP'}</td></tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>`;
+
+  return resend.emails.send({
+    from: 'Greenspace Realty <onboarding@resend.dev>', // TODO: Update once domain is verified
+    to: process.env.RESEND_TO_EMAIL!,
+    subject: `📅 Site Visit Request: ${lead.name} - ${lead.unitType}`,
+    html,
+  });
+}
+
+// ---------- BROCHURE DOWNLOAD — instant alert ----------
+export async function sendBrochureLeadEmail(lead: LeadData) {
+  const resend = getResendClient();
+  
+  const html = `
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#FAF8F3; padding:24px 0; font-family: Arial, sans-serif;">
+    <tr>
+      <td align="center">
+        <table width="480" cellpadding="0" cellspacing="0" style="background:#ffffff; border-radius:12px; overflow:hidden; border:1px solid #eee;">
+          <tr>
+            <td style="background:#1F4D3A; padding:20px 24px;">
+              <span style="color:#C9A24B; font-size:12px; font-weight:bold; letter-spacing:1px;">GREENSPACE REALTY</span><br/>
+              <span style="color:#ffffff; font-size:20px; font-weight:bold;">📥 New Brochure Download</span>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:24px;">
+              <p style="margin:0 0 16px; color:#222420; font-size:14px;">
+                A prospect just unlocked a project brochure. This is a top-of-funnel lead.
+              </p>
+              <table width="100%" cellpadding="8" cellspacing="0" style="border-collapse:collapse;">
+                <tr><td style="color:#666; font-size:13px; width:110px;">Name</td><td style="color:#222420; font-size:14px; font-weight:bold;">${lead.name}</td></tr>
+                <tr style="background:#FAF8F3;"><td style="color:#666; font-size:13px;">Mobile</td><td style="color:#222420; font-size:14px; font-weight:bold;">${lead.mobile}</td></tr>
+                <tr><td style="color:#666; font-size:13px;">Source</td><td style="color:#222420; font-size:14px;">Website Brochure Gate</td></tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>`;
+
+  return resend.emails.send({
+    from: 'Greenspace Realty <onboarding@resend.dev>', // TODO: Update once domain is verified
+    to: process.env.RESEND_TO_EMAIL!,
+    subject: `📥 Brochure Downloaded: ${lead.name}`,
     html,
   });
 }
