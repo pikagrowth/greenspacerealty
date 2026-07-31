@@ -73,7 +73,7 @@ export const Header = () => {
             <Link href="/" className="flex items-center gap-3 z-50 group">
               <div className="relative w-10 h-10 md:w-12 md:h-12 rounded-lg overflow-hidden shadow-sm group-hover:shadow-md transition-shadow">
                 <Image 
-                  src="/images/brand/logo-square.jpg" 
+                  src="/images/brand/logo-full.png" 
                   alt={`${BUSINESS_DETAILS.name} Logo`}
                   fill
                   className="object-cover"

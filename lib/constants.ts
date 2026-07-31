@@ -9,13 +9,13 @@ export const CLOUDINARY_URLS = {
 export const BUSINESS_DETAILS = {
   // ⚠️ DEVELOPER ACTION REQUIRED: Logo art says "Reality" — YOU MUST confirm spelling ('Realty' vs 'Reality') directly with Krishna before final launch. Do not guess.
   name: "Greenspace Realty", 
-  owner: "Krishna Patil",
+  owner: "Sonali Krishna Katale Patil",
   siteOffice: "Shravan Siddhant, Plot No. 224A, Old Panvel, Navi Mumbai, Panvel 410206",
   headOffice: "Shop No 7, Plot 48, Sector 4, Karanjade, Panvel, Maharashtra 410206",
   phone: "+91 92092 78867",
   email: "sales@greenspacerealty.com",
   tagline: "Building Trust, Creating Value",
-  mahaReraNumber: "[PENDING-FROM-CLIENT: MahaRERA Agent Number]",
+  mahaReraNumber: "A52000017772",
   inventory: {
     residential: 80,
     commercial: 2,

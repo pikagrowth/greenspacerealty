@@ -124,7 +124,7 @@ export const Footer = () => {
             className="flex items-center gap-2 text-sm text-gray-300 dark:text-gray-400 bg-white/5 hover:bg-white/10 dark:bg-black/20 dark:hover:bg-black/40 transition-colors px-4 py-2.5 rounded-lg border border-white/10 group"
           >
             {/* UPDATE REQUIRED: Replace 'A52XXXXXXX' with the client's actual MahaRERA Agent Number once provided */}
-            <span>MahaRERA Reg No: <strong className="text-white">{("mahaReraNumber" in BUSINESS_DETAILS) ? (BUSINESS_DETAILS as any).mahaReraNumber : "A52XXXXXXX"}</strong></span>
+            <span>MahaRERA Reg No: <strong className="text-white">{("mahaReraNumber" in BUSINESS_DETAILS) ? (BUSINESS_DETAILS as any).mahaReraNumber : "A52000017772"}</strong></span>
             <ExternalLink size={14} className="text-gray-400 group-hover:text-white transition-colors" />
           </a>
         </div>

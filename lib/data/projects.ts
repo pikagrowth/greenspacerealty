@@ -20,9 +20,9 @@ export const projects: Project[] = [
       "Exclusive sole-selling project by Greenspace Realty"
     ],
     images: [
-      "/images/projects/shravan-siddhant-1.jpg",
-      "/images/projects/shravan-siddhant-2.jpg",
-      "/images/projects/shravan-siddhant-3.jpg"
+      "/images/projects/shravan-siddhant-1.jpeg",
+      "/images/projects/shravan-siddhant-2.jpeg",
+      "/images/projects/shravan-siddhant-3.jpeg"
     ]
   },
   // Placeholders for other categories to demonstrate the filters in the UI
@@ -44,7 +44,7 @@ export const projects: Project[] = [
       "Rigorous title check completed by our team"
     ],
     images: [
-      "/images/projects/land-placeholder-1.jpg"
+      "/images/projects/land-placeholder-1.jpeg"
     ]
   }
 ];
