@@ -15,6 +15,12 @@ import {
   Maximize2
 } from "lucide-react";
 
+interface ProjectPageProps {
+  params: {
+    slug: string;
+  };
+}
+
 // ==========================================
 // DATA (Inlined for standalone execution)
 // ==========================================
@@ -52,7 +58,7 @@ const projectDatabase = {
   }
 };
 
-export default function ProjectDetailPage({ params }: { params: { slug: string } }) {
+export default function ProjectDetailsPage({ params }: ProjectPageProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formSuccess, setFormSuccess] = useState(false);
   
@@ -275,13 +281,13 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
               <div className="mb-16">
                 <div className="flex justify-between items-end mb-6">
                   <h2 className="text-2xl font-medium text-gray-900 dark:text-white tracking-tight">Gallery</h2>
-<Link href={`/projects/${slug}/gallery`} className="text-sm font-medium text-emerald-600 hover:text-emerald-700 transition-colors">
-  View All
-</Link>
+                  <Link href={`/projects/${params.slug}/gallery`} className="text-sm font-medium text-emerald-600 hover:text-emerald-700 transition-colors">
+                    View All
+                  </Link>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   {project.gallery.slice(1, 3).map((img, idx) => (
-                    <Link key={idx} href={`/projects/${project.slug}/gallery`} className="relative h-64 bg-gray-100 dark:bg-gray-900 rounded-lg overflow-hidden group">
+                    <Link key={idx} href={`/projects/${params.slug}/gallery`} className="relative h-64 bg-gray-100 dark:bg-gray-900 rounded-lg overflow-hidden group">
                       <Image src={img} alt={`Gallery ${idx + 1}`} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
                         <Maximize2 className="text-white opacity-0 group-hover:opacity-100 transition-opacity" size={24} />
