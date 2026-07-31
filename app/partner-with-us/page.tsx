@@ -63,7 +63,7 @@ export default function PartnerWithUsPage() {
           HERO SECTION (Using brand-primary)
           Fixed Text Contrast: Forced text-white
       ========================================== */}
-      <section className="relative w-full py-24 lg:py-32 bg-brand-primary dark:bg-[#0c100e] overflow-hidden flex items-center justify-center">
+      <section className="relative w-full py-10 lg:py-14 bg-brand-primary dark:bg-[#0c100e] overflow-hidden flex items-center justify-center">
         {/* Background Image with Deep Overlay */}
         <div className="absolute inset-0 z-0">
           <img 

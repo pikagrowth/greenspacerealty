@@ -41,7 +41,7 @@ export default function ProjectsPage() {
           PREMIUM HERO SECTION (Brand Primary Theme)
           Fixed Text Contrast: Forced text-white
       ========================================== */}
-      <section className="relative w-full py-10 lg:py-12 bg-brand-primary dark:bg-[#0c100e] overflow-hidden">
+      <section className="relative w-full py-10 lg:py-14 bg-brand-primary dark:bg-[#0c100e] overflow-hidden">
         {/* Abstract Background Elements */}
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-[url('/images/brand/pattern.png')] opacity-10 mix-blend-overlay pointer-events-none"></div>
