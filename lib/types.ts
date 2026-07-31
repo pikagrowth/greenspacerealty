@@ -34,6 +34,7 @@ export type Project = {
   description: string;
   highlights: string[];
   images: string[];
+  tags?: string[]; // <--- Add this line
 };
 
 export type Service = {
