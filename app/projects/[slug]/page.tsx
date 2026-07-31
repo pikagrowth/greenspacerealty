@@ -275,9 +275,9 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
               <div className="mb-16">
                 <div className="flex justify-between items-end mb-6">
                   <h2 className="text-2xl font-medium text-gray-900 dark:text-white tracking-tight">Gallery</h2>
-                  <Link href={`/projects/${project.slug}/gallery`} className="text-sm font-medium text-emerald-600 hover:text-emerald-700 transition-colors">
-                    View All
-                  </Link>
+<Link href={`/projects/${slug}/gallery`} className="text-sm font-medium text-emerald-600 hover:text-emerald-700 transition-colors">
+  View All
+</Link>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   {project.gallery.slice(1, 3).map((img, idx) => (
