@@ -135,12 +135,12 @@ export default function ProjectsPage() {
                     </div>
                   )}
                   
-                  <Image 
-                    src={project.image || "/images/brand/hero-poster.jpeg"} // Fallback image
-                    alt={project.title}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out"
-                  />
+<Image 
+  src={project.images?.[0] || "/images/brand/hero-poster.jpeg"} // Fallback image
+  alt={project.title}
+  fill
+  className="object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out"
+/>
                   {/* Gradient overlay for premium feel */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-80" />
                 </div>
