@@ -1,4 +1,3 @@
-// app/layout.tsx
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
@@ -71,7 +70,7 @@ export default function RootLayout({
         />
       </head>
       {/* Added dark mode base colors to the body utilizing brand variables */}
-      <body className={`${inter.variable} ${playfair.variable} font-body bg-brand-bg dark:bg-brand-bgDark text-brand-text dark:text-brand-textDark antialiased flex flex-col min-h-screen transition-colors duration-300`}>
+      <body className={`${inter.variable} ${playfair.variable} font-body bg-brand-bg dark:bg-brand-bgDark text-gray-900 dark:text-gray-100 antialiased flex flex-col min-h-screen transition-colors duration-300`}>
         <ThemeProvider>
           <JsonLd />
           <Header />
@@ -80,6 +79,8 @@ export default function RootLayout({
           </main>
           <Footer />
           <ChatWidget />
+          
+          {/* Global High-Conversion Popup Form */}
           <QuickPopupForm />
         </ThemeProvider>
       </body>

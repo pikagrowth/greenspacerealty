@@ -1,12 +1,10 @@
-// components/layout/Header.tsx
 "use client";
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { Menu, X, ChevronDown } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { Menu, X, ChevronDown, ArrowRight } from "lucide-react";
 import { BUSINESS_DETAILS } from "@/lib/constants";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 
@@ -18,7 +16,7 @@ export const Header = () => {
   const pathname = usePathname();
   const router = useRouter();
 
-  // Premium feature: Shrink header and increase shadow on scroll
+  // Premium feature: Shrink header, add glassmorphism, and increase shadow on scroll
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -51,7 +49,6 @@ export const Header = () => {
     { name: "Contact", href: "/contact" },
   ];
 
-  // Fix: Route explicitly to the contact page's enquire form to ensure it works globally
   const handleEnquireClick = () => {
     setIsMobileMenuOpen(false);
     router.push('/contact#enquire');
@@ -60,28 +57,28 @@ export const Header = () => {
   return (
     <>
       <header 
-        className={`fixed top-0 w-full z-50 transition-all duration-300 ease-in-out border-b ${
+        className={`fixed top-0 w-full z-50 transition-all duration-500 ease-in-out border-b ${
           isScrolled 
-            ? "bg-white/95 dark:bg-brand-bgDark/95 backdrop-blur-md shadow-md border-gray-200 dark:border-gray-800" 
-            : "bg-white/80 dark:bg-brand-bgDark/80 backdrop-blur-sm shadow-sm border-gray-100 dark:border-gray-800/50"
+            ? "bg-white/90 dark:bg-[#0c100e]/90 backdrop-blur-xl shadow-lg border-gray-200/50 dark:border-gray-800/50 py-2" 
+            : "bg-white/95 dark:bg-[#111412]/95 backdrop-blur-md shadow-sm border-transparent dark:border-transparent py-4"
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className={`flex justify-between items-center transition-all duration-300 ease-in-out ${isScrolled ? "h-16" : "h-20"}`}>
+          <div className="flex justify-between items-center transition-all duration-300 ease-in-out h-14">
             
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 z-50 group">
-              <div className="relative w-10 h-10 md:w-12 md:h-12 rounded-lg overflow-hidden shadow-sm group-hover:shadow-md transition-shadow">
+              <div className="relative w-10 h-10 md:w-12 md:h-12 rounded-xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-800 group-hover:scale-105 transition-transform duration-300 bg-white">
                 <Image 
                   src="/images/brand/logo-full.png" 
                   alt={`${BUSINESS_DETAILS.name} Logo`}
                   fill
-                  className="object-cover"
+                  className="object-cover p-1"
                 />
               </div>
               <div>
-                <h1 className="font-heading font-bold text-lg md:text-xl text-brand-primary dark:text-brand-primaryDark leading-tight transition-colors duration-300">
-                  Greenspace<br/>Realty
+                <h1 className="font-extrabold text-lg md:text-xl text-gray-900 dark:text-white leading-tight tracking-tight transition-colors duration-300 group-hover:text-brand-primary dark:group-hover:text-brand-accent">
+                  Greenspace<br/><span className="text-brand-primary dark:text-brand-accentDark font-medium">Realty</span>
                 </h1>
               </div>
             </Link>
@@ -97,10 +94,10 @@ export const Header = () => {
                       <>
                         <Link
                           href={link.href}
-                          className={`flex items-center gap-1 text-sm font-medium transition-colors h-full ${
+                          className={`flex items-center gap-1 text-sm font-bold transition-colors h-full ${
                             isActive 
-                              ? "text-brand-primary dark:text-brand-primaryDark" 
-                              : "text-gray-600 dark:text-gray-300 hover:text-brand-primary dark:hover:text-brand-primaryDark"
+                              ? "text-brand-primary dark:text-brand-accent" 
+                              : "text-gray-700 dark:text-gray-300 hover:text-brand-primary dark:hover:text-brand-accent"
                           }`}
                         >
                           {link.name}
@@ -108,18 +105,18 @@ export const Header = () => {
                         </Link>
                         
                         {/* Premium Dropdown with smooth slide-up animation */}
-                        <div className="absolute top-[calc(100%-0.5rem)] left-0 w-64 bg-white dark:bg-[#161917] border border-gray-100 dark:border-gray-800 shadow-2xl rounded-xl opacity-0 invisible translate-y-4 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out flex flex-col py-3 overflow-hidden">
+                        <div className="absolute top-[calc(100%+0.5rem)] left-1/2 -translate-x-1/2 w-64 bg-white/95 dark:bg-[#161917]/95 backdrop-blur-xl border border-gray-100 dark:border-gray-800 shadow-[0_20px_50px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)] rounded-2xl opacity-0 invisible translate-y-4 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out flex flex-col py-3 overflow-hidden">
                           <Link 
                             href={link.href}
-                            className="px-5 py-2.5 text-sm font-bold text-brand-primary dark:text-brand-primaryDark hover:bg-gray-50 dark:hover:bg-gray-800/50 border-b border-gray-50 dark:border-gray-800 transition-colors"
+                            className="px-6 py-3 text-sm font-extrabold text-brand-primary dark:text-brand-accent hover:bg-brand-primary/5 dark:hover:bg-brand-primaryDark/10 border-b border-gray-50 dark:border-gray-800/50 transition-colors flex items-center justify-between group/sub"
                           >
-                            Services Overview
+                            Services Overview <ArrowRight size={14} className="group-hover/sub:translate-x-1 transition-transform" />
                           </Link>
                           {link.subLinks.map((sub) => (
                             <Link
                               key={sub.name}
                               href={sub.href}
-                              className="px-5 py-2.5 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-brand-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
+                              className="px-6 py-2.5 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-brand-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
                             >
                               {sub.name}
                             </Link>
@@ -129,16 +126,16 @@ export const Header = () => {
                     ) : (
                       <Link 
                         href={link.href}
-                        className={`text-sm font-medium transition-colors h-full flex items-center relative ${
+                        className={`text-sm font-bold transition-colors h-full flex items-center relative ${
                           isActive 
-                            ? "text-brand-primary dark:text-brand-primaryDark" 
-                            : "text-gray-600 dark:text-gray-300 hover:text-brand-primary dark:hover:text-brand-primaryDark"
+                            ? "text-brand-primary dark:text-brand-accent" 
+                            : "text-gray-700 dark:text-gray-300 hover:text-brand-primary dark:hover:text-brand-accent"
                         }`}
                       >
                         {link.name}
-                        {/* Active Indicator Dot */}
+                        {/* Premium Active Indicator Dot */}
                         {isActive && (
-                          <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-brand-primary dark:bg-brand-primaryDark rounded-full" />
+                          <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-brand-primary dark:bg-brand-accent rounded-full animate-in zoom-in duration-300" />
                         )}
                       </Link>
                     )}
@@ -146,15 +143,15 @@ export const Header = () => {
                 );
               })}
               
-              <div className="flex items-center gap-4 ml-4 pl-4 border-l border-gray-200 dark:border-gray-800">
+              {/* Desktop Actions */}
+              <div className="flex items-center gap-4 ml-4 pl-6 border-l border-gray-200 dark:border-gray-800">
                 <ThemeToggle />
-                <Button 
-                  size="sm" 
+                <button 
                   onClick={handleEnquireClick}
-                  className="shadow-md hover:shadow-lg transition-shadow"
+                  className="px-6 py-2.5 bg-brand-primary hover:bg-brand-primary/90 text-white text-sm font-extrabold rounded-xl shadow-lg shadow-brand-primary/20 transition-all duration-300 hover:-translate-y-0.5"
                 >
                   Enquire Now
-                </Button>
+                </button>
               </div>
             </nav>
 
@@ -162,7 +159,7 @@ export const Header = () => {
             <div className="flex items-center gap-3 lg:hidden relative z-50">
               <ThemeToggle />
               <button 
-                className="p-2 text-gray-600 dark:text-gray-300 bg-gray-50 dark:bg-[#161917] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-800 transition-colors"
+                className="p-2 text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-[#161917] hover:bg-gray-200 dark:hover:bg-gray-800 rounded-xl border border-transparent transition-colors"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-label="Toggle menu"
               >
@@ -173,21 +170,21 @@ export const Header = () => {
         </div>
       </header>
 
-      {/* Mobile Menu Backdrop (Premium enhancement) */}
+      {/* Mobile Menu Backdrop */}
       <div 
-        className={`fixed inset-0 bg-black/40 backdrop-blur-sm z-40 lg:hidden transition-opacity duration-300 ${
+        className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden transition-opacity duration-300 ${
           isMobileMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setIsMobileMenuOpen(false)}
       />
 
-      {/* Mobile Nav Drawer */}
+      {/* Premium Mobile Nav Drawer */}
       <div 
-        className={`lg:hidden fixed top-0 right-0 bottom-0 w-[85vw] max-w-sm bg-white dark:bg-brand-bgDark z-50 shadow-2xl border-l border-gray-100 dark:border-gray-800 transition-transform duration-300 ease-out overflow-y-auto ${
+        className={`lg:hidden fixed top-0 right-0 bottom-0 w-[85vw] max-w-sm bg-white dark:bg-[#0c100e] z-50 shadow-[-20px_0_50px_rgba(0,0,0,0.3)] border-l border-gray-100 dark:border-gray-800/50 transition-transform duration-500 ease-out overflow-y-auto flex flex-col ${
           isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="flex flex-col pt-24 pb-8 px-6 gap-2 min-h-full">
+        <div className="flex flex-col pt-28 pb-8 px-6 gap-2 flex-grow">
           {navLinks.map((link) => {
             const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
 
@@ -197,16 +194,16 @@ export const Header = () => {
                   <>
                     <button
                       onClick={() => setIsMobileServicesOpen(!isMobileServicesOpen)}
-                      className={`flex items-center justify-between text-base font-semibold p-3 rounded-xl transition-colors ${
+                      className={`flex items-center justify-between text-base font-extrabold p-4 rounded-2xl transition-colors ${
                         isActive || isMobileServicesOpen
-                          ? "bg-brand-primary/5 dark:bg-brand-primaryDark/10 text-brand-primary dark:text-brand-primaryDark"
-                          : "text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-[#161917]"
+                          ? "bg-brand-primary/10 dark:bg-brand-primaryDark/20 text-brand-primary dark:text-brand-accent"
+                          : "text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-[#161917]"
                       }`}
                     >
                       {link.name}
                       <ChevronDown 
                         size={18} 
-                        className={`transition-transform duration-300 ${isMobileServicesOpen ? "rotate-180 text-brand-primary dark:text-brand-primaryDark" : "text-gray-400"}`} 
+                        className={`transition-transform duration-300 ${isMobileServicesOpen ? "rotate-180 text-brand-primary dark:text-brand-accent" : "text-gray-400"}`} 
                       />
                     </button>
                     <div 
@@ -214,10 +211,10 @@ export const Header = () => {
                         isMobileServicesOpen ? "max-h-80 opacity-100 mt-2" : "max-h-0 opacity-0"
                       }`}
                     >
-                      <div className="pl-4 flex flex-col gap-1 border-l-2 border-brand-primary/20 dark:border-brand-primaryDark/20 ml-5 py-1">
+                      <div className="pl-4 flex flex-col gap-1 border-l-2 border-brand-primary/20 dark:border-gray-800 ml-6 py-2">
                         <Link 
                           href={link.href}
-                          className="text-sm font-bold text-brand-primary dark:text-brand-primaryDark py-2 px-4 rounded-lg hover:bg-brand-primary/5 dark:hover:bg-brand-primaryDark/10 transition-colors"
+                          className="text-sm font-extrabold text-brand-primary dark:text-brand-accent py-3 px-4 rounded-xl hover:bg-brand-primary/5 dark:hover:bg-white/5 transition-colors"
                         >
                           Services Overview
                         </Link>
@@ -225,7 +222,7 @@ export const Header = () => {
                           <Link 
                             key={sub.name}
                             href={sub.href}
-                            className="text-sm font-medium text-gray-600 dark:text-gray-400 py-2 px-4 rounded-lg hover:bg-gray-50 dark:hover:bg-[#161917] hover:text-brand-primary dark:hover:text-brand-primaryDark transition-colors"
+                            className="text-sm font-medium text-gray-600 dark:text-gray-400 py-3 px-4 rounded-xl hover:bg-gray-50 dark:hover:bg-[#161917] hover:text-gray-900 dark:hover:text-white transition-colors"
                           >
                             {sub.name}
                           </Link>
@@ -236,13 +233,14 @@ export const Header = () => {
                 ) : (
                   <Link 
                     href={link.href}
-                    className={`text-base font-semibold p-3 rounded-xl transition-colors ${
+                    className={`text-base font-extrabold p-4 rounded-2xl transition-colors flex items-center justify-between group ${
                       isActive 
-                        ? "bg-brand-primary/5 dark:bg-brand-primaryDark/10 text-brand-primary dark:text-brand-primaryDark" 
-                        : "text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-[#161917]"
+                        ? "bg-brand-primary/10 dark:bg-brand-primaryDark/20 text-brand-primary dark:text-brand-accent" 
+                        : "text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-[#161917]"
                     }`}
                   >
                     {link.name}
+                    {isActive && <ArrowRight size={16} className="text-brand-primary dark:text-brand-accent" />}
                   </Link>
                 )}
               </div>
@@ -250,12 +248,12 @@ export const Header = () => {
           })}
           
           <div className="mt-auto pt-8">
-            <Button 
-              className="w-full py-4 text-base shadow-lg" 
+            <button 
+              className="w-full py-4 bg-brand-primary text-white font-extrabold rounded-xl shadow-lg shadow-brand-primary/20 flex items-center justify-center gap-2" 
               onClick={handleEnquireClick}
             >
-              Enquire Now
-            </Button>
+              Enquire Now <ArrowRight size={18} />
+            </button>
           </div>
         </div>
       </div>

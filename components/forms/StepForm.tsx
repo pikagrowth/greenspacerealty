@@ -1,10 +1,7 @@
-// components/forms/StepForm.tsx
 "use client";
 
 import React, { useState } from "react";
-import { ArrowRight, ArrowLeft, Home, Wallet, TrendingUp, CheckCircle2 } from "lucide-react";
-import { Input } from "@/components/ui/Input";
-import { Button } from "@/components/ui/Button";
+import { ArrowRight, ArrowLeft, Home, Wallet, TrendingUp, CheckCircle2, Building2 } from "lucide-react";
 
 export const StepForm = () => {
   const [step, setStep] = useState(1);
@@ -51,220 +48,229 @@ export const StepForm = () => {
 
   if (isSuccess) {
     return (
-      <div className="bg-white dark:bg-[#161917] p-8 md:p-12 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-800 text-center animate-in fade-in zoom-in duration-500 h-full flex flex-col items-center justify-center min-h-[400px] transition-colors">
-        <div className="w-20 h-20 bg-brand-success/10 dark:bg-brand-successDark/20 text-brand-success dark:text-brand-successDark rounded-full flex items-center justify-center mx-auto mb-6">
-          <CheckCircle2 size={40} />
+      <div className="bg-white dark:bg-[#111412] p-10 md:p-16 rounded-[2.5rem] shadow-2xl border border-gray-100 dark:border-gray-800 text-center animate-in zoom-in-95 duration-500 h-full flex flex-col items-center justify-center min-h-[500px] transition-colors">
+        <div className="w-24 h-24 bg-brand-success/10 dark:bg-brand-successDark/20 text-brand-success dark:text-brand-successDark rounded-full flex items-center justify-center mx-auto mb-8 shadow-inner">
+          <CheckCircle2 size={48} />
         </div>
-        <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-4 transition-colors">Request Received</h3>
-        <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed transition-colors">
-          Thank you for reaching out. Our property advisor has received your details and is curating a list of options that match your exact goals. We will be in touch shortly.
+        <h3 className="text-4xl font-extrabold text-gray-900 dark:text-white mb-4 tracking-tight">Request Received</h3>
+        <p className="text-gray-500 dark:text-gray-400 text-lg leading-relaxed font-light max-w-md mx-auto">
+          Thank you for reaching out. Our property advisor is curating a list of options that match your exact goals and will be in touch shortly.
         </p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white dark:bg-[#161917] p-8 md:p-10 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-800 transition-colors duration-300">
+    <div className="bg-white dark:bg-[#111412] p-8 md:p-12 rounded-[2.5rem] shadow-2xl border border-gray-100 dark:border-gray-800 transition-colors duration-300 min-h-[500px] flex flex-col justify-center relative overflow-hidden">
       
-      {/* Progress Indicator */}
-      <div className="mb-8">
-        <div className="flex justify-between items-center mb-2">
-          <span className="text-xs font-bold text-brand-primary dark:text-brand-primaryDark uppercase tracking-wider transition-colors">
-            Step {step} of 3
-          </span>
-          <span className="text-xs font-medium text-gray-400 dark:text-gray-500 transition-colors">
-            {step === 1 ? "Intent" : step === 2 ? "Preferences" : "Contact"}
-          </span>
-        </div>
-        <div className="w-full bg-gray-100 dark:bg-gray-800 h-2 rounded-full overflow-hidden transition-colors">
-          <div 
-            className="bg-brand-primary dark:bg-brand-primaryDark h-full transition-all duration-500 ease-in-out"
-            style={{ width: `${(step / 3) * 100}%` }}
-          ></div>
-        </div>
-      </div>
+      {/* Decorative Background Glow */}
+      <div className="absolute top-0 right-0 w-64 h-64 bg-brand-primary/5 rounded-bl-full pointer-events-none -z-0"></div>
 
-      <form onSubmit={step === 3 ? handleSubmit : (e) => { e.preventDefault(); nextStep(); }}>
-        
-        {/* STEP 1: ENQUIRY TYPE */}
-        {step === 1 && (
-          <div className="space-y-6 animate-in slide-in-from-right-4 fade-in duration-300">
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 transition-colors">How can we help you?</h3>
-              <p className="text-gray-600 dark:text-gray-400 text-sm mb-6 transition-colors">Select the option that best describes your real estate goal.</p>
-            </div>
-            
-            <div className="grid grid-cols-1 gap-4">
-              {[
-                { id: "buy", title: "Buy a Property", icon: <Home size={20} />, desc: "Find a primary residence or weekend home" },
-                { id: "invest", title: "Investment", icon: <TrendingUp size={20} />, desc: "Secure a high-yield asset for your portfolio" },
-                { id: "sell", title: "Sell a Property", icon: <Wallet size={20} />, desc: "List a property or plot for sale" }
-              ].map((opt) => (
-                <label 
-                  key={opt.id} 
-                  className={`flex items-start p-4 border rounded-xl cursor-pointer transition-all duration-300 ${
-                    formData.enquiryType === opt.id 
-                      ? "border-brand-primary dark:border-brand-primaryDark bg-brand-primary/5 dark:bg-brand-primaryDark/10 shadow-sm" 
-                      : "border-gray-200 dark:border-gray-800 hover:border-brand-primary/50 dark:hover:border-brand-primaryDark/50 bg-white dark:bg-[#161917]"
-                  }`}
-                >
-                  <input 
-                    type="radio" 
-                    name="enquiryType" 
-                    value={opt.id} 
-                    className="mt-1 sr-only"
-                    checked={formData.enquiryType === opt.id}
-                    onChange={(e) => setFormData({ ...formData, enquiryType: e.target.value })}
-                    required
-                  />
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center mr-4 shrink-0 transition-colors ${
-                    formData.enquiryType === opt.id ? "bg-brand-primary dark:bg-brand-primaryDark text-white dark:text-brand-bgDark" : "bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400"
-                  }`}>
-                    {opt.icon}
-                  </div>
-                  <div>
-                    <h4 className={`font-bold text-base transition-colors ${formData.enquiryType === opt.id ? "text-brand-primary dark:text-brand-primaryDark" : "text-gray-900 dark:text-gray-200"}`}>
-                      {opt.title}
-                    </h4>
-                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 transition-colors">{opt.desc}</p>
-                  </div>
-                </label>
-              ))}
-            </div>
-            
-            <div className="pt-4">
-              <Button type="button" onClick={nextStep} disabled={!formData.enquiryType} className="w-full py-4">
-                Continue <ArrowRight size={18} className="ml-2" />
-              </Button>
-            </div>
+      <div className="relative z-10">
+        {/* Progress Indicator */}
+        <div className="mb-10">
+          <div className="flex justify-between items-center mb-3">
+            <span className="text-xs font-bold text-brand-primary dark:text-brand-primaryDark uppercase tracking-widest">
+              Step 0{step} / 03
+            </span>
+            <span className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest">
+              {step === 1 ? "Your Goal" : step === 2 ? "Preferences" : "Contact Details"}
+            </span>
           </div>
-        )}
-
-        {/* STEP 2: PROPERTY REQUIREMENTS (Psychology Update: Framed as helpful filters) */}
-        {step === 2 && (
-          <div className="space-y-6 animate-in slide-in-from-right-4 fade-in duration-300">
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 transition-colors">Help us find your perfect match</h3>
-              <p className="text-gray-600 dark:text-gray-400 text-sm mb-6 transition-colors">We use these details to filter out the noise and only share properties that fit your actual criteria.</p>
-            </div>
-            
-            <div className="space-y-5">
-              <div className="space-y-1">
-                <label className="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider transition-colors">What are you looking for? *</label>
-                <select 
-                  required
-                  value={formData.unitType}
-                  onChange={(e) => setFormData({ ...formData, unitType: e.target.value })}
-                  className="w-full rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#111412] px-4 py-3 text-gray-900 dark:text-gray-100 focus:border-brand-primary dark:focus:border-brand-primaryDark focus:ring-1 focus:ring-brand-primary/50 dark:focus:ring-brand-primaryDark/50 focus:outline-none transition-colors appearance-none"
-                >
-                  <option value="" disabled>Select property type</option>
-                  <option value="1 BHK">1 BHK Apartment</option>
-                  <option value="2 BHK">2 BHK Apartment</option>
-                  <option value="3 BHK+">3 BHK+ Apartment</option>
-                  <option value="Villa / Bungalow">Villa / Independent House</option>
-                  <option value="Land / Plot">Land / Plot</option>
-                  <option value="Commercial">Commercial (Shop / Office)</option>
-                </select>
-              </div>
-
-              <div className="space-y-1">
-                <label className="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider transition-colors">Comfortable Investment Range *</label>
-                <select 
-                  required
-                  value={formData.budget}
-                  onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                  className="w-full rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#111412] px-4 py-3 text-gray-900 dark:text-gray-100 focus:border-brand-primary dark:focus:border-brand-primaryDark focus:ring-1 focus:ring-brand-primary/50 dark:focus:ring-brand-primaryDark/50 focus:outline-none transition-colors appearance-none"
-                >
-                  <option value="" disabled>Select your budget</option>
-                  <option value="Under 50 Lakhs">Under 50 Lakhs</option>
-                  <option value="50 Lakhs - 1 Crore">50 Lakhs - 1 Crore</option>
-                  <option value="1 Crore - 2 Crores">1 Crore - 2 Crores</option>
-                  <option value="2 Crores+">2 Crores+</option>
-                </select>
-              </div>
-
-              <div className="space-y-1">
-                <label className="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider transition-colors">When do you need it by? *</label>
-                <select 
-                  required
-                  value={formData.timeline}
-                  onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
-                  className="w-full rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#111412] px-4 py-3 text-gray-900 dark:text-gray-100 focus:border-brand-primary dark:focus:border-brand-primaryDark focus:ring-1 focus:ring-brand-primary/50 dark:focus:ring-brand-primaryDark/50 focus:outline-none transition-colors appearance-none"
-                >
-                  <option value="" disabled>Select timeframe</option>
-                  <option value="Immediate (Hot)">Immediate (Ready to move/invest now)</option>
-                  <option value="1-3 Months">1 to 3 Months</option>
-                  <option value="3-6 Months">3 to 6 Months</option>
-                  <option value="Just Exploring">Just exploring options (No strict timeline)</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="pt-4 flex gap-3">
-              <Button type="button" onClick={prevStep} variant="outline" className="px-6 border-gray-200 dark:border-gray-700">
-                <ArrowLeft size={18} />
-              </Button>
-              <Button type="button" onClick={nextStep} disabled={!formData.unitType || !formData.budget || !formData.timeline} className="flex-1 py-4">
-                See Matching Properties <ArrowRight size={18} className="ml-2" />
-              </Button>
-            </div>
+          <div className="w-full bg-gray-100 dark:bg-gray-800 h-1.5 rounded-full overflow-hidden">
+            <div 
+              className="bg-brand-primary dark:bg-brand-primaryDark h-full transition-all duration-700 ease-out"
+              style={{ width: `${(step / 3) * 100}%` }}
+            ></div>
           </div>
-        )}
+        </div>
 
-        {/* STEP 3: CONTACT INFO */}
-        {step === 3 && (
-          <div className="space-y-6 animate-in slide-in-from-right-4 fade-in duration-300">
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 transition-colors">Almost there!</h3>
-              <p className="text-gray-600 dark:text-gray-400 text-sm mb-6 transition-colors">Where should we send your personalized property list?</p>
-            </div>
-            
-            <div className="space-y-4">
-              <div className="space-y-1">
-                <Input
-                  label="Your Name *"
-                  required
-                  placeholder="e.g. Rahul Sharma"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                />
+        <form onSubmit={step === 3 ? handleSubmit : (e) => { e.preventDefault(); nextStep(); }}>
+          
+          {/* STEP 1: ENQUIRY TYPE */}
+          {step === 1 && (
+            <div className="space-y-8 animate-in slide-in-from-right-8 fade-in duration-500">
+              <div>
+                <h3 className="text-3xl font-extrabold text-gray-900 dark:text-white mb-2 tracking-tight">How can we help you?</h3>
+                <p className="text-gray-500 dark:text-gray-400 text-base font-light">Select the option that best describes your real estate goal.</p>
               </div>
               
-              <div className="space-y-1">
-                <Input
-                  label="Mobile Number *"
-                  required
-                  type="tel"
-                  pattern="[0-9]{10}"
-                  title="Please enter a valid 10-digit mobile number"
-                  placeholder="10-digit number"
-                  value={formData.mobile}
-                  onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
-                />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {[
+                  { id: "buy", title: "Buy a Home", icon: <Home size={24} />, desc: "Primary or 2nd home" },
+                  { id: "invest", title: "Land Investment", icon: <TrendingUp size={24} />, desc: "High-yield assets" },
+                  { id: "sell", title: "Sell Property", icon: <Wallet size={24} />, desc: "List your property" },
+                  { id: "builder", title: "Builder Mandate", icon: <Building2 size={24} />, desc: "B2B Sales Engine" }
+                ].map((opt) => (
+                  <label 
+                    key={opt.id} 
+                    className={`flex flex-col items-start p-6 rounded-2xl border-2 cursor-pointer transition-all duration-300 group ${
+                      formData.enquiryType === opt.id 
+                        ? "border-brand-primary dark:border-brand-primaryDark bg-brand-primary/5 dark:bg-brand-primaryDark/10 shadow-md" 
+                        : "border-gray-100 dark:border-gray-800 hover:border-brand-primary/40 bg-gray-50 dark:bg-[#161917]"
+                    }`}
+                  >
+                    <input 
+                      type="radio" 
+                      name="enquiryType" 
+                      value={opt.id} 
+                      className="sr-only"
+                      checked={formData.enquiryType === opt.id}
+                      onChange={(e) => setFormData({ ...formData, enquiryType: e.target.value })}
+                      required
+                    />
+                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-colors ${
+                      formData.enquiryType === opt.id ? "bg-brand-primary text-white" : "bg-white dark:bg-[#111] text-gray-400 border border-gray-200 dark:border-gray-700"
+                    }`}>
+                      {opt.icon}
+                    </div>
+                    <div>
+                      <h4 className={`font-extrabold text-lg mb-1 transition-colors ${formData.enquiryType === opt.id ? "text-brand-primary dark:text-brand-primaryDark" : "text-gray-900 dark:text-gray-100"}`}>
+                        {opt.title}
+                      </h4>
+                      <p className="text-xs text-gray-500 font-medium">{opt.desc}</p>
+                    </div>
+                  </label>
+                ))}
               </div>
-
-              <div className="space-y-1">
-                <Input
-                  label="Email Address"
-                  type="email"
-                  placeholder="rahul@example.com"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                />
+              
+              <div className="pt-2">
+                <button type="button" onClick={nextStep} disabled={!formData.enquiryType} className="w-full py-4 bg-brand-primary hover:bg-brand-primary/90 text-white font-extrabold rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-brand-primary/20 flex items-center justify-center text-lg">
+                  Continue <ArrowRight size={20} className="ml-2" />
+                </button>
               </div>
             </div>
+          )}
 
-            <div className="pt-4 flex gap-3">
-              <Button type="button" onClick={prevStep} variant="outline" className="px-6 border-gray-200 dark:border-gray-700">
-                <ArrowLeft size={18} />
-              </Button>
-              <Button type="submit" isLoading={isSubmitting} className="flex-1 py-4">
-                Get Personalized Options
-              </Button>
+          {/* STEP 2: PROPERTY REQUIREMENTS */}
+          {step === 2 && (
+            <div className="space-y-8 animate-in slide-in-from-right-8 fade-in duration-500">
+              <div>
+                <h3 className="text-3xl font-extrabold text-gray-900 dark:text-white mb-2 tracking-tight">Tell us your criteria</h3>
+                <p className="text-gray-500 dark:text-gray-400 text-base font-light">We use this to filter out the noise and find exact matches.</p>
+              </div>
+              
+              <div className="space-y-5">
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">Property Type *</label>
+                  <select 
+                    required
+                    value={formData.unitType}
+                    onChange={(e) => setFormData({ ...formData, unitType: e.target.value })}
+                    className="w-full rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-[#161917] px-5 py-4 text-gray-900 dark:text-white font-semibold focus:border-brand-primary focus:ring-2 focus:ring-brand-primary outline-none transition-all appearance-none cursor-pointer"
+                  >
+                    <option value="" disabled>Select property type</option>
+                    <option value="1 BHK">1 BHK Apartment</option>
+                    <option value="2 BHK">2 BHK Apartment</option>
+                    <option value="3 BHK+">3 BHK+ Apartment</option>
+                    <option value="Villa / Bungalow">Villa / Independent House</option>
+                    <option value="Land / Plot">Land / Plot</option>
+                    <option value="Commercial">Commercial (Shop / Office)</option>
+                  </select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">Budget Range *</label>
+                  <select 
+                    required
+                    value={formData.budget}
+                    onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
+                    className="w-full rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-[#161917] px-5 py-4 text-gray-900 dark:text-white font-semibold focus:border-brand-primary focus:ring-2 focus:ring-brand-primary outline-none transition-all appearance-none cursor-pointer"
+                  >
+                    <option value="" disabled>Select your budget</option>
+                    <option value="Under 50 Lakhs">Under 50 Lakhs</option>
+                    <option value="50 Lakhs - 1 Crore">50 Lakhs - 1 Crore</option>
+                    <option value="1 Crore - 2 Crores">1 Crore - 2 Crores</option>
+                    <option value="2 Crores+">2 Crores+</option>
+                  </select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">Timeline *</label>
+                  <select 
+                    required
+                    value={formData.timeline}
+                    onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
+                    className="w-full rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-[#161917] px-5 py-4 text-gray-900 dark:text-white font-semibold focus:border-brand-primary focus:ring-2 focus:ring-brand-primary outline-none transition-all appearance-none cursor-pointer"
+                  >
+                    <option value="" disabled>When do you want to close?</option>
+                    <option value="Immediate (Hot)">Immediate (Ready to invest now)</option>
+                    <option value="1-3 Months">1 to 3 Months</option>
+                    <option value="3-6 Months">3 to 6 Months</option>
+                    <option value="Just Exploring">Just exploring options</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="pt-2 flex gap-4">
+                <button type="button" onClick={prevStep} className="px-6 py-4 rounded-xl border-2 border-gray-100 dark:border-gray-800 text-gray-500 hover:bg-gray-50 dark:hover:bg-[#161917] hover:text-brand-primary transition-all flex items-center justify-center">
+                  <ArrowLeft size={20} />
+                </button>
+                <button type="button" onClick={nextStep} disabled={!formData.unitType || !formData.budget || !formData.timeline} className="flex-1 py-4 bg-brand-primary hover:bg-brand-primary/90 text-white font-extrabold rounded-xl transition-all duration-300 disabled:opacity-50 shadow-lg shadow-brand-primary/20 flex items-center justify-center text-lg">
+                  Next Step <ArrowRight size={20} className="ml-2" />
+                </button>
+              </div>
             </div>
-          </div>
-        )}
-      </form>
+          )}
+
+          {/* STEP 3: CONTACT INFO */}
+          {step === 3 && (
+            <div className="space-y-8 animate-in slide-in-from-right-8 fade-in duration-500">
+              <div>
+                <h3 className="text-3xl font-extrabold text-gray-900 dark:text-white mb-2 tracking-tight">Where to send details?</h3>
+                <p className="text-gray-500 dark:text-gray-400 text-base font-light">Your information is strictly confidential. No spam.</p>
+              </div>
+              
+              <div className="space-y-5">
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">Your Full Name *</label>
+                  <input 
+                    required
+                    placeholder="e.g. Rahul Sharma"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className="w-full px-5 py-4 bg-gray-50 dark:bg-[#161917] border border-gray-200 dark:border-gray-800 rounded-xl focus:ring-2 focus:ring-brand-primary outline-none transition-all text-gray-900 dark:text-white font-semibold placeholder-gray-400" 
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">Mobile Number *</label>
+                  <input 
+                    required
+                    type="tel"
+                    pattern="[0-9]{10}"
+                    title="Please enter a valid 10-digit mobile number"
+                    placeholder="10-digit number"
+                    value={formData.mobile}
+                    onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
+                    className="w-full px-5 py-4 bg-gray-50 dark:bg-[#161917] border border-gray-200 dark:border-gray-800 rounded-xl focus:ring-2 focus:ring-brand-primary outline-none transition-all text-gray-900 dark:text-white font-semibold placeholder-gray-400" 
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">Email Address</label>
+                  <input 
+                    type="email"
+                    placeholder="rahul@example.com"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className="w-full px-5 py-4 bg-gray-50 dark:bg-[#161917] border border-gray-200 dark:border-gray-800 rounded-xl focus:ring-2 focus:ring-brand-primary outline-none transition-all text-gray-900 dark:text-white font-semibold placeholder-gray-400" 
+                  />
+                </div>
+              </div>
+
+              <div className="pt-2 flex gap-4">
+                <button type="button" onClick={prevStep} className="px-6 py-4 rounded-xl border-2 border-gray-100 dark:border-gray-800 text-gray-500 hover:bg-gray-50 dark:hover:bg-[#161917] hover:text-brand-primary transition-all flex items-center justify-center">
+                  <ArrowLeft size={20} />
+                </button>
+                <button type="submit" disabled={isSubmitting} className="flex-1 py-4 bg-brand-primary hover:bg-brand-primary/90 text-white font-extrabold rounded-xl transition-all duration-300 shadow-xl shadow-brand-primary/30 flex items-center justify-center disabled:opacity-70 text-lg">
+                  {isSubmitting ? "Processing..." : "View Matches Now"}
+                </button>
+              </div>
+            </div>
+          )}
+        </form>
+      </div>
     </div>
   );
 };

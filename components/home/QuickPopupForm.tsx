@@ -1,10 +1,7 @@
-// components/home/QuickPopupForm.tsx
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { X, CheckCircle2 } from "lucide-react";
-import { Input } from "@/components/ui/Input";
-import { Button } from "@/components/ui/Button";
+import { X, CheckCircle2, Flame, Lock, ArrowRight } from "lucide-react";
 
 export const QuickPopupForm = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,13 +11,15 @@ export const QuickPopupForm = () => {
   const [formData, setFormData] = useState({ name: "", mobile: "" });
 
   useEffect(() => {
-    // Show after 8 seconds if not previously dismissed
+    // Show after 5 seconds instead of 8 for better conversion & testing
     const timer = setTimeout(() => {
-      const dismissed = localStorage.getItem("greenspace_popup_dismissed");
+      // Changed to sessionStorage so it resets when you close the browser tab.
+      // This prevents the popup from being permanently hidden forever during testing.
+      const dismissed = sessionStorage.getItem("greenspace_popup_dismissed");
       if (!dismissed) {
         setIsOpen(true);
       }
-    }, 8000);
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -28,7 +27,8 @@ export const QuickPopupForm = () => {
   const handleClose = () => {
     setIsOpen(false);
     setHasDismissed(true);
-    localStorage.setItem("greenspace_popup_dismissed", "true");
+    // Use sessionStorage so the user sees it again on their next fresh visit
+    sessionStorage.setItem("greenspace_popup_dismissed", "true");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -61,44 +61,59 @@ export const QuickPopupForm = () => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed bottom-24 right-4 md:bottom-28 md:right-6 z-[100] pointer-events-auto w-[calc(100%-2rem)] md:w-80 animate-in slide-in-from-bottom-10 fade-in duration-500 drop-shadow-2xl">
-      <div className="bg-white dark:bg-[#161917] rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800 overflow-hidden relative pointer-events-auto flex flex-col transition-colors duration-300">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-300">
+      
+      {/* High-Conversion Centered Modal */}
+      <div className="bg-white dark:bg-[#111412] w-full max-w-md rounded-3xl shadow-[0_0_50px_rgba(0,0,0,0.5)] border border-brand-primary/30 overflow-hidden relative flex flex-col transition-colors duration-300 animate-in zoom-in-95 duration-300">
         
-        {/* Improved Close Button hit area and z-index */}
+        {/* Subtle Close Button (De-emphasized to force focus on the form) */}
         <button 
           onClick={handleClose}
           type="button"
-          className="absolute top-3 right-3 text-white/80 hover:text-white transition-colors z-50 cursor-pointer p-1.5 bg-black/10 hover:bg-black/20 rounded-full"
+          className="absolute top-4 right-4 text-gray-400 hover:text-gray-900 dark:hover:text-white bg-gray-100 hover:bg-gray-200 dark:bg-[#161917] dark:hover:bg-gray-800 transition-colors z-50 p-2 rounded-full cursor-pointer"
           aria-label="Close popup"
         >
-          <X size={18} />
+          <X size={16} strokeWidth={3} />
         </button>
-        
-        <div className="p-5 bg-brand-primary dark:bg-brand-primaryDark text-white relative z-10 pointer-events-none transition-colors duration-300">
-          <h3 className="font-heading font-bold text-lg mb-1 pr-8">Looking for a property or expert advice?</h3>
-          <p className="text-xs text-brand-accent dark:text-brand-bgDark font-medium">Drop your number for a quick, no-pressure chat.</p>
+
+        {/* Aggressive / High-Conversion Header */}
+        <div className="px-8 pt-10 pb-6 relative z-10 bg-brand-bg dark:bg-[#161917] text-center border-b border-gray-100 dark:border-gray-800">
+          <div className="inline-flex items-center justify-center gap-1.5 px-4 py-1.5 bg-brand-alert/10 text-brand-alert rounded-full text-[11px] font-extrabold uppercase tracking-widest mb-6 animate-pulse border border-brand-alert/20">
+            <Flame size={14} /> High Demand
+          </div>
+          
+          <h3 className="font-black text-gray-900 dark:text-white text-3xl leading-tight mb-3 tracking-tight">
+            Unlock Secret Pricing & Floor Plans
+          </h3>
+          
+          <p className="text-sm text-gray-600 dark:text-gray-400 font-medium leading-relaxed">
+            The best units never make it to the public market. Register now for <span className="text-brand-primary dark:text-brand-primaryDark font-bold">priority allocation</span> and <span className="text-brand-primary dark:text-brand-primaryDark font-bold">direct developer deals</span>.
+          </p>
         </div>
 
-        <div className="p-5 relative z-20 bg-white dark:bg-[#161917] pointer-events-auto transition-colors duration-300">
+        {/* Form Section */}
+        <div className="px-8 py-8 relative z-20 bg-white dark:bg-[#111412]">
           {isSuccess ? (
-            <div className="text-center py-4">
-              <div className="w-12 h-12 bg-brand-success/10 dark:bg-brand-successDark/20 text-brand-success dark:text-brand-successDark rounded-full flex items-center justify-center mx-auto mb-3 transition-colors">
-                <CheckCircle2 size={24} />
+            <div className="text-center py-6 animate-in zoom-in duration-300">
+              <div className="w-16 h-16 bg-brand-success/10 text-brand-success rounded-full flex items-center justify-center mx-auto mb-4">
+                <CheckCircle2 size={32} />
               </div>
-              <p className="font-medium text-gray-900 dark:text-white transition-colors">Got it! We'll call you shortly.</p>
+              <h4 className="font-extrabold text-gray-900 dark:text-white text-xl mb-2">Access Granted!</h4>
+              <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">Our Senior Advisor is reviewing your slot and will call you instantly.</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="pointer-events-auto">
-                <Input
-                  placeholder="Your Name"
+              <div>
+                <input
+                  placeholder="Your Full Name"
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="w-full px-5 py-4 bg-gray-50 dark:bg-[#161917] border border-gray-200 dark:border-gray-800 rounded-xl focus:ring-2 focus:ring-brand-primary outline-none transition-all text-gray-900 dark:text-white font-semibold text-base placeholder-gray-400"
                 />
               </div>
-              <div className="pointer-events-auto">
-                <Input
+              <div>
+                <input
                   placeholder="Mobile Number"
                   type="tel"
                   required
@@ -106,14 +121,27 @@ export const QuickPopupForm = () => {
                   title="Please enter a valid 10-digit mobile number"
                   value={formData.mobile}
                   onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
+                  className="w-full px-5 py-4 bg-gray-50 dark:bg-[#161917] border border-gray-200 dark:border-gray-800 rounded-xl focus:ring-2 focus:ring-brand-primary outline-none transition-all text-gray-900 dark:text-white font-semibold text-base placeholder-gray-400"
                 />
               </div>
-              <Button type="submit" className="w-full text-sm py-2.5 pointer-events-auto cursor-pointer" isLoading={isSubmitting}>
-                Get a Callback in 30 Mins
-              </Button>
+              <button 
+                type="submit" 
+                disabled={isSubmitting}
+                className="w-full py-4 mt-2 bg-brand-primary hover:bg-brand-primary/90 text-white font-black rounded-xl transition-all duration-300 shadow-xl shadow-brand-primary/30 flex items-center justify-center disabled:opacity-70 text-lg group cursor-pointer"
+              >
+                {isSubmitting ? "Securing Access..." : (
+                  <>Claim Priority Access <ArrowRight size={20} className="ml-2 group-hover:translate-x-1 transition-transform" /></>
+                )}
+              </button>
+              
+              {/* Trust Microcopy */}
+              <div className="flex items-center justify-center gap-1.5 mt-4 text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest">
+                <Lock size={12} /> 100% Secure. Zero Spam.
+              </div>
             </form>
           )}
         </div>
+
       </div>
     </div>
   );

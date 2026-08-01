@@ -1,4 +1,3 @@
-// components/home/AudienceSplit.tsx
 "use client";
 
 import React from "react";
@@ -21,62 +20,83 @@ export function AudienceSplit() {
           className="mb-16"
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* B2C Card */}
-          <div className="bg-white dark:bg-[#161917] rounded-3xl p-8 md:p-12 shadow-soft border border-gray-100 dark:border-gray-800 flex flex-col items-start transition-all hover:-translate-y-1 duration-300 group">
-            <div className="w-16 h-16 bg-brand-success/10 dark:bg-brand-successDark/20 rounded-2xl flex items-center justify-center mb-8 transition-colors">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+          
+          {/* B2C Card - Premium Light/Dark Theme */}
+          <div className="bg-white dark:bg-[#111412] rounded-3xl p-8 md:p-12 shadow-xl border border-gray-200 dark:border-gray-800 flex flex-col items-start transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl group relative overflow-hidden">
+            {/* Decorative Corner Glow */}
+            <div className="absolute top-0 right-0 w-40 h-40 bg-brand-success/5 dark:bg-brand-successDark/5 rounded-bl-[100px] transition-transform duration-500 group-hover:scale-110"></div>
+            
+            <div className="w-16 h-16 bg-gray-50 dark:bg-[#161917] rounded-2xl flex items-center justify-center mb-8 border border-gray-100 dark:border-gray-800 shadow-sm relative z-10 transition-colors">
               <Home className="w-8 h-8 text-brand-success dark:text-brand-successDark transition-colors" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 transition-colors">
+            
+            <h3 className="text-3xl font-extrabold text-gray-900 dark:text-white mb-4 relative z-10 transition-colors tracking-tight">
               For Home Buyers & Investors
             </h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed flex-1 transition-colors">
+            
+            <p className="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed flex-1 relative z-10 transition-colors font-light text-lg">
               Skip the clutter. Access a curated portfolio of verified resale homes, premium weekend getaways, and high-yield land parcels in Navi Mumbai's fastest-growing micro-markets.
             </p>
-            <ul className="space-y-4 mb-10 w-full">
-              <li className="flex items-center text-sm text-gray-700 dark:text-gray-300 font-medium transition-colors">
-                <ShieldCheck size={20} className="text-brand-success dark:text-brand-successDark mr-3 shrink-0" /> 
+            
+            <ul className="space-y-4 mb-10 w-full relative z-10">
+              <li className="flex items-center text-base text-gray-700 dark:text-gray-300 font-medium transition-colors">
+                <ShieldCheck size={22} className="text-brand-success dark:text-brand-successDark mr-4 shrink-0" /> 
                 100% Clear Titles & RERA Verified
               </li>
-              <li className="flex items-center text-sm text-gray-700 dark:text-gray-300 font-medium transition-colors">
-                <TrendingUp size={20} className="text-brand-success dark:text-brand-successDark mr-3 shrink-0" /> 
+              <li className="flex items-center text-base text-gray-700 dark:text-gray-300 font-medium transition-colors">
+                <TrendingUp size={22} className="text-brand-success dark:text-brand-successDark mr-4 shrink-0" /> 
                 High-Growth Corridor Strategy
               </li>
             </ul>
-            <Button onClick={() => router.push('/projects')} variant="outline" className="w-full sm:w-auto">
+            
+            <Button 
+              onClick={() => router.push('/projects')} 
+              className="w-full py-4 bg-brand-bg dark:bg-[#161917] text-brand-primary dark:text-white font-bold rounded-xl border border-gray-200 dark:border-gray-800 hover:bg-brand-primary hover:text-white dark:hover:bg-brand-primary transition-all duration-300 shadow-sm relative z-10"
+            >
               View Premium Listings
               <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
           </div>
 
-          {/* B2B Card */}
-          <div className="bg-brand-primary dark:bg-[#0c100e] rounded-3xl p-8 md:p-12 shadow-xl border border-brand-primary/50 dark:border-brand-primaryDark/30 flex flex-col items-start transition-all hover:-translate-y-1 duration-300 relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 dark:bg-brand-primaryDark/10 rounded-full -mr-20 -mt-20 pointer-events-none blur-3xl transition-colors"></div>
+          {/* B2B Card - Strict Brand Primary Theme */}
+          <div className="bg-brand-primary dark:bg-[#0c100e] rounded-3xl p-8 md:p-12 shadow-2xl border border-brand-primary/50 dark:border-gray-800 flex flex-col items-start transition-all duration-500 hover:-translate-y-2 hover:shadow-brand-primary/20 relative overflow-hidden group">
+            {/* Decorative Corner Glow */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 dark:bg-brand-accent/5 rounded-bl-[100px] pointer-events-none blur-2xl transition-transform duration-500 group-hover:scale-125"></div>
             
-            <div className="w-16 h-16 bg-white/10 dark:bg-white/5 rounded-2xl flex items-center justify-center mb-8 backdrop-blur-sm border border-white/20 dark:border-white/10 relative z-10 transition-colors">
+            <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center mb-8 border border-white/20 relative z-10 transition-colors">
               <Building2 className="w-8 h-8 text-brand-accent dark:text-brand-accentDark transition-colors" />
             </div>
-            <h3 className="text-2xl font-bold text-white mb-4 relative z-10">
+            
+            {/* Forced text-white for contrast against dark brand-primary */}
+            <h3 className="text-3xl font-extrabold text-white mb-4 relative z-10 tracking-tight">
               For Builders & Developers
             </h3>
-            <p className="text-gray-200 dark:text-gray-400 mb-8 leading-relaxed flex-1 relative z-10 transition-colors">
+            
+            <p className="text-gray-200 dark:text-gray-400 mb-8 leading-relaxed flex-1 relative z-10 transition-colors font-light text-lg">
               Stop worrying about unsold inventory. Appoint Greenspace Realty as your sole selling mandate. We engineer the entire marketing funnel and site-visit conversion process so you can focus entirely on construction.
             </p>
+            
             <ul className="space-y-4 mb-10 w-full relative z-10">
-              <li className="flex items-center text-sm text-gray-100 dark:text-gray-300 font-medium transition-colors">
-                <TrendingUp size={20} className="text-brand-accent dark:text-brand-accentDark mr-3 shrink-0 transition-colors" /> 
+              <li className="flex items-center text-base text-white font-medium transition-colors">
+                <TrendingUp size={22} className="text-brand-accent dark:text-brand-accentDark mr-4 shrink-0" /> 
                 Accelerated Inventory Liquidation
               </li>
-              <li className="flex items-center text-sm text-gray-100 dark:text-gray-300 font-medium transition-colors">
-                <ShieldCheck size={20} className="text-brand-accent dark:text-brand-accentDark mr-3 shrink-0 transition-colors" /> 
+              <li className="flex items-center text-base text-white font-medium transition-colors">
+                <ShieldCheck size={22} className="text-brand-accent dark:text-brand-accentDark mr-4 shrink-0" /> 
                 End-to-End Sales Pipeline Management
               </li>
             </ul>
-            <Button onClick={() => router.push('/partner-with-us')} className="w-full sm:w-auto bg-brand-accent hover:bg-brand-accent/90 text-brand-primary dark:bg-brand-accentDark dark:hover:bg-brand-accentDark/90 border-none relative z-10">
+            
+            <Button 
+              onClick={() => router.push('/partner-with-us')} 
+              className="w-full py-4 bg-brand-accent hover:bg-white text-brand-primary font-extrabold rounded-xl transition-all duration-300 shadow-lg relative z-10"
+            >
               Request a Mandate Proposal
               <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
           </div>
+
         </div>
       </div>
     </section>
