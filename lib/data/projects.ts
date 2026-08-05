@@ -8,8 +8,8 @@ export const projects: Project[] = [
     status: "Ongoing",
     mandateType: "Sole Selling Mandate",
     location: "Old Panvel, Navi Mumbai",
-    priceRange: "[PENDING-FROM-CLIENT: Starting Price e.g., ₹45L*]",
-    configuration: "[PENDING-FROM-CLIENT: Configurations e.g., 1 & 2 BHK]",
+    priceRange: "₹75L",
+    configuration: "1, 2 & 3 BHK",
     fastSelling: true,
     description: "Located in the established and well-connected node of Old Panvel, Shravan Siddhant is a premium mixed-use development designed for modern living and thriving businesses. Currently marketed by Greenspace Realty under an exclusive sole-selling mandate, this project offers a blend of residential comfort and commercial viability, surrounded by excellent social infrastructure, schools, and transport links.",
     highlights: [

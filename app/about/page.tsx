@@ -121,13 +121,13 @@ const coreTeam: TeamMember[] = [
   { 
     name: "Kiran Sarang", 
     role: "Sourcing Manager", 
-    degree: "Electronic Engineer",
+    degree: "Electrical Engineer",
     image: "https://res.cloudinary.com/rlhk97ns/image/upload/v1785500511/kiran_sir_onv2mx.jpg",
     icon: <Cpu className="w-5 h-5" />,
-    description: "Applying the precision of electronic engineering to real estate, Kiran systematically sources prime inventory and evaluates land parcels. His data-driven approach to market research ensures that Greenspace only acquires and represents properties that meet our stringent criteria for ROI and legal safety."
+    description: "Applying the precision of electrical engineering to real estate, Kiran systematically sources prime inventory and evaluates land parcels. His data-driven approach to market research ensures that Greenspace only acquires and represents properties that meet our stringent criteria for ROI and legal safety."
   },
   { 
-    name: "Riddhi Gotharkar", 
+    name: "Riddhi Ghotarkar", 
     role: "Customer Relationship Manager", 
     degree: "Science Graduate",
     image: "https://res.cloudinary.com/rlhk97ns/image/upload/v1785500580/riddhi_azwngi.jpg",
