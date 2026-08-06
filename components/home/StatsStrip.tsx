@@ -4,9 +4,9 @@ import React from "react";
 
 export const StatsStrip = () => {
   const stats = [
-    { label: "Properties Transacted", value: "150+" },
-    { label: "Years Experience", value: "8+" },
-    { label: "Core Services", value: "3" },
+    { label: "Properties Transacted", value: "700+" },
+    { label: "Years Experience", value: "12+" },
+    { label: "Core Services", value: "4" },
     { label: "Transparent Process", value: "100%" },
   ];
 

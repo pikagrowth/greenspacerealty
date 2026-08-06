@@ -36,7 +36,7 @@ const BUSINESS_DETAILS = {
 };
 
 // ==========================================
-// FAQ DATA (To add enterprise depth to the page)
+// FAQ DATA 
 // ==========================================
 const faqs = [
   {
@@ -73,26 +73,58 @@ export default function ContactPage() {
     setFormStep(2);
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault(); // CRITICAL: Stop browser reload
+    
+    // Manual validation to bypass silent HTML5 blocks
+    if (!formData.name || !formData.phone) {
+      alert("Please provide your name and phone number.");
+      return;
+    }
+
     setIsSubmitting(true);
     
-    // Simulate API call to Google Sheets (To be implemented in Phase 2)
-    setTimeout(() => {
+    try {
+      // Map the contact form state to the exact API payload format
+      const payload = {
+        name: formData.name,
+        mobile: formData.phone, // API expects 'mobile'
+        email: formData.email,
+        enquiryType: formData.interest,
+        message: formData.message || "N/A",
+        source: "contact-page-form",
+        leadPriority: "High Intent",
+      };
+
+      const res = await fetch("/api/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        setFormSuccess(true);
+      } else {
+        console.error("Contact form submission failed:", data.error);
+        alert("Submission failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Network error during contact submission:", error);
+      alert("Network error. Please check your connection.");
+    } finally {
       setIsSubmitting(false);
-      setFormSuccess(true);
-    }, 1500);
+    }
   };
 
   return (
     <main className="flex flex-col w-full bg-brand-bg dark:bg-brand-bgDark min-h-screen transition-colors duration-300 pb-0">
       
       {/* ==========================================
-          HERO SECTION (Premium Brand Theme)
-          Fixed Text Contrast: Forced text-white
+          HERO SECTION 
       ========================================== */}
       <section className="relative w-full py-10 lg:py-14 bg-brand-primary dark:bg-[#0c100e] overflow-hidden flex items-center justify-center">
-        {/* Background Image with Deep Overlay */}
         <div className="absolute inset-0 z-0">
           <Image 
             src="/images/brand/hero-poster.jpeg" 
@@ -104,7 +136,6 @@ export default function ContactPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-brand-primary/95 via-brand-primary/80 to-brand-primary dark:from-[#0c100e]/95 dark:to-[#0c100e]"></div>
         </div>
 
-        {/* Subtle Accents */}
         <div className="absolute top-0 right-0 w-[40%] h-[100%] bg-brand-accent/10 blur-[120px] rounded-full pointer-events-none"></div>
         
         <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
@@ -133,9 +164,7 @@ export default function ContactPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
             
-            {/* --------------------------------------
-                LEFT COLUMN: Contact Information 
-            -------------------------------------- */}
+            {/* LEFT COLUMN: Contact Information */}
             <div className="lg:w-5/12 space-y-12">
               <div>
                 <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white mb-8 tracking-tight transition-colors">
@@ -146,7 +175,6 @@ export default function ContactPage() {
                 </p>
                 
                 <div className="space-y-8">
-                  
                   {/* Phone */}
                   <div className="flex items-start group">
                     <div className="w-14 h-14 bg-gray-50 dark:bg-[#161917] rounded-2xl flex items-center justify-center border border-gray-200 dark:border-gray-800 shadow-sm shrink-0 mr-5 transition-colors group-hover:border-brand-primary group-hover:bg-brand-primary/5">
@@ -228,18 +256,14 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* --------------------------------------
-                RIGHT COLUMN: Premium Interactive Form 
-            -------------------------------------- */}
+            {/* RIGHT COLUMN: Premium Interactive Form */}
             <div className="lg:w-7/12 relative" id="enquire">
-              {/* Decorative Background Offset */}
               <div className="absolute inset-0 bg-brand-primary/5 dark:bg-brand-primaryDark/10 transform -rotate-2 rounded-[40px] -z-10 transition-colors"></div>
               
               <div className="bg-white dark:bg-[#161917] p-8 md:p-12 rounded-[40px] shadow-2xl border border-gray-200 dark:border-gray-800 relative z-10 transition-colors duration-300 min-h-[500px] flex flex-col justify-center">
                 
                 {!formSuccess ? (
                   <>
-                    {/* Form Header */}
                     <div className="mb-10">
                       <h3 className="text-2xl md:text-3xl font-extrabold text-gray-900 dark:text-white mb-2 transition-colors">
                         {formStep === 1 ? "How can we help you?" : "Your Contact Details"}
@@ -249,7 +273,6 @@ export default function ContactPage() {
                       </p>
                     </div>
 
-                    {/* Step 1: Intent Selection */}
                     {formStep === 1 && (
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
                         <button 
@@ -281,7 +304,6 @@ export default function ContactPage() {
                       </div>
                     )}
 
-                    {/* Step 2: Contact Details */}
                     {formStep === 2 && (
                       <form onSubmit={handleFormSubmit} className="space-y-6 animate-in fade-in slide-in-from-right-8 duration-500 flex flex-col h-full">
                         <div className="flex items-center gap-2 mb-2">
@@ -302,7 +324,6 @@ export default function ContactPage() {
                             <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Full Name</label>
                             <input 
                               type="text" 
-                              required
                               value={formData.name}
                               onChange={(e) => setFormData({...formData, name: e.target.value})}
                               className="w-full px-5 py-4 bg-gray-50 dark:bg-[#111412] border border-gray-200 dark:border-gray-800 rounded-xl focus:ring-2 focus:ring-brand-primary focus:border-brand-primary outline-none transition-all text-gray-900 dark:text-white font-medium placeholder-gray-400" 
@@ -313,7 +334,6 @@ export default function ContactPage() {
                             <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Phone Number</label>
                             <input 
                               type="tel" 
-                              required
                               value={formData.phone}
                               onChange={(e) => setFormData({...formData, phone: e.target.value})}
                               className="w-full px-5 py-4 bg-gray-50 dark:bg-[#111412] border border-gray-200 dark:border-gray-800 rounded-xl focus:ring-2 focus:ring-brand-primary focus:border-brand-primary outline-none transition-all text-gray-900 dark:text-white font-medium placeholder-gray-400" 
@@ -326,7 +346,6 @@ export default function ContactPage() {
                           <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Email Address</label>
                           <input 
                             type="email" 
-                            required
                             value={formData.email}
                             onChange={(e) => setFormData({...formData, email: e.target.value})}
                             className="w-full px-5 py-4 bg-gray-50 dark:bg-[#111412] border border-gray-200 dark:border-gray-800 rounded-xl focus:ring-2 focus:ring-brand-primary focus:border-brand-primary outline-none transition-all text-gray-900 dark:text-white font-medium placeholder-gray-400" 
@@ -387,7 +406,7 @@ export default function ContactPage() {
       </section>
 
       {/* ==========================================
-          FAQ SECTION (Adds depth and SEO value)
+          FAQ SECTION
       ========================================== */}
       <section className="py-24 bg-brand-bg dark:bg-brand-bgDark transition-colors duration-300">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -408,12 +427,11 @@ export default function ContactPage() {
       </section>
 
       {/* ==========================================
-          DYNAMIC MAP SECTION (Premium styling overlay)
+          DYNAMIC MAP SECTION 
       ========================================== */}
       <section className="relative w-full h-[500px] bg-gray-200 dark:bg-[#0c100e] transition-colors border-t border-gray-200 dark:border-gray-800 group">
         <div className="absolute inset-0 pointer-events-none z-10 shadow-[inset_0_0_100px_rgba(0,0,0,0.1)] dark:shadow-[inset_0_0_100px_rgba(0,0,0,0.8)] transition-shadow duration-500"></div>
         
-        {/* Floating overlay to encourage interaction */}
         <div className="absolute top-8 left-8 z-20 bg-white/90 dark:bg-[#111412]/90 backdrop-blur-md p-6 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800 max-w-sm hidden md:block transition-colors">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-10 h-10 bg-brand-primary/10 rounded-full flex items-center justify-center">

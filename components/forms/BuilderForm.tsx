@@ -18,11 +18,11 @@ export const BuilderForm = () => {
     message: "",
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleManualSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!formData.name || !formData.mobile) {
-      alert("Name and Mobile are required.");
+
+    if (!formData.name || !formData.mobile || !formData.projectName || !formData.location) {
+      alert("Please fill in all required fields (*).");
       return;
     }
 
@@ -37,7 +37,7 @@ export const BuilderForm = () => {
         source: "partner-with-us-page",
         leadPriority: "Builder Mandate",
         unitType: formData.configuration || "Not Specified",
-        budget: formData.location || "Not Specified", 
+        budget: formData.location, 
         message: `Project: ${formData.projectName} | Details: ${formData.message}`,
       };
 
@@ -52,11 +52,12 @@ export const BuilderForm = () => {
       if (res.ok && data.success) {
         setIsSuccess(true);
       } else {
-        console.error("Builder form submission failed:", data.error);
+        console.error("Form failed:", data.error);
         alert("Submission failed. Please try again.");
       }
     } catch (error) {
-      console.error("Network or server error during form submission:", error);
+      console.error("Submission error:", error);
+      alert("Network error. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -70,7 +71,7 @@ export const BuilderForm = () => {
         </div>
         <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-4 transition-colors">Mandate Request Received</h3>
         <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed transition-colors">
-          Thank you for considering Greenspace Realty for your project. Our B2B partnership director will review your details and contact you shortly to schedule an initial feasibility discussion.
+          Thank you for considering Greenspace Realty for your project. Our B2B partnership director will review your details and contact you shortly.
         </p>
       </div>
     );
@@ -78,14 +79,14 @@ export const BuilderForm = () => {
 
   return (
     <div className="bg-white dark:bg-[#161917] p-8 md:p-10 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-800 transition-colors duration-300">
-      <div className="mb-8">
-        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 transition-colors">Request a Sole Selling Mandate</h3>
-        <p className="text-gray-600 dark:text-gray-400 text-sm transition-colors">
-          Submit your project details for an initial feasibility review. We partner exclusively with developers committed to quality and timely delivery.
+      <div className="mb-8 text-center sm:text-left">
+        <h3 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-2">Request Consultation</h3>
+        <p className="text-gray-600 dark:text-gray-400 text-sm">
+          Fill out the form below and our B2B Director will contact you within 24 hours.
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-5">
+      <form onSubmit={handleManualSubmit} className="space-y-5">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div className="space-y-1">
             <Input
@@ -101,7 +102,9 @@ export const BuilderForm = () => {
               label="Mobile Number *"
               required
               type="tel"
-              placeholder="Enter mobile number"
+              pattern="[0-9]{10}"
+              title="Please enter a valid 10-digit mobile number"
+              placeholder="10-digit number"
               value={formData.mobile}
               onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
             />
@@ -142,7 +145,7 @@ export const BuilderForm = () => {
         <div className="space-y-1">
           <Input
             label="Configuration (Optional)"
-            placeholder="e.g. 1 & 2 BHK, Commercial Shops"
+            placeholder="e.g. 1 & 2 BHK"
             value={formData.configuration}
             onChange={(e) => setFormData({ ...formData, configuration: e.target.value })}
           />

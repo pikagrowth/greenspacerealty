@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { 
   Building2, 
   TrendingUp, 
@@ -8,26 +8,15 @@ import {
   Target, 
   BarChart, 
   ShieldCheck,
-  CheckCircle2,
   ArrowRight,
   Phone,
   Briefcase
 } from "lucide-react";
 
+// CRITICAL FIX: Import the actual BuilderForm component
+import { BuilderForm } from "@/components/forms/BuilderForm";
+
 export default function PartnerWithUsPage() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formSuccess, setFormSuccess] = useState(false);
-
-  const handleFormSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    // Simulate API call to Google Sheets
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setFormSuccess(true);
-    }, 1500);
-  };
-
   const steps = [
     {
       title: "Project Feasibility & Site Visit",
@@ -59,12 +48,8 @@ export default function PartnerWithUsPage() {
   return (
     <main className="flex flex-col w-full bg-gray-50 dark:bg-brand-bgDark min-h-screen transition-colors duration-300 pb-24">
       
-      {/* ==========================================
-          HERO SECTION (Using brand-primary)
-          Fixed Text Contrast: Forced text-white
-      ========================================== */}
+      {/* HERO SECTION */}
       <section className="relative w-full py-10 lg:py-14 bg-brand-primary dark:bg-[#0c100e] overflow-hidden flex items-center justify-center">
-        {/* Background Image with Deep Overlay */}
         <div className="absolute inset-0 z-0">
           <img 
             src="/images/brand/hero-poster.jpeg" 
@@ -100,9 +85,7 @@ export default function PartnerWithUsPage() {
         </div>
       </section>
 
-      {/* ==========================================
-          THE SOLE-SELLING ADVANTAGE SECTION
-      ========================================== */}
+      {/* THE SOLE-SELLING ADVANTAGE SECTION */}
       <section className="py-24 bg-white dark:bg-[#111412] border-b border-gray-200 dark:border-gray-800 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
@@ -120,7 +103,6 @@ export default function PartnerWithUsPage() {
               </p>
               
               <div className="space-y-8">
-                {/* Advantage 1 */}
                 <div className="flex items-start gap-5 group">
                   <div className="w-14 h-14 bg-gray-50 dark:bg-[#161917] rounded-2xl flex items-center justify-center shrink-0 shadow-sm border border-gray-200 dark:border-gray-800 group-hover:border-brand-primary transition-colors">
                     <ShieldCheck className="w-7 h-7 text-brand-success dark:text-brand-successDark" />
@@ -133,7 +115,6 @@ export default function PartnerWithUsPage() {
                   </div>
                 </div>
                 
-                {/* Advantage 2 */}
                 <div className="flex items-start gap-5 group">
                   <div className="w-14 h-14 bg-gray-50 dark:bg-[#161917] rounded-2xl flex items-center justify-center shrink-0 shadow-sm border border-gray-200 dark:border-gray-800 group-hover:border-brand-primary transition-colors">
                     <TrendingUp className="w-7 h-7 text-brand-success dark:text-brand-successDark" />
@@ -148,87 +129,18 @@ export default function PartnerWithUsPage() {
               </div>
             </div>
             
-            {/* Right Column: Premium Builder Lead Form (Inlined for perfect styling) */}
+            {/* Right Column: REAL Builder Form Component */}
             <div className="relative lg:mt-4" id="builder-form">
-              {/* Decorative Offset Background using brand-primary */}
               <div className="absolute inset-0 bg-brand-primary/5 dark:bg-brand-primaryDark/10 transform rotate-3 rounded-3xl -z-10 transition-colors"></div>
-              
-              <div className="bg-white dark:bg-[#161917] p-8 md:p-10 rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-800 relative z-10">
-                <div className="mb-8 text-center sm:text-left">
-                  <h3 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-2">Request Consultation</h3>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm">
-                    Fill out the form below and our B2B Director will contact you within 24 hours.
-                  </p>
-                </div>
-
-                {!formSuccess ? (
-                  <form onSubmit={handleFormSubmit} className="space-y-5">
-                    <div>
-                      <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-2">Developer / Company Name</label>
-                      <input 
-                        type="text" 
-                        placeholder="e.g. Apex Builders" 
-                        required
-                        className="w-full px-5 py-4 bg-gray-50 dark:bg-[#111412] border border-gray-200 dark:border-gray-800 rounded-xl focus:ring-2 focus:ring-brand-primary focus:border-brand-primary outline-none transition-all text-gray-900 dark:text-white placeholder-gray-400" 
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-2">Contact Person</label>
-                      <input 
-                        type="text" 
-                        placeholder="Your Name" 
-                        required
-                        className="w-full px-5 py-4 bg-gray-50 dark:bg-[#111412] border border-gray-200 dark:border-gray-800 rounded-xl focus:ring-2 focus:ring-brand-primary focus:border-brand-primary outline-none transition-all text-gray-900 dark:text-white placeholder-gray-400" 
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-2">Phone Number</label>
-                      <input 
-                        type="tel" 
-                        placeholder="+91 98765 43210" 
-                        required
-                        className="w-full px-5 py-4 bg-gray-50 dark:bg-[#111412] border border-gray-200 dark:border-gray-800 rounded-xl focus:ring-2 focus:ring-brand-primary focus:border-brand-primary outline-none transition-all text-gray-900 dark:text-white placeholder-gray-400" 
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-2">Project Details</label>
-                      <textarea 
-                        rows={3}
-                        placeholder="Location, scale, and current status of your project..." 
-                        required
-                        className="w-full px-5 py-4 bg-gray-50 dark:bg-[#111412] border border-gray-200 dark:border-gray-800 rounded-xl focus:ring-2 focus:ring-brand-primary focus:border-brand-primary outline-none transition-all text-gray-900 dark:text-white placeholder-gray-400 resize-none" 
-                      ></textarea>
-                    </div>
-                    <button 
-                      type="submit" 
-                      disabled={isSubmitting}
-                      className="w-full py-4 mt-2 bg-brand-primary hover:bg-brand-primary/90 text-white font-extrabold rounded-xl transition duration-300 shadow-lg shadow-brand-primary/20 flex items-center justify-center disabled:opacity-70"
-                    >
-                      {isSubmitting ? "Submitting..." : "Submit Inquiry"}
-                    </button>
-                    <p className="text-xs text-center text-gray-500 dark:text-gray-400 mt-4 flex items-center justify-center gap-1">
-                      <ShieldCheck size={14} /> All inquiries are treated with strict confidentiality.
-                    </p>
-                  </form>
-                ) : (
-                  <div className="py-12 flex flex-col items-center text-center">
-                    <div className="w-20 h-20 bg-brand-success/10 text-brand-success rounded-full flex items-center justify-center mb-6">
-                      <CheckCircle2 size={40} />
-                    </div>
-                    <h4 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-2">Inquiry Received</h4>
-                    <p className="text-gray-600 dark:text-gray-400">Our B2B Director will contact you shortly to schedule a confidential consultation.</p>
-                  </div>
-                )}
-              </div>
+              {/* CRITICAL FIX: Calling the real component */}
+              <BuilderForm />
             </div>
 
           </div>
         </div>
       </section>
 
-      {/* ==========================================
-          OUR PROCESS EXECUTION SECTION
-      ========================================== */}
+      {/* OUR PROCESS EXECUTION SECTION */}
       <section className="py-24 bg-gray-50 dark:bg-brand-bgDark transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
@@ -247,22 +159,16 @@ export default function PartnerWithUsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {steps.map((step, idx) => (
               <div key={idx} className="relative p-8 bg-white dark:bg-[#111412] rounded-3xl border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-xl transition-all duration-300 group overflow-hidden">
-                {/* Hover Accent Line */}
                 <div className="absolute top-0 left-0 w-full h-1 bg-brand-primary transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
-                
-                {/* Large Background Number */}
                 <div className="text-7xl font-black text-gray-50 dark:text-gray-800/30 absolute top-4 right-4 pointer-events-none group-hover:scale-110 transition-transform duration-500">
                   0{idx + 1}
                 </div>
-                
                 <div className="w-16 h-16 bg-gray-50 dark:bg-[#161917] rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 flex items-center justify-center mb-6 relative z-10 transition-colors">
                   {step.icon}
                 </div>
-                
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 relative z-10 transition-colors">
                   {step.title}
                 </h3>
-                
                 <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm relative z-10 transition-colors">
                   {step.description}
                 </p>
@@ -270,7 +176,6 @@ export default function PartnerWithUsPage() {
             ))}
           </div>
 
-          {/* Bottom CTA */}
           <div className="mt-20 text-center">
             <p className="text-gray-600 dark:text-gray-400 mb-6 font-medium">Ready to scale your real estate business?</p>
             <a 

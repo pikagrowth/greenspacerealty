@@ -24,11 +24,19 @@ export const SiteVisitForm: React.FC<SiteVisitFormProps> = ({
     preferredVisitDate: "",
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!formData.name || !formData.mobile) {
-      alert("Name and Mobile are required.");
+  const handleManualSubmit = async (e: React.FormEvent) => {
+    e.preventDefault(); 
+
+    if (!formData.name || formData.name.trim() === "") {
+      alert("Please enter your name.");
+      return;
+    }
+    if (!formData.mobile || formData.mobile.length < 10) {
+      alert("Please enter a valid 10-digit mobile number.");
+      return;
+    }
+    if (!formData.preferredVisitDate) {
+      alert("Please select a preferred visit date.");
       return;
     }
 
@@ -40,7 +48,7 @@ export const SiteVisitForm: React.FC<SiteVisitFormProps> = ({
         mobile: formData.mobile,
         preferredVisitDate: formData.preferredVisitDate,
         enquiryType: "site-visit",
-        source: "site-visit-form",
+        source: "site-visit-form", 
         unitType: projectTitle || "Not Specified",
         leadPriority: "High Intent"
       };
@@ -57,10 +65,11 @@ export const SiteVisitForm: React.FC<SiteVisitFormProps> = ({
         setIsSuccess(true);
       } else {
         console.error("Site visit form submission failed:", data.error);
-        alert("Failed to schedule visit. Please try again.");
+        alert("Submission failed. Please try again.");
       }
     } catch (error) {
       console.error("Network error during site visit submission:", error);
+      alert("Network error. Please check your connection.");
     } finally {
       setIsSubmitting(false);
     }
@@ -94,37 +103,39 @@ export const SiteVisitForm: React.FC<SiteVisitFormProps> = ({
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <Input
-          label="Your Name *"
-          placeholder="e.g. Rahul Sharma"
-          required
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-        />
-        
-        <Input
-          label="Mobile Number *"
-          placeholder="Enter mobile number"
-          type="tel"
-          required
-          value={formData.mobile}
-          onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
-        />
+      <form onSubmit={handleManualSubmit} className="space-y-4">
+        <div className="space-y-1">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Your Name *</label>
+          <input 
+            placeholder="e.g. Rahul Sharma" 
+            value={formData.name} 
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })} 
+            className="w-full h-11 px-4 rounded-xl border bg-gray-50 focus:bg-white outline-none dark:bg-[#161917] dark:border-gray-800 dark:text-white"
+          />
+        </div>
 
         <div className="space-y-1">
-          <label className="block text-sm font-medium text-brand-text dark:text-brand-textDark mb-1.5 transition-colors">
-            Preferred Visit Date *
-          </label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Mobile Number *</label>
+          <input 
+            type="tel" 
+            placeholder="10-digit number" 
+            value={formData.mobile} 
+            onChange={(e) => setFormData({ ...formData, mobile: e.target.value })} 
+            className="w-full h-11 px-4 rounded-xl border bg-gray-50 focus:bg-white outline-none dark:bg-[#161917] dark:border-gray-800 dark:text-white"
+          />
+        </div>
+
+        <div className="space-y-1">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Preferred Visit Date *</label>
           <div className="relative">
-            <input
-              type="date"
-              required
-              className="w-full h-11 pl-11 pr-4 rounded-xl border bg-brand-bg/50 dark:bg-brand-bgDark/50 focus:bg-white dark:focus:bg-[#161917] border-gray-200 dark:border-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-brand-primary/20 dark:focus:ring-brand-primaryDark/20 focus:border-brand-primary dark:focus:border-brand-primaryDark transition-colors"
-              value={formData.preferredVisitDate}
-              onChange={(e) => setFormData({ ...formData, preferredVisitDate: e.target.value })}
+            <input 
+              type="date" 
+              min={new Date().toISOString().split("T")[0]} 
+              className="w-full h-11 pl-11 pr-4 rounded-xl border bg-gray-50 focus:bg-white outline-none dark:bg-[#161917] dark:border-gray-800 dark:text-white" 
+              value={formData.preferredVisitDate} 
+              onChange={(e) => setFormData({ ...formData, preferredVisitDate: e.target.value })} 
             />
-            <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 pointer-events-none" size={18} />
+            <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" size={18} />
           </div>
         </div>
 
