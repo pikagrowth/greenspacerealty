@@ -1,4 +1,3 @@
-// components/forms/SiteVisitForm.tsx
 "use client";
 
 import React, { useState } from "react";
@@ -27,25 +26,41 @@ export const SiteVisitForm: React.FC<SiteVisitFormProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!formData.name || !formData.mobile) {
+      alert("Name and Mobile are required.");
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
+      const payload = {
+        name: formData.name,
+        mobile: formData.mobile,
+        preferredVisitDate: formData.preferredVisitDate,
+        enquiryType: "site-visit",
+        source: "site-visit-form",
+        unitType: projectTitle || "Not Specified",
+        leadPriority: "High Intent"
+      };
+
       const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...formData,
-          enquiryType: "buyer", // Assuming site visits are primarily buyers
-          source: "site-visit-form",
-          unitType: projectTitle,
-        }),
+        body: JSON.stringify(payload),
       });
 
-      if (res.ok) {
+      const data = await res.json();
+
+      if (res.ok && data.success) {
         setIsSuccess(true);
+      } else {
+        console.error("Site visit form submission failed:", data.error);
+        alert("Failed to schedule visit. Please try again.");
       }
     } catch (error) {
-      console.error("Site visit form submission failed", error);
+      console.error("Network error during site visit submission:", error);
     } finally {
       setIsSubmitting(false);
     }
@@ -90,11 +105,9 @@ export const SiteVisitForm: React.FC<SiteVisitFormProps> = ({
         
         <Input
           label="Mobile Number *"
-          placeholder="10-digit number"
+          placeholder="Enter mobile number"
           type="tel"
           required
-          pattern="[0-9]{10}"
-          title="Please enter a valid 10-digit mobile number"
           value={formData.mobile}
           onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
         />
@@ -107,7 +120,6 @@ export const SiteVisitForm: React.FC<SiteVisitFormProps> = ({
             <input
               type="date"
               required
-              min={new Date().toISOString().split("T")[0]} // Prevent selecting past dates
               className="w-full h-11 pl-11 pr-4 rounded-xl border bg-brand-bg/50 dark:bg-brand-bgDark/50 focus:bg-white dark:focus:bg-[#161917] border-gray-200 dark:border-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-brand-primary/20 dark:focus:ring-brand-primaryDark/20 focus:border-brand-primary dark:focus:border-brand-primaryDark transition-colors"
               value={formData.preferredVisitDate}
               onChange={(e) => setFormData({ ...formData, preferredVisitDate: e.target.value })}
@@ -121,9 +133,6 @@ export const SiteVisitForm: React.FC<SiteVisitFormProps> = ({
             Schedule Visit
           </Button>
         </div>
-        <p className="text-xs text-center text-gray-500 dark:text-gray-500 mt-2 transition-colors">
-          Free site pickup & drop available on request.
-        </p>
       </form>
     </div>
   );

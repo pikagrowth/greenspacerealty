@@ -1,3 +1,4 @@
+// components/home/QuickPopupForm.tsx
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -13,8 +14,6 @@ export const QuickPopupForm = () => {
   useEffect(() => {
     // Show after 5 seconds instead of 8 for better conversion & testing
     const timer = setTimeout(() => {
-      // Changed to sessionStorage so it resets when you close the browser tab.
-      // This prevents the popup from being permanently hidden forever during testing.
       const dismissed = sessionStorage.getItem("greenspace_popup_dismissed");
       if (!dismissed) {
         setIsOpen(true);
@@ -36,23 +35,30 @@ export const QuickPopupForm = () => {
     setIsSubmitting(true);
 
     try {
+      const payload = {
+        name: formData.name,
+        mobile: formData.mobile,
+        enquiryType: "general",
+        source: "quick-popup-form",
+        leadPriority: "High Intent", // Marks this as a hot lead for the backend
+      };
+
       const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...formData,
-          enquiryType: "general",
-          source: "popup",
-          tab: "Quick Leads"
-        }),
+        body: JSON.stringify(payload),
       });
 
-      if (res.ok) {
+      const data = await res.json();
+
+      if (res.ok && data.success) {
         setIsSuccess(true);
         setTimeout(() => handleClose(), 3000);
+      } else {
+        console.error("Popup form submission failed:", data.error);
       }
     } catch (error) {
-      console.error("Popup submission failed", error);
+      console.error("Network or server error during popup submission:", error);
     } finally {
       setIsSubmitting(false);
     }

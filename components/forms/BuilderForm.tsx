@@ -1,4 +1,3 @@
-// components/forms/BuilderForm.tsx
 "use client";
 
 import React, { useState } from "react";
@@ -21,31 +20,43 @@ export const BuilderForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!formData.name || !formData.mobile) {
+      alert("Name and Mobile are required.");
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
+      const payload = {
+        name: formData.name,
+        mobile: formData.mobile,
+        email: formData.email,
+        enquiryType: "seller-builder",
+        source: "partner-with-us-page",
+        leadPriority: "Builder Mandate",
+        unitType: formData.configuration || "Not Specified",
+        budget: formData.location || "Not Specified", 
+        message: `Project: ${formData.projectName} | Details: ${formData.message}`,
+      };
+
       const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.name,
-          mobile: formData.mobile,
-          email: formData.email,
-          enquiryType: "seller-builder",
-          source: "partner-with-us-page",
-          tab: "Builder Leads", // Note: The updated route.ts will prioritize scoring logic, but this is safe to pass
-          // Mapping B2B fields to the existing database columns safely
-          unitType: formData.configuration,
-          budget: formData.location, 
-          message: `Project: ${formData.projectName} | Details: ${formData.message}`,
-        }),
+        body: JSON.stringify(payload),
       });
 
-      if (res.ok) {
+      const data = await res.json();
+
+      if (res.ok && data.success) {
         setIsSuccess(true);
+      } else {
+        console.error("Builder form submission failed:", data.error);
+        alert("Submission failed. Please try again.");
       }
     } catch (error) {
-      console.error("Form submission error:", error);
+      console.error("Network or server error during form submission:", error);
     } finally {
       setIsSubmitting(false);
     }
@@ -90,9 +101,7 @@ export const BuilderForm = () => {
               label="Mobile Number *"
               required
               type="tel"
-              pattern="[0-9]{10}"
-              title="Please enter a valid 10-digit mobile number"
-              placeholder="10-digit number"
+              placeholder="Enter mobile number"
               value={formData.mobile}
               onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
             />
