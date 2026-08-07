@@ -3,46 +3,95 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Phone, CheckCircle2, ChevronDown, ShieldCheck, ArrowRight, Building2 } from "lucide-react";
+
+// Assuming EnquiryType is exported from your types, fallback to string if needed
 import { EnquiryType } from "@/lib/types";
 
 export function VideoHero() {
   const router = useRouter();
+  
+  // ==========================================
+  // STATE MANAGEMENT
+  // ==========================================
   const [intent, setIntent] = useState<EnquiryType | "">("");
-  const [mobile, setMobile] = useState("");
+  const [mobile, setMobile] = useState<string>("");
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
-  const handleQuickSubmit = async (e: React.FormEvent) => {
+  // ==========================================
+  // HANDLERS & VALIDATION
+  // ==========================================
+  const handleManualSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!intent || !mobile) return;
+
+    // 1. Strict Intent Validation
+    if (!intent) {
+      alert("Please select what you are looking for from the dropdown.");
+      return;
+    }
+
+    // 2. Strict Mobile Validation (Exactly 10 digits)
+    const mobileRegex = /^[0-9]{10}$/;
+    if (!mobile || !mobileRegex.test(mobile)) {
+      alert("Please enter a valid 10-digit mobile number.");
+      return;
+    }
     
     setStatus('loading');
+
     try {
+      // 3. Standardized Enterprise Payload Mapping (Unified 12-Column Sheet)
+      const payload = {
+        name: "Hero Quick Form Lead", // Standardized fallback for fast-conversion forms
+        mobile: mobile.trim(),
+        email: "Not Provided",
+        enquiryType: intent,
+        unitType: "Not Specified",
+        budget: "Not Specified",
+        timeline: "Not Specified",
+        preferredVisitDate: "N/A",
+        message: "Lead captured via the Hero Video Quick Form.",
+        source: "hero-quick-form",
+        leadPriority: "High Intent", 
+      };
+
+      console.log("🚀 Initiating Secure Hero Form Submission:", payload);
+
       const response = await fetch('/api/lead', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          enquiryType: intent,
-          mobile,
-          source: 'hero-quick-form',
-          name: 'Hero Quick Form Lead', 
-        })
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(payload)
       });
 
-      if (response.ok) {
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        console.log("✅ Hero Quick Form Submission Successful");
         setStatus('success');
+        
+        // Reset form after 3 seconds
         setTimeout(() => {
           setStatus('idle');
           setMobile('');
           setIntent('');
         }, 3000);
       } else {
+        console.error("❌ Hero form API rejected the payload:", data.error);
         setStatus('error');
+        alert("Our servers are busy. Please try again or call us.");
       }
     } catch (error) {
+      console.error("❌ Fatal network error during hero form submission:", error);
       setStatus('error');
+      alert("A network error occurred. Please check your connection.");
     }
   };
 
+  // ==========================================
+  // UI RENDER
+  // ==========================================
   return (
     <div className="relative w-full h-[90vh] min-h-[650px] flex items-center justify-center overflow-hidden pt-20">
       
@@ -55,7 +104,6 @@ export function VideoHero() {
           playsInline
           preload="metadata"
           poster="/images/brand/hero-poster.jpeg"
-          /* REMOVED mix-blend and opacity so the video is fully visible in its natural colors */
           className="absolute inset-0 w-full h-full object-cover"
         >
           <source 
@@ -70,7 +118,7 @@ export function VideoHero() {
           />
         </video>
         
-        {/* CHANGED OVERLAY: Cinematic neutral dark vignette to keep text readable without turning the video green */}
+        {/* Cinematic neutral dark vignette to keep text readable */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/30 to-black/80 transition-colors duration-300" />
       </div>
 
@@ -109,41 +157,48 @@ export function VideoHero() {
 
         {/* Compact Quick Select Strip (Premium Glassmorphism) */}
         <div className="w-full max-w-4xl mx-auto bg-black/40 backdrop-blur-xl p-2 rounded-2xl md:rounded-full border border-white/20 shadow-[0_0_40px_rgba(0,0,0,0.5)] animate-in slide-in-from-bottom-8 fade-in duration-1000">
-          <form onSubmit={handleQuickSubmit} className="flex flex-col md:flex-row gap-2 bg-white dark:bg-[#111412] rounded-xl md:rounded-full p-2">
+          <form onSubmit={handleManualSubmit} className="flex flex-col md:flex-row gap-2 bg-white dark:bg-[#111412] rounded-xl md:rounded-full p-2">
             
+            {/* Intent Dropdown */}
             <div className="flex-1 flex items-center border-b md:border-b-0 md:border-r border-gray-100 dark:border-gray-800 px-4 py-2 md:py-0 relative h-12">
               <select 
-                required
                 value={intent}
                 onChange={(e) => setIntent(e.target.value as EnquiryType)}
                 className="w-full h-full bg-transparent text-gray-900 dark:text-white font-bold focus:outline-none cursor-pointer appearance-none z-10"
               >
-                <option value="" disabled>My goal is to...</option>
-                <option value="buyer">Buy a Home / Resale</option>
-                <option value="seller-builder">Partner (Builder Mandate)</option>
-                <option value="land">Buy or Sell Land</option>
-                <option value="consultation">Get Investment Advice</option>
+                {/* 
+                  FIX: Explicitly adding background and text colors to the <option> tags 
+                  so the native browser dropdown reads correctly in Dark Mode!
+                */}
+                <option value="" disabled className="bg-white dark:bg-[#111412] text-gray-500 dark:text-gray-400">My goal is to...</option>
+                <option value="buyer" className="bg-white dark:bg-[#111412] text-gray-900 dark:text-white font-semibold">Buy a Home / Resale</option>
+                <option value="seller-builder" className="bg-white dark:bg-[#111412] text-gray-900 dark:text-white font-semibold">Partner (Builder Mandate)</option>
+                <option value="land" className="bg-white dark:bg-[#111412] text-gray-900 dark:text-white font-semibold">Buy or Sell Land</option>
+                <option value="consultation" className="bg-white dark:bg-[#111412] text-gray-900 dark:text-white font-semibold">Get Investment Advice</option>
               </select>
               <ChevronDown size={18} className="text-gray-400 dark:text-gray-500 absolute right-4 z-0 pointer-events-none" />
             </div>
 
+            {/* Mobile Input */}
             <div className="flex-1 flex items-center px-4 py-2 md:py-0 h-12">
               <Phone size={18} className="text-brand-primary dark:text-brand-primaryDark mr-3 shrink-0" />
               <input 
                 type="tel" 
-                required
-                pattern="[0-9]{10}"
-                title="Please enter a valid 10-digit mobile number"
+                maxLength={10}
                 placeholder="Mobile Number" 
                 value={mobile}
-                onChange={(e) => setMobile(e.target.value)}
+                onChange={(e) => {
+                  const numericValue = e.target.value.replace(/\D/g, '');
+                  setMobile(numericValue);
+                }}
                 className="w-full h-full bg-transparent text-gray-900 dark:text-white font-bold focus:outline-none placeholder:font-normal placeholder:text-gray-400 dark:placeholder:text-gray-500"
               />
             </div>
 
+            {/* Submit Button */}
             <button 
               type="submit" 
-              disabled={status === 'loading' || status === 'success'}
+              disabled={status === 'loading' || status === 'success' || mobile.length !== 10 || !intent}
               className="md:w-auto w-full rounded-lg md:rounded-full px-8 h-12 bg-brand-primary hover:bg-brand-primary/90 text-white font-bold transition-all shadow-md disabled:opacity-70 flex items-center justify-center whitespace-nowrap"
             >
               {status === 'loading' ? (

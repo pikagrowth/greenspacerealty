@@ -2,20 +2,19 @@
 
 export type EnquiryType = 'buyer' | 'seller-builder' | 'land' | 'consultation' | 'general' | 'brochure-download' | 'site-visit';
 
-export type LeadData = {
+export interface LeadData {
   name: string;
   mobile: string;
   email?: string;
-  enquiryType: EnquiryType;
+  enquiryType?: string;
   unitType?: string;
   budget?: string;
   timeline?: string;
-  message?: string;
-  source: string;
-  leadPriority?: string;
   preferredVisitDate?: string;
-  tab?: string; // Maintained temporarily to prevent undefined errors before routing logic is fully swapped
-};
+  message?: string;
+  source?: string;
+  leadPriority?: string;
+}
 
 export type IntentScore = 'HIGH' | 'NURTURE' | 'LOW';
 

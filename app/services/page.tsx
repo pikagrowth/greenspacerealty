@@ -12,11 +12,12 @@ import {
   CheckCircle2, 
   Briefcase,
   ShieldCheck,
-  Compass
+  Compass,
+  Landmark
 } from "lucide-react";
 
 // ==========================================
-// DATA CONFIGURATION (Inlined for standalone execution)
+// DATA CONFIGURATION
 // ==========================================
 const servicesData = [
   {
@@ -32,7 +33,7 @@ const servicesData = [
       "Predictable cash flow mapping for construction milestones."
     ],
     ctaLabel: "View Builder Solutions",
-    ctaHref: "/b2b-builders"
+    ctaHref: "/partner-with-us"
   },
   {
     slug: "land-dealing",
@@ -58,7 +59,7 @@ const servicesData = [
     fullDescription: "Finding a home should be an exciting journey, not a legal minefield. We curate a strict, zero-litigation portfolio of ready-to-move apartments, luxury villas, and serene weekend getaways for families seeking quality and peace of mind.",
     bullets: [
       "Rigorous 50-point background checks on all resale properties.",
-      "Assistance with loan transfers, stamp duty, and registration.",
+      "Assistance with stamp duty, registration, and legal compliance.",
       "Expert negotiation to ensure fair market value for buyers."
     ],
     ctaLabel: "Browse Properties",
@@ -77,6 +78,21 @@ const servicesData = [
       "Exclusive access to pre-launch and off-market opportunities."
     ],
     ctaLabel: "Book a Consultation",
+    ctaHref: "/contact"
+  },
+  {
+    slug: "home-loans",
+    title: "Seamless Home Loan Assistance",
+    audience: "B2C Homebuyers & Investors",
+    icon: Landmark,
+    image: "/images/projects/shravan-siddhant/hero-residential.webp",
+    fullDescription: "Securing financing shouldn't be the hardest part of buying a property. Our dedicated financial advisory desk partners with leading national banks to secure the lowest interest rates, fastest approvals, and highest loan-to-value ratios for our clients.",
+    bullets: [
+      "Strategic partnerships with top-tier banks (HDFC, SBI, ICICI) for preferential rates.",
+      "Hassle-free documentation, eligibility optimization, and doorstep service.",
+      "Expert guidance on tax benefits, PMAY subsidies, and balance transfers."
+    ],
+    ctaLabel: "Check Loan Eligibility",
     ctaHref: "/contact"
   }
 ];

@@ -2,18 +2,29 @@ import { LeadData } from "./types";
 
 export async function sendLeadToSheet(lead: LeadData): Promise<boolean> {
   const url = process.env.GOOGLE_SHEET_WEBAPP_URL;
+  
   if (!url) {
-    console.error("❌ Missing GOOGLE_SHEET_WEBAPP_URL");
+    console.error("❌ ERROR: Missing GOOGLE_SHEET_WEBAPP_URL in environment variables.");
     return false;
   }
 
   try {
+    // Explicitly structure the payload for the Apps Script
     const payload = {
-      ...lead,
-      leadPriority: lead.leadPriority || 'Low Intent'
+      name: lead.name,
+      mobile: lead.mobile,
+      email: lead.email,
+      enquiryType: lead.enquiryType,
+      unitType: lead.unitType,
+      budget: lead.budget,
+      timeline: lead.timeline,
+      preferredVisitDate: lead.preferredVisitDate,
+      message: lead.message,
+      source: lead.source,
+      leadPriority: lead.leadPriority
     };
 
-    console.log("🔄 Contacting Google Sheets API...");
+    console.log("🔄 Syncing Lead to Google Sheets Master Database...");
 
     const response = await fetch(url, {
       method: 'POST',
@@ -29,15 +40,15 @@ export async function sendLeadToSheet(lead: LeadData): Promise<boolean> {
         console.log("✅ Google Sheets Updated Successfully!");
         return true;
       } else {
-        console.error("❌ Apps Script Error:", result);
+        console.error("❌ Google Apps Script Error:", result);
         return false;
       }
     } catch (parseError) {
-      console.error("❌ Sheets returned HTML instead of JSON. Ensure Web App access is set to 'Anyone'. Response snippet:", text.substring(0, 100));
+      console.error("❌ Sheets API failed to return valid JSON. Check Web App Deployment settings (Must be 'Anyone'). Response snippet:", text.substring(0, 150));
       return false;
     }
   } catch (error) {
-    console.error("❌ Network error connecting to Sheets:", error);
+    console.error("❌ Network error connecting to Google Sheets:", error);
     return false;
   }
 }

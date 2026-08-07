@@ -5,17 +5,98 @@ import { LeadData } from './types';
 const TO_EMAIL = process.env.RESEND_TO_EMAIL || 'greenspacerealitee@gmail.com';
 const FROM_EMAIL = 'Greenspace Realty <onboarding@resend.dev>';
 
+// ==========================================
+// EMAIL HTML UI GENERATOR (HELPER)
+// ==========================================
+const generateEmailHTML = (title: string, accentColor: string, fields: { label: string; value: string | undefined }[]) => {
+  const rowsHtml = fields
+    .filter(f => f.value && f.value !== "N/A" && f.value !== "Not Provided")
+    .map(f => `
+      <tr>
+        <td style="padding: 16px 0; border-bottom: 1px solid #f0f0f0;">
+          <div style="font-size: 11px; color: #888888; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; margin-bottom: 4px;">
+            ${f.label}
+          </div>
+          <div style="font-size: 16px; color: #111412; font-weight: 600;">
+            ${f.value}
+          </div>
+        </td>
+      </tr>
+    `).join('');
+
+  return `
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>${title}</title>
+    </head>
+    <body style="margin: 0; padding: 0; background-color: #f4f5f4; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+      <div style="max-width: 600px; margin: 0 auto; padding: 40px 20px;">
+        
+        <!-- Main Card -->
+        <div style="background-color: #ffffff; border-radius: 24px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.05); border: 1px solid #eaeaea;">
+          
+          <!-- Header -->
+          <div style="background-color: #111412; padding: 40px 30px; text-align: center; border-bottom: 4px solid ${accentColor};">
+            <h2 style="color: #C9A24B; margin: 0 0 10px 0; font-size: 12px; text-transform: uppercase; letter-spacing: 3px;">
+              Greenspace Realty
+            </h2>
+            <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: 800; letter-spacing: -0.5px;">
+              ${title}
+            </h1>
+          </div>
+
+          <!-- Body / Data Table -->
+          <div style="padding: 30px 40px;">
+            <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+              ${rowsHtml}
+            </table>
+          </div>
+
+          <!-- Footer -->
+          <div style="background-color: #f9fafa; padding: 20px; text-align: center; border-top: 1px solid #f0f0f0;">
+            <p style="margin: 0; font-size: 12px; color: #999999;">
+              Securely generated via Greenspace Realty Platform<br/>
+              ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </body>
+  </html>
+  `;
+};
+
+
+// ==========================================
+// 1. HOT LEAD EMAIL (General, Quick Popup, Builder, Step Form)
+// ==========================================
 export async function sendHotLeadEmail(lead: LeadData) {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) return { success: false, error: 'Missing Resend API Key' };
   
   const resend = new Resend(apiKey);
   try {
+    const htmlContent = generateEmailHTML("🔥 High Intent Lead", "#C9A24B", [
+      { label: "Lead Name", value: lead.name },
+      { label: "Mobile Number", value: lead.mobile },
+      { label: "Email Address", value: lead.email },
+      { label: "Enquiry Intent", value: lead.enquiryType },
+      { label: "Property / Project", value: lead.unitType },
+      { label: "Budget Range", value: lead.budget },
+      { label: "Timeline to Close", value: lead.timeline },
+      { label: "Additional Details", value: lead.message },
+      { label: "Lead Source", value: lead.source },
+    ]);
+
     const data = await resend.emails.send({
       from: FROM_EMAIL,
       to: TO_EMAIL,
-      subject: `🔥 Hot Lead: ${lead.name}`,
-      html: `<p><strong>Name:</strong> ${lead.name}</p><p><strong>Mobile:</strong> ${lead.mobile}</p><p><strong>Type:</strong> ${lead.enquiryType}</p>`,
+      subject: `🔥 Hot Lead: ${lead.name} (${lead.enquiryType})`,
+      html: htmlContent,
     });
     console.log("✅ Hot Lead Email Sent:", data);
     return { success: true, data };
@@ -25,17 +106,28 @@ export async function sendHotLeadEmail(lead: LeadData) {
   }
 }
 
+// ==========================================
+// 2. SITE VISIT EMAIL 
+// ==========================================
 export async function sendSiteVisitEmail(lead: LeadData) {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) return { success: false, error: 'Missing Resend API Key' };
   
   const resend = new Resend(apiKey);
   try {
+    const htmlContent = generateEmailHTML("📅 Site Visit Requested", "#10b981", [
+      { label: "Lead Name", value: lead.name },
+      { label: "Mobile Number", value: lead.mobile },
+      { label: "Requested Visit Date", value: lead.preferredVisitDate },
+      { label: "Target Project", value: lead.unitType },
+      { label: "Lead Source", value: lead.source },
+    ]);
+
     const data = await resend.emails.send({
       from: FROM_EMAIL,
       to: TO_EMAIL,
-      subject: `📅 Site Visit Request: ${lead.name}`,
-      html: `<p><strong>Name:</strong> ${lead.name}</p><p><strong>Mobile:</strong> ${lead.mobile}</p><p><strong>Project:</strong> ${lead.unitType}</p>`,
+      subject: `📅 Site Visit: ${lead.name} for ${lead.unitType}`,
+      html: htmlContent,
     });
     console.log("✅ Site Visit Email Sent:", data);
     return { success: true, data };
@@ -45,17 +137,27 @@ export async function sendSiteVisitEmail(lead: LeadData) {
   }
 }
 
+// ==========================================
+// 3. BROCHURE DOWNLOAD EMAIL
+// ==========================================
 export async function sendBrochureLeadEmail(lead: LeadData) {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) return { success: false, error: 'Missing Resend API Key' };
   
   const resend = new Resend(apiKey);
   try {
+    const htmlContent = generateEmailHTML("📥 Brochure Download", "#3b82f6", [
+      { label: "Lead Name", value: lead.name },
+      { label: "Mobile Number", value: lead.mobile },
+      { label: "Downloaded Brochure", value: lead.unitType },
+      { label: "Lead Source", value: lead.source },
+    ]);
+
     const data = await resend.emails.send({
       from: FROM_EMAIL,
       to: TO_EMAIL,
-      subject: `📥 Brochure Download: ${lead.name}`,
-      html: `<p><strong>Name:</strong> ${lead.name}</p><p><strong>Mobile:</strong> ${lead.mobile}</p><p><strong>Project:</strong> ${lead.unitType}</p>`,
+      subject: `📥 Brochure Unlocked: ${lead.name} (${lead.unitType})`,
+      html: htmlContent,
     });
     console.log("✅ Brochure Email Sent:", data);
     return { success: true, data };

@@ -41,6 +41,7 @@ export const Header = () => {
         { name: "Land Dealing", href: "/services/land-dealing" },
         { name: "Resale & 2nd Homes", href: "/services#resale-and-2nd-homes" },
         { name: "Investment Consultation", href: "/services#investment-consultation" },
+        { name: "Home Loans", href: "/services#home-loans" },
       ]
     },
     { name: "Projects", href: "/projects" },
@@ -59,21 +60,24 @@ export const Header = () => {
       <header 
         className={`fixed top-0 w-full z-50 transition-all duration-500 ease-in-out border-b ${
           isScrolled 
-            ? "bg-white/90 dark:bg-[#0c100e]/90 backdrop-blur-xl shadow-lg border-gray-200/50 dark:border-gray-800/50 py-2" 
-            : "bg-white/95 dark:bg-[#111412]/95 backdrop-blur-md shadow-sm border-transparent dark:border-transparent py-4"
+            ? "bg-white/85 dark:bg-[#0c100e]/85 backdrop-blur-2xl shadow-lg border-gray-200/50 dark:border-gray-800/50 py-1" 
+            : "bg-white/70 dark:bg-[#111412]/70 backdrop-blur-xl shadow-sm border-transparent dark:border-transparent py-2"
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center transition-all duration-300 ease-in-out h-14">
+          {/* SLIM NAVBAR HEIGHT: h-14 on mobile, h-16 on desktop */}
+          <div className="flex justify-between items-center transition-all duration-300 ease-in-out h-14 md:h-16">
             
-            {/* Logo */}
+            {/* OVERHANGING LOGO TRICK */}
             <Link href="/" className="flex items-center gap-3 z-50 group">
-              <div className="relative w-10 h-10 md:w-12 md:h-12 rounded-xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-800 group-hover:scale-105 transition-transform duration-300 bg-white">
+              {/* Negative margins (-my-4) allow the logo to be bigger than the navbar without stretching it */}
+              <div className="relative w-16 h-16 md:w-20 md:h-18 -my-2 md:-my-4 group-hover:scale-105 transition-transform duration-300">
                 <Image 
                   src="/images/brand/logo-full.png" 
                   alt={`${BUSINESS_DETAILS.name} Logo`}
                   fill
-                  className="object-cover p-1"
+                  priority
+                  className="object-contain drop-shadow-md"
                 />
               </div>
               <div>
@@ -84,7 +88,7 @@ export const Header = () => {
             </Link>
 
             {/* Desktop Nav */}
-            <nav className="hidden lg:flex items-center gap-6 xl:gap-8 h-full">
+            <nav className="hidden lg:flex items-center gap-5 xl:gap-8 h-full">
               {navLinks.map((link) => {
                 const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
                 
@@ -97,7 +101,7 @@ export const Header = () => {
                           className={`flex items-center gap-1 text-sm font-bold transition-colors h-full ${
                             isActive 
                               ? "text-brand-primary dark:text-brand-accent" 
-                              : "text-gray-700 dark:text-gray-300 hover:text-brand-primary dark:hover:text-brand-accent"
+                              : "text-gray-800 dark:text-gray-200 hover:text-brand-primary dark:hover:text-brand-accent"
                           }`}
                         >
                           {link.name}
@@ -129,7 +133,7 @@ export const Header = () => {
                         className={`text-sm font-bold transition-colors h-full flex items-center relative ${
                           isActive 
                             ? "text-brand-primary dark:text-brand-accent" 
-                            : "text-gray-700 dark:text-gray-300 hover:text-brand-primary dark:hover:text-brand-accent"
+                            : "text-gray-800 dark:text-gray-200 hover:text-brand-primary dark:hover:text-brand-accent"
                         }`}
                       >
                         {link.name}
@@ -144,11 +148,11 @@ export const Header = () => {
               })}
               
               {/* Desktop Actions */}
-              <div className="flex items-center gap-4 ml-4 pl-6 border-l border-gray-200 dark:border-gray-800">
+              <div className="flex items-center gap-4 ml-2 pl-5 border-l border-gray-200 dark:border-gray-800">
                 <ThemeToggle />
                 <button 
                   onClick={handleEnquireClick}
-                  className="px-6 py-2.5 bg-brand-primary hover:bg-brand-primary/90 text-white text-sm font-extrabold rounded-xl shadow-lg shadow-brand-primary/20 transition-all duration-300 hover:-translate-y-0.5"
+                  className="px-5 py-2 bg-brand-primary hover:bg-brand-primary/90 text-white text-sm font-extrabold rounded-xl shadow-lg shadow-brand-primary/20 transition-all duration-300 hover:-translate-y-0.5"
                 >
                   Enquire Now
                 </button>
@@ -159,7 +163,7 @@ export const Header = () => {
             <div className="flex items-center gap-3 lg:hidden relative z-50">
               <ThemeToggle />
               <button 
-                className="p-2 text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-[#161917] hover:bg-gray-200 dark:hover:bg-gray-800 rounded-xl border border-transparent transition-colors"
+                className="p-2 text-gray-600 dark:text-gray-300 bg-gray-100/80 dark:bg-[#161917]/80 backdrop-blur-md hover:bg-gray-200 dark:hover:bg-gray-800 rounded-xl border border-transparent transition-colors"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-label="Toggle menu"
               >
