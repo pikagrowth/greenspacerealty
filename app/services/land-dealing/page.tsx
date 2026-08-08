@@ -76,7 +76,7 @@ export default function LandDealingPage() {
         {/* Background Image with Deep Overlay */}
         <div className="absolute inset-0 z-0">
           <Image 
-            src="/images/brand/hero-poster.jpeg" 
+            src="/images/services/land-dealing.png" 
             alt="Land Dealing Advisory" 
             fill
             className="object-cover opacity-15 grayscale mix-blend-overlay"

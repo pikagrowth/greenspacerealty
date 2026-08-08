@@ -34,9 +34,43 @@ export default function ProjectsPage() {
     });
   }, [activeCategory, searchQuery]);
 
+  // JSON-LD Schema identifying this page as a Catalog/Collection of Real Estate Listings
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Properties & Projects in Panvel & Navi Mumbai | Greenspace Realty",
+    "description": "Browse our exclusive mandates, verified resale homes, and premium land parcels across Navi Mumbai and Panvel.",
+    "url": "https://greenspacerealty.in/projects",
+    "publisher": {
+      "@type": "RealEstateAgent",
+      "name": "Greenspace Realty",
+      "url": "https://greenspacerealty.in"
+    },
+    "mainEntity": {
+      "@type": "ItemList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@type": "RealEstateListing",
+            "name": "Shravan Siddhant",
+            "url": "https://greenspacerealty.in/projects/shravan-siddhant"
+          }
+        }
+      ]
+    }
+  };
+
   return (
     <main className="flex flex-col min-h-screen w-full bg-brand-bg dark:bg-brand-bgDark transition-colors duration-300 pb-24">
       
+      {/* Inject JSON-LD to rank your portfolio page structure */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       {/* ==========================================
           PREMIUM HERO SECTION (Brand Primary Theme)
           Fixed Text Contrast: Forced text-white
@@ -135,12 +169,12 @@ export default function ProjectsPage() {
                     </div>
                   )}
                   
-<Image 
-  src={project.images?.[0] || "/images/brand/hero-poster.jpeg"} // Fallback image
-  alt={project.title}
-  fill
-  className="object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out"
-/>
+                  <Image 
+                    src={project.images?.[0] || "/images/brand/hero-poster.jpeg"} // Fallback image
+                    alt={project.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out"
+                  />
                   {/* Gradient overlay for premium feel */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-80" />
                 </div>
@@ -183,7 +217,7 @@ export default function ProjectsPage() {
           </div>
         ) : (
           /* ==========================================
-             EMPTY STATE
+              EMPTY STATE
           ========================================== */
           <div className="w-full py-24 flex flex-col items-center justify-center text-center bg-white dark:bg-[#161917] rounded-3xl border border-dashed border-gray-300 dark:border-gray-700 shadow-sm transition-colors max-w-3xl mx-auto">
             <div className="w-20 h-20 bg-gray-50 dark:bg-[#111412] rounded-2xl flex items-center justify-center mb-6 border border-gray-100 dark:border-gray-800">

@@ -44,10 +44,29 @@ export default function PartnerWithUsPage() {
       icon: <BarChart className="w-6 h-6 text-brand-primary dark:text-brand-primaryDark" />
     }
   ];
+const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Builder Sole-Selling Mandates",
+    "serviceType": "Real Estate Marketing and Sales",
+    "provider": {
+      "@type": "RealEstateAgent",
+      "name": "Greenspace Realty",
+      "url": "https://greenspacerealty.in"
+    },
+    "areaServed": [
+      { "@type": "City", "name": "Panvel" },
+      { "@type": "City", "name": "Navi Mumbai" }
+    ],
+    "description": "Exclusive real estate marketing and sole-selling mandates for developers. We handle lead generation, site operations, and sales conversions."
+  };
 
   return (
     <main className="flex flex-col w-full bg-gray-50 dark:bg-brand-bgDark min-h-screen transition-colors duration-300 pb-24">
-      
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* HERO SECTION */}
       <section className="relative w-full py-10 lg:py-14 bg-brand-primary dark:bg-[#0c100e] overflow-hidden flex items-center justify-center">
         <div className="absolute inset-0 z-0">

@@ -64,8 +64,45 @@ export default function ProjectDetailsPage({ params }: ProjectPageProps) {
     notFound();
   }
 
+  // JSON-LD Schema identifying this page as an Apartment Complex / Real Estate Listing
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ApartmentComplex",
+    "name": project.title,
+    "description": project.overview,
+    "url": `https://greenspacerealty.in/projects/${params.slug}`,
+    "image": `https://greenspacerealty.in${project.heroImage}`,
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Old Panvel",
+      "addressRegion": "Maharashtra",
+      "addressCountry": "IN"
+    },
+    "amenityFeature": project.amenities.map(amenity => ({
+      "@type": "LocationFeatureSpecification",
+      "name": amenity,
+      "value": true
+    })),
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "INR",
+      "description": project.priceRange,
+      "seller": {
+        "@type": "RealEstateAgent",
+        "name": "Greenspace Realty",
+        "url": "https://greenspacerealty.in"
+      }
+    }
+  };
+
   return (
     <main className="flex flex-col min-h-screen bg-brand-bg dark:bg-brand-bgDark transition-colors duration-300">
+      
+      {/* Inject JSON-LD to rank project details, location, and pricing */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       
       <BrochureGateForm 
         isOpen={isBrochureModalOpen} 

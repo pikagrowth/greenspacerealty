@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
-import "./globals.css";
 import { BUSINESS_DETAILS } from "@/lib/constants";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -8,6 +7,7 @@ import { ChatWidget } from "@/components/chat/ChatWidget";
 import { QuickPopupForm } from "@/components/home/QuickPopupForm";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
+import "./globals.css";
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -27,13 +27,43 @@ export const metadata: Metadata = {
     template: `%s | ${BUSINESS_DETAILS.name}`,
     default: `${BUSINESS_DETAILS.name} | Panvel & Navi Mumbai's Trusted Property Partner`,
   },
-  description: "Exclusive marketing mandates, land dealing advisory, and verified resale homes across Old Panvel, Karanjade, and Navi Mumbai.",
+  description: "Exclusive marketing mandates, land dealing advisory, and verified resale homes across Old Panvel, Karanjade, and Navi Mumbai. Discover flagship projects like Shravan Siddhant.",
+  keywords: [
+    "Greenspace Realty",
+    "Panvel real estate",
+    "Navi Mumbai properties",
+    "Shravan Siddhant Old Panvel",
+    "1 BHK Old Panvel",
+    "2 BHK Old Panvel",
+    "3 BHK Old Panvel",
+    "Karanjade properties",
+    "Real estate advisory Panvel",
+    "Sole selling mandates Navi Mumbai",
+    "Land dealing advisory Panvel"
+  ],
+  authors: [{ name: BUSINESS_DETAILS.name, url: "https://greenspacerealty.in" }],
+  creator: BUSINESS_DETAILS.name,
+  publisher: BUSINESS_DETAILS.name,
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
-    title: `${BUSINESS_DETAILS.name} | Premium Real Estate Advisory`,
-    description: "Exclusive marketing mandates, land dealing advisory, and verified resale homes.",
+    title: `${BUSINESS_DETAILS.name} | Premium Real Estate Advisory in Panvel & Navi Mumbai`,
+    description: "Exclusive marketing mandates, land dealing advisory, and verified resale homes across Old Panvel, Karanjade, and Navi Mumbai.",
     url: "/",
     siteName: BUSINESS_DETAILS.name,
     images: [
+      {
+        url: "/images/brand/hero-poster.jpeg",
+        width: 1200,
+        height: 630,
+        alt: `${BUSINESS_DETAILS.name} - Premium Properties in Panvel & Navi Mumbai`,
+      },
       {
         url: "/images/brand/logo-square.jpg",
         width: 800,
@@ -43,6 +73,23 @@ export const metadata: Metadata = {
     ],
     locale: "en_IN",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${BUSINESS_DETAILS.name} | Panvel & Navi Mumbai Real Estate`,
+    description: "Exclusive marketing mandates, land dealing advisory, and verified homes across Old Panvel, Karanjade, and Navi Mumbai.",
+    images: ["/images/brand/hero-poster.jpeg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 };
 

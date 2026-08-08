@@ -25,7 +25,7 @@ const servicesData = [
     title: "Sole-Selling Marketing Mandates",
     audience: "B2B Developers",
     icon: Building2,
-    image: "/images/projects/shravan-siddhant/hero-residential.webp",
+    image: "/images/services/sole.png",
     fullDescription: "We act as a dedicated outsourced sales and marketing arm for top-tier developers. From crafting the initial brand narrative to generating high-intent leads and managing on-site conversions, we take complete ownership of liquidating your inventory.",
     bullets: [
       "Zero marketing overheads and reduced operational stress for builders.",
@@ -40,7 +40,7 @@ const servicesData = [
     title: "Strategic Land Dealing & NAINA",
     audience: "B2B & B2C Investors",
     icon: Map,
-    image: "/images/projects/shravan-siddhant/amenities.jpg",
+    image: "/images/services/land-dealing.png",
     fullDescription: "Navigating land acquisition in rapidly developing corridors requires immense local knowledge and legal foresight. We specialize in clear-title CIDCO plots, agricultural land conversions, and high-yield parcels near the upcoming International Airport.",
     bullets: [
       "Comprehensive zoning, FSI calculations, and title due diligence.",
@@ -55,7 +55,7 @@ const servicesData = [
     title: "Premium Resale & Second Homes",
     audience: "B2C Homebuyers",
     icon: Home,
-    image: "/images/projects/shravan-siddhant/commercial-spaces.jpg",
+    image: "/images/services/2nd-home.png",
     fullDescription: "Finding a home should be an exciting journey, not a legal minefield. We curate a strict, zero-litigation portfolio of ready-to-move apartments, luxury villas, and serene weekend getaways for families seeking quality and peace of mind.",
     bullets: [
       "Rigorous 50-point background checks on all resale properties.",
@@ -70,7 +70,7 @@ const servicesData = [
     title: "Real Estate Investment Consultation",
     audience: "B2C Investors",
     icon: LineChart,
-    image: "/images/brand/hero-poster.jpeg",
+    image: "/images/services/const.png",
     fullDescription: "Real estate is a science. Our engineering-led advisory team helps high-net-worth individuals and NRI investors build diversified, high-yielding property portfolios based on hard data, infrastructure tracking, and market analytics.",
     bullets: [
       "Data-backed rental yield and capital appreciation analysis.",
@@ -85,7 +85,7 @@ const servicesData = [
     title: "Seamless Home Loan Assistance",
     audience: "B2C Homebuyers & Investors",
     icon: Landmark,
-    image: "/images/projects/shravan-siddhant/hero-residential.webp",
+    image: "/images/services/loan.png",
     fullDescription: "Securing financing shouldn't be the hardest part of buying a property. Our dedicated financial advisory desk partners with leading national banks to secure the lowest interest rates, fastest approvals, and highest loan-to-value ratios for our clients.",
     bullets: [
       "Strategic partnerships with top-tier banks (HDFC, SBI, ICICI) for preferential rates.",
@@ -98,9 +98,65 @@ const servicesData = [
 ];
 
 export default function ServicesPage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Greenspace Realty Services",
+    "description": "Comprehensive real estate solutions in Panvel and Navi Mumbai.",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@type": "Service",
+          "name": "Sole-Selling Marketing Mandates",
+          "description": "Outsourced sales and marketing arm for top-tier developers in Navi Mumbai."
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "item": {
+          "@type": "Service",
+          "name": "Strategic Land Dealing & NAINA",
+          "description": "Clear-title CIDCO plots, agricultural land conversions, and high-yield parcels near the Navi Mumbai International Airport."
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@type": "Service",
+          "name": "Premium Resale & Second Homes",
+          "description": "Zero-litigation portfolio of ready-to-move apartments and luxury villas."
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "item": {
+          "@type": "Service",
+          "name": "Real Estate Investment Consultation",
+          "description": "Engineering-led advisory for high-net-worth individuals and NRI investors."
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 5,
+        "item": {
+          "@type": "Service",
+          "name": "Seamless Home Loan Assistance",
+          "description": "Financial advisory desk partnering with leading national banks for the lowest interest rates."
+        }
+      }
+    ]
+  };
   return (
     <main className="flex flex-col w-full bg-brand-bg dark:bg-brand-bgDark transition-colors duration-300 min-h-screen">
-      
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* ==========================================
           HERO SECTION
           Fixed Text Contrast: Forced text-white

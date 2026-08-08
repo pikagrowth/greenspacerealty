@@ -1,5 +1,5 @@
-// app/page.tsx
 import React from "react";
+import type { Metadata } from "next";
 import { VideoHero } from "@/components/home/VideoHero";
 import { FeaturedProject } from "@/components/home/FeaturedProject";
 import { StatsStrip } from "@/components/home/StatsStrip";
@@ -10,6 +10,71 @@ import { WhyChooseUs } from "@/components/home/WhyChooseUs";
 import { Testimonials } from "@/components/home/Testimonials";
 import { ToolsTeaser } from "@/components/home/ToolsTeaser";
 import { StepForm } from "@/components/forms/StepForm";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://greenspacerealty.in";
+
+  return {
+    title: "Flats in Panvel | 1, 2 & 3 BHK Properties & Land | Greenspace Realty",
+    description:
+      "Find verified 1, 2 & 3 BHK flats, land & properties in Panvel. Explore Shravan Siddhant in Old Panvel & top real estate deals with Greenspace Realty.",
+    alternates: {
+      canonical: siteUrl,
+    },
+    keywords: [
+      "Flats in Panvel",
+      "Properties in Panvel",
+      "2 BHK Flat in Panvel",
+      "1 BHK Flat in Panvel",
+      "3 BHK Flat in Panvel",
+      "Land for sale in Panvel",
+      "Plots in Panvel",
+      "Flats in Old Panvel",
+      "Shravan Siddhant",
+      "Shravan Siddhant Old Panvel",
+      "Commercial space in Panvel",
+      "Karanjade properties",
+      "Navi Mumbai properties",
+      "Real estate agent in Panvel",
+      "Greenspace Realty"
+    ],
+    openGraph: {
+      title: "Flats in Panvel | 1, 2 & 3 BHK Properties & Land | Greenspace Realty",
+      description:
+        "Find verified 1, 2 & 3 BHK flats, land & properties in Panvel. Explore Shravan Siddhant in Old Panvel & top real estate deals with Greenspace Realty.",
+      url: siteUrl,
+      siteName: "Greenspace Realty",
+      images: [
+        {
+          url: "/images/brand/hero-poster.jpeg",
+          width: 1200,
+          height: 630,
+          alt: "Greenspace Realty - Premier Properties and Flats in Panvel",
+        },
+      ],
+      locale: "en_IN",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Flats in Panvel | 1, 2 & 3 BHK Properties & Land | Greenspace Realty",
+      description:
+        "Find verified 1, 2 & 3 BHK flats, land & properties in Panvel. Explore Shravan Siddhant in Old Panvel with Greenspace Realty.",
+      images: ["/images/brand/hero-poster.jpeg"],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
+  };
+}
 
 export default function HomePage() {
   return (

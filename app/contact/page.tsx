@@ -117,10 +117,64 @@ export default function ContactPage() {
       setIsSubmitting(false);
     }
   };
-
+const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ContactPage",
+        "@id": "https://greenspacerealty.in/contact/#webpage",
+        "url": "https://greenspacerealty.in/contact",
+        "name": "Contact Greenspace Realty"
+      },
+      {
+        "@type": "RealEstateAgent",
+        "@id": "https://greenspacerealty.in/#organization",
+        "name": "Greenspace Realty",
+        "image": "https://greenspacerealty.in/images/brand/logo-full.png",
+        "telephone": "+91 80970 04111",
+        "email": "info@greenspacerealty.in",
+        "url": "https://greenspacerealty.in",
+        "location": [
+          {
+            "@type": "Place",
+            "name": "Greenspace Realty Head Office",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Office No. 402, 4th Floor, Platinum Techno Park, Sector 30A",
+              "addressLocality": "Vashi, Navi Mumbai",
+              "addressRegion": "Maharashtra",
+              "postalCode": "400705",
+              "addressCountry": "IN"
+            }
+          },
+          {
+            "@type": "Place",
+            "name": "Greenspace Realty Site Office (Shravan Siddhant)",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Shop No. 5, Shravan Siddhant, MTNL Road",
+              "addressLocality": "Old Panvel, Navi Mumbai",
+              "addressRegion": "Maharashtra",
+              "postalCode": "410206",
+              "addressCountry": "IN"
+            }
+          }
+        ],
+        "openingHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+          "opens": "10:00",
+          "closes": "20:00"
+        }
+      }
+    ]
+  };
   return (
     <main className="flex flex-col w-full bg-brand-bg dark:bg-brand-bgDark min-h-screen transition-colors duration-300 pb-0">
-      
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* ==========================================
           HERO SECTION 
       ========================================== */}

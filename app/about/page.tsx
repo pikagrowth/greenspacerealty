@@ -21,10 +21,33 @@ import {
   Quote,
   Leaf
 } from "lucide-react";
+import type { Metadata } from "next";
 
-export const metadata = {
-  title: "About Us | Greenspace Realty | Enterprise Profile",
-  description: "Learn about Greenspace Realty's journey. Discover how our highly educated, engineering-led team brings academic precision and absolute diligence to real estate transactions.",
+export const metadata: Metadata = {
+  title: "About Us | Meet the Greenspace Realty Team | Panvel",
+  description: "Learn about Greenspace Realty's journey. Discover our engineering-led team including Sonali Katale-Patil, Krishna Katale-Patil, Kiran Sarang, and more.",
+  keywords: [
+    "Greenspace Realty Team",
+    "Sonali Krishna Katale-Patil",
+    "Krishna Kashiram Katale-Patil",
+    "Shankar Katale Patil",
+    "Subhash Rale",
+    "Kiran Sarang",
+    "Riddhi Ghotarkar",
+    "Panvel real estate advisors",
+    "Navi Mumbai property experts",
+    "Real estate sole-selling Panvel"
+  ],
+  alternates: {
+    canonical: "https://greenspacerealty.in/about",
+  },
+  openGraph: {
+    title: "About Us | Meet the Greenspace Realty Team",
+    description: "Discover how our highly educated, engineering-led team brings academic precision to real estate in Panvel and Navi Mumbai.",
+    url: "https://greenspacerealty.in/about",
+    siteName: "Greenspace Realty",
+    type: "profile",
+  }
 };
 
 // ==========================================
@@ -87,7 +110,7 @@ const founders: TeamMember[] = [
     name: "Sonali Krishna Katale-Patil", 
     role: "Company Founder & Owner", 
     degree: "Master in Arts & Bachelor in Education",
-    image: "https://res.cloudinary.com/demo/image/upload/w_600,h_600,c_fill,g_face/avatar1.jpg",
+    image: "/images/team/sonali.png",
     icon: <BookOpen className="w-5 h-5" />,
     description: "With a strong academic background in education and the arts, Sonali brings a deeply empathetic, advisory-first approach to real estate. She established the firm's core ethics, ensuring that every transaction prioritizes client education and absolute transparency. Her leadership focuses on building long-term trust rather than short-term transactions, setting the cultural standard for the entire Greenspace team."
   },
@@ -95,7 +118,7 @@ const founders: TeamMember[] = [
     name: "Krishna Kashiram Katale-Patil", 
     role: "Company Founder & Owner", 
     degree: "Mechanical Engineer & Social Studies",
-    image: "https://res.cloudinary.com/demo/image/upload/w_600,h_600,c_fill,g_face/avatar2.jpg",
+    image: "/images/team/krishna.png",
     icon: <Settings className="w-5 h-5" />,
     description: "Krishna combines the structural precision of a mechanical engineer with a deep understanding of demographic trends through his social studies background. He applies mathematical logic to property valuations, ROI projections, and infrastructure analysis. Under his guidance, the firm evaluates projects not just on aesthetics, but on structural viability, legal clarity, and long-term capital appreciation."
   }
@@ -155,9 +178,62 @@ const coreValues: CoreValue[] = [
 ];
 
 export default function AboutPage() {
-  return (
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "RealEstateAgent",
+    "@id": "https://greenspacerealty.in/#organization",
+    "name": "Greenspace Realty",
+    "url": "https://greenspacerealty.in",
+    "founder": [
+      {
+        "@type": "Person",
+        "name": "Sonali Krishna Katale-Patil",
+        "jobTitle": "Company Founder & Owner",
+        "image": "https://res.cloudinary.com/demo/image/upload/w_600,h_600,c_fill,g_face/avatar1.jpg",
+        "description": "Company Founder & Owner of Greenspace Realty with a background in education and arts."
+      },
+      {
+        "@type": "Person",
+        "name": "Krishna Kashiram Katale-Patil",
+        "jobTitle": "Company Founder & Owner",
+        "image": "https://res.cloudinary.com/demo/image/upload/w_600,h_600,c_fill,g_face/avatar2.jpg",
+        "description": "Company Founder & Owner of Greenspace Realty applying mechanical engineering logic to property valuations."
+      }
+    ],
+    "employee": [
+      {
+        "@type": "Person",
+        "name": "Shankar Katale Patil",
+        "jobTitle": "Senior Manager (Sales & Administration)",
+        "image": "https://res.cloudinary.com/rlhk97ns/image/upload/v1785500699/shankar_n3brgh.jpg"
+      },
+      {
+        "@type": "Person",
+        "name": "Subhash Rale",
+        "jobTitle": "Manager (Sales & Administration)",
+        "image": "https://res.cloudinary.com/rlhk97ns/image/upload/v1785500591/subhash_gyo7mh.jpg"
+      },
+      {
+        "@type": "Person",
+        "name": "Kiran Sarang",
+        "jobTitle": "Sourcing Manager",
+        "image": "https://res.cloudinary.com/rlhk97ns/image/upload/v1785500511/kiran_sir_onv2mx.jpg"
+      },
+      {
+        "@type": "Person",
+        "name": "Riddhi Ghotarkar",
+        "jobTitle": "Customer Relationship Manager",
+        "image": "https://res.cloudinary.com/rlhk97ns/image/upload/v1785500580/riddhi_azwngi.jpg"
+      }
+    ]
+  };
+  
+return (
     <div className="flex flex-col w-full bg-brand-bg dark:bg-brand-bgDark pb-24 transition-colors duration-300">
-      
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* ==========================================
           HERO SECTION (Brand Theme)
       ========================================== */}
