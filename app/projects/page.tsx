@@ -12,29 +12,116 @@ import {
   Filter
 } from "lucide-react";
 
-// Importing your actual data
-import { projects } from "@/lib/data/projects";
+// ==========================================
+// ENTERPRISE DATA CONFIGURATION (Inlined for safety)
+// ==========================================
+// You can later move this back to @/lib/data/projects if you prefer to keep it separated.
+const projectsData = [
+  {
+    slug: "shravan-siddhant",
+    title: "Shravan Siddhant",
+    status: "Ongoing",
+    category: "Residential & Commercial",
+    location: "Old Panvel, Navi Mumbai",
+    images: ["/images/projects/shravan-siddhant/hero-residential.webp", "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=1000&auto=format&fit=crop"],
+    description: "A flagship redevelopment project in the heart of Old Panvel offering premium 2 & 3 BHK residences and high-visibility commercial retail spaces.",
+    tags: ["Sole Selling Mandate", "2 & 3 BHK", "G+14 Storey", "Retail Shops"]
+  },
+  {
+    slug: "lk-avanti",
+    title: "LK Avanti",
+    status: "Delivered",
+    category: "Residential",
+    location: "Plot 11, Sector 05A, Karanjade",
+    images: ["https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1000&auto=format&fit=crop"],
+    description: "A fully residential 14-storey tower delivered by LK Infrastructure Pvt. Ltd., featuring thoughtfully designed 1 BHK apartments with modern amenities and smart stack parking.",
+    tags: ["1 BHK", "14 Storey Tower", "CIDCO Plot"]
+  },
+  {
+    slug: "neelkanth-aspire",
+    title: "Neelkanth Aspire",
+    status: "Delivered",
+    category: "Residential",
+    location: "Plot 38, Sector 03, Karanjade",
+    images: ["https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=1000&auto=format&fit=crop"],
+    description: "An elegant G+13 storeyed pure residential masterpiece by Neelkanth Properties. Features spacious 1 & 2 BHK homes with a fitness center, toddler play area, and grand entrance lobby.",
+    tags: ["1 & 2 BHK", "G+13 Storey", "Fitness Center", "Clear Title"]
+  },
+  {
+    slug: "naina-prime-plots",
+    title: "NAINA Prime Plots",
+    status: "Ongoing",
+    category: "Land",
+    location: "Panvel-Matheran Road",
+    images: ["https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=1000&auto=format&fit=crop"],
+    description: "Strategic NA/NOC clear-title land parcels located in the high-appreciation NAINA corridor. Ideal for long-term investment, farmhouse development, or commercial warehousing.",
+    tags: ["NAINA Approved", "Clear Title", "High ROI", "1000+ Sq.Ft"]
+  },
+  {
+    slug: "taloja-industrial-park",
+    title: "Taloja Industrial Parcel",
+    status: "Delivered",
+    category: "Land",
+    location: "Taloja MIDC, Navi Mumbai",
+    images: ["https://images.unsplash.com/photo-1587293852726-70cdb56c2866?q=80&w=1000&auto=format&fit=crop"],
+    description: "A fully developed industrial land parcel within Taloja MIDC, featuring wide road access, high-power grid connectivity, and immediate registry capability.",
+    tags: ["Industrial", "MIDC Plot", "Ready to Build"]
+  },
+  {
+    slug: "highway-commercial-hub",
+    title: "Highway Commercial Hub",
+    status: "Ongoing",
+    category: "Commercial",
+    location: "Mumbai-Pune Expressway",
+    images: ["https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1000&auto=format&fit=crop"],
+    description: "Premium highway-facing commercial showrooms and office spaces designed for high footfall and massive brand visibility along the Expressway.",
+    tags: ["Highway Touch", "Retail & Offices", "High Visibility"]
+  }
+];
 
-type FilterOption = "All" | "Residential" | "Commercial" | "Land";
+type FilterOption = "All" | "Ongoing" | "Delivered" | "Residential" | "Commercial" | "Land";
 
 export default function ProjectsPage() {
-  const [activeCategory, setActiveCategory] = useState<FilterOption>("All");
+  const [activeFilter, setActiveFilter] = useState<FilterOption>("All");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const categories: FilterOption[] = ["All", "Residential", "Commercial", "Land"];
+  const filterOptions: FilterOption[] = [
+    "All", 
+    "Ongoing", 
+    "Delivered", 
+    "Residential", 
+    "Commercial", 
+    "Land"
+  ];
 
-  // Filter logic based on your data structure
+  // ==========================================
+  // SMART FILTER LOGIC
+  // ==========================================
   const filteredProjects = useMemo(() => {
-    return projects.filter((project) => {
-      // @ts-ignore - Assuming category exists on your project object based on your previous code
-      const matchesCategory = activeCategory === "All" || project.category === activeCategory;
+    return projectsData.filter((project) => {
+      // 1. Handle Text Search
       const matchesSearch = project.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
                             project.location.toLowerCase().includes(searchQuery.toLowerCase());
-      return matchesCategory && matchesSearch;
-    });
-  }, [activeCategory, searchQuery]);
+      
+      // 2. Handle Smart Categorization (Status vs Category)
+      let matchesFilter = false;
+      if (activeFilter === "All") {
+        matchesFilter = true;
+      } else if (activeFilter === "Ongoing" || activeFilter === "Delivered") {
+        // Match strictly by exact Status
+        matchesFilter = project.status === activeFilter;
+      } else {
+        // Match by Category (allowing partial matches like "Residential & Commercial")
+        matchesFilter = project.category.includes(activeFilter);
+      }
 
-  // JSON-LD Schema identifying this page as a Catalog/Collection of Real Estate Listings
+      return matchesSearch && matchesFilter;
+    });
+  }, [activeFilter, searchQuery]);
+
+  // ==========================================
+  // ENTERPRISE JSON-LD SCHEMA
+  // ==========================================
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
@@ -48,17 +135,19 @@ export default function ProjectsPage() {
     },
     "mainEntity": {
       "@type": "ItemList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "item": {
-            "@type": "RealEstateListing",
-            "name": "Shravan Siddhant",
-            "url": "https://greenspacerealty.in/projects/shravan-siddhant"
+      "itemListElement": projectsData.map((proj, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "item": {
+          "@type": "RealEstateListing",
+          "name": proj.title,
+          "url": `https://greenspacerealty.in/projects/${proj.slug}`,
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": proj.location
           }
         }
-      ]
+      }))
     }
   };
 
@@ -115,23 +204,25 @@ export default function ProjectsPage() {
       {/* ==========================================
           STICKY FILTERS
       ========================================== */}
-      <section className="sticky top-20 z-40 bg-white/90 dark:bg-[#111412]/90 backdrop-blur-lg border-b border-gray-200 dark:border-gray-800 transition-colors py-4 shadow-sm">
+      <section className="sticky top-[56px] md:top-[64px] z-40 bg-white/90 dark:bg-[#111412]/90 backdrop-blur-lg border-b border-gray-200 dark:border-gray-800 transition-colors py-4 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-nowrap overflow-x-auto hide-scrollbar items-center justify-start md:justify-center gap-3 py-2">
-            <div className="flex items-center text-sm font-bold text-gray-400 dark:text-gray-500 mr-2 uppercase tracking-widest hidden md:flex">
+            <div className="flex items-center text-sm font-bold text-gray-400 dark:text-gray-500 mr-2 uppercase tracking-widest hidden md:flex shrink-0">
               <Filter size={16} className="mr-2" /> Filter
             </div>
-            {categories.map((category) => (
+            
+            {/* Filter Buttons */}
+            {filterOptions.map((filter) => (
               <button
-                key={category}
-                onClick={() => setActiveCategory(category)}
-                className={`whitespace-nowrap px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 ${
-                  activeCategory === category
+                key={filter}
+                onClick={() => setActiveFilter(filter)}
+                className={`whitespace-nowrap px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 shrink-0 ${
+                  activeFilter === filter
                     ? "bg-brand-primary text-white shadow-md border border-brand-primary"
                     : "bg-gray-100 dark:bg-[#161917] text-gray-600 dark:text-gray-400 border border-transparent hover:bg-gray-200 dark:hover:bg-[#1a1e1b] hover:text-gray-900 dark:hover:text-white"
                 }`}
               >
-                {category}
+                {filter}
               </button>
             ))}
           </div>
@@ -139,7 +230,7 @@ export default function ProjectsPage() {
       </section>
 
       {/* ==========================================
-          PROJECTS GRID (Inlined for Guaranteed Premium UI)
+          PROJECTS GRID 
       ========================================== */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-16">
         {filteredProjects.length > 0 ? (
@@ -151,32 +242,33 @@ export default function ProjectsPage() {
               >
                 {/* Image & Badges Container */}
                 <div className="relative aspect-[4/3] w-full overflow-hidden bg-gray-100 dark:bg-[#111412]">
-                  {/* Status Badge */}
+                  
+                  {/* Status Badge (Ongoing / Delivered) */}
                   <div className="absolute top-4 left-4 z-10">
-                    <span className="px-4 py-1.5 bg-brand-primary/90 dark:bg-brand-primaryDark/90 backdrop-blur-md text-white text-xs font-bold uppercase tracking-wider rounded-lg shadow-sm">
+                    <span className={`px-4 py-1.5 backdrop-blur-md text-white text-xs font-bold uppercase tracking-wider rounded-lg shadow-sm ${
+                      project.status === 'Delivered' ? 'bg-brand-success/90 dark:bg-brand-successDark/90' : 'bg-brand-primary/90 dark:bg-brand-primaryDark/90'
+                    }`}>
                       {project.status}
                     </span>
                   </div>
                   
-                  {/* Category Badge (Optional if available in data) */}
-                  {/* @ts-ignore */}
+                  {/* Category Badge */}
                   {project.category && (
                     <div className="absolute top-4 right-4 z-10">
                       <span className="px-3 py-1.5 bg-white/90 dark:bg-[#111412]/90 backdrop-blur-md text-brand-primary dark:text-white text-xs font-bold rounded-lg shadow-sm border border-gray-100 dark:border-gray-800">
-                        {/* @ts-ignore */}
                         {project.category}
                       </span>
                     </div>
                   )}
                   
                   <Image 
-                    src={project.images?.[0] || "/images/brand/hero-poster.jpeg"} // Fallback image
+                    src={project.images?.[0] || "/images/brand/hero-poster.jpeg"}
                     alt={project.title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out"
                   />
                   {/* Gradient overlay for premium feel */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-80" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
                 </div>
                 
                 {/* Content Container */}
@@ -190,8 +282,7 @@ export default function ProjectsPage() {
                   </h3>
                   
                   <p className="text-gray-600 dark:text-gray-400 text-sm mb-6 flex-grow leading-relaxed line-clamp-3">
-                    {/* @ts-ignore - Handle desc or description */}
-                    {project.desc || project.description}
+                    {project.description}
                   </p>
                   
                   {/* Tags */}
@@ -225,12 +316,12 @@ export default function ProjectsPage() {
             </div>
             <h3 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-3">No Properties Found</h3>
             <p className="text-gray-500 dark:text-gray-400 max-w-md mx-auto mb-8 text-lg">
-              We currently don't have any active public listings for "{activeCategory}". However, we often have exclusive offline inventory available.
+              We currently don't have any active public listings for "{activeFilter}". However, we often have exclusive offline inventory available.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <button 
                 onClick={() => {
-                  setActiveCategory("All");
+                  setActiveFilter("All");
                   setSearchQuery("");
                 }}
                 className="px-8 py-3.5 bg-gray-100 dark:bg-[#111412] text-gray-700 dark:text-gray-300 rounded-xl font-bold hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors border border-gray-200 dark:border-gray-700"
