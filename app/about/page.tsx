@@ -189,14 +189,14 @@ export default function AboutPage() {
         "@type": "Person",
         "name": "Sonali Krishna Katale-Patil",
         "jobTitle": "Company Founder & Owner",
-        "image": "https://res.cloudinary.com/demo/image/upload/w_600,h_600,c_fill,g_face/avatar1.jpg",
+        "image": "/images/team/sonali.png",
         "description": "Company Founder & Owner of Greenspace Realty with a background in education and arts."
       },
       {
         "@type": "Person",
         "name": "Krishna Kashiram Katale-Patil",
         "jobTitle": "Company Founder & Owner",
-        "image": "https://res.cloudinary.com/demo/image/upload/w_600,h_600,c_fill,g_face/avatar2.jpg",
+        "image": "/images/team/krishna.png",
         "description": "Company Founder & Owner of Greenspace Realty applying mechanical engineering logic to property valuations."
       }
     ],

@@ -90,7 +90,7 @@ export const Hero = () => {
             {/* Floating Info Tag */}
             <div className="absolute bottom-8 left-8 bg-white/90 dark:bg-[#111]/90 backdrop-blur-md px-6 py-4 rounded-2xl shadow-xl border border-white/20 dark:border-gray-700">
               <p className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1">Starting Price</p>
-              <p className="text-2xl font-black text-brand-primary dark:text-brand-primaryDark">₹85 Lacs*</p>
+              <p className="text-2xl font-black text-brand-primary dark:text-brand-primaryDark">₹91 Lacs*</p>
             </div>
           </div>
 

@@ -33,31 +33,31 @@ const projectDatabase = {
     status: "Ongoing",
     badge: "Sole Selling Mandate",
     category: "Residential & Commercial",
-    location: "Old Panvel, Navi Mumbai",
-    priceRange: "Starting ₹85 Lacs*",
-    configuration: "2 & 3 BHK + Retail",
+    location: "Old Siddhant Market Chs, Plot No - 224, Panvel: 410206, Navi Mumbai[cite: 3]",
+    priceRange: "Starting ₹91 Lacs*",
+    configuration: "2 & 3 BHK + Retail[cite: 3]",
     heroImage: "/images/projects/shravan-siddhant/hero-residential.webp",
     gallery: [
       "/images/projects/shravan-siddhant/hero-residential.webp",
       "/images/projects/shravan-siddhant/amenities.jpg",
       "/images/projects/shravan-siddhant/commercial-spaces.jpg"
     ],
-    overview: "Shravan Siddhant is a flagship redevelopment project in the heart of Old Panvel. Curated for modern families and ambitious businesses, it offers a perfect blend of luxury 2 & 3 BHK residences and high-visibility commercial spaces. Designed with meticulous attention to detail, the architecture maximizes natural light and ventilation while providing sweeping views of the cityscape.",
+    overview: "Shravan Siddhant by SHREE SAMARTH KRUPA BUILDERS & DEVELOPERS is located in the fast-growing commercial hub of Panvel on MTNL Road[cite: 3]. Thoughtfully designed 1, 2, and 3 BHK residences offer smart layouts that maximize space, comfort, and natural light[cite: 3]. It features prime commercial spaces, shops, offices, and showrooms with high visibility and ample parking space[cite: 3]. The project is perfectly positioned for future business growth and success[cite: 3].",
     highlights: [
-      "G+14 Storey Magnificent Tower",
-      "Premium 2 & 3 BHK Residences",
-      "High-street Retail Shops on Ground Floor",
-      "State-of-the-art Automated Parking",
-      "5 Mins from Panvel Railway Station",
-      "Clear Title & RERA Approved"
+      "1, 2 & 3 BHK Homes with optimum space utilization[cite: 3]",
+      "Prime commercial spaces, shops, offices, and showrooms[cite: 3]",
+      "Earthquake Resistant RCC Frame Structure[cite: 3]",
+      "Panvel Railway station and Bus stand - 5 Minutes[cite: 3]",
+      "Navi Mumbai International airport - 5 Minutes[cite: 3]",
+      "Atal setu Bridge Entry - 15 Minutes[cite: 3]"
     ],
     amenities: [
-      "Rooftop Landscaped Garden", 
-      "Modern Equipped Gymnasium", 
-      "24/7 Security & Intercom", 
-      "Dedicated Kids Play Area", 
-      "100% Power Backup", 
-      "High-speed Elevators"
+      "Luxury Swimming Pool and Baby pool on the 3rd floor[cite: 3]", 
+      "Modern indoor gymnasium and Outdoor Gym Area[cite: 3]", 
+      "Bbq/party Area and Sky Lounge Deck[cite: 3]", 
+      "Roof Terrace Garden and Zen Garden[cite: 3]", 
+      "CCTV surveillance system and Secure entrance[cite: 3]", 
+      "Jogging Track and Yoga Deck[cite: 3]"
     ]
   },
   "lk-avanti": {
