@@ -140,8 +140,8 @@ const jsonLd = {
             "name": "Greenspace Realty Head Office",
             "address": {
               "@type": "PostalAddress",
-              "streetAddress": "Office No. 402, 4th Floor, Platinum Techno Park, Sector 30A",
-              "addressLocality": "Vashi, Navi Mumbai",
+              "streetAddress": "Shop no. 7, Deep Chs, Karanjade",
+              "addressLocality": "Karanjade",
               "addressRegion": "Maharashtra",
               "postalCode": "400705",
               "addressCountry": "IN"
