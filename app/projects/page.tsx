@@ -23,7 +23,7 @@ const projectsData = [
     status: "Ongoing",
     category: "Residential & Commercial",
     location: "Old Panvel, Navi Mumbai",
-    images: ["/images/projects/shravan-siddhant/hero-residential.webp", "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=1000&auto=format&fit=crop"],
+    images: ["https://res.cloudinary.com/r11mrpj9/image/upload/v1788267458/shravan-siddhant-1.jpg"],
     description: "A flagship redevelopment project in the heart of Old Panvel offering premium 2 & 3 BHK residences and high-visibility commercial retail spaces.",
     tags: ["Sole Selling Mandate", "2 & 3 BHK", "G+14 Storey", "Retail Shops"]
   },
@@ -33,7 +33,7 @@ const projectsData = [
     status: "Delivered",
     category: "Residential",
     location: "Plot 11, Sector 05A, Karanjade",
-    images: ["https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1000&auto=format&fit=crop"],
+    images: ["https://res.cloudinary.com/r11mrpj9/image/upload/v1788267391/lk_avanti.png"],
     description: "A fully residential 14-storey tower delivered by LK Infrastructure Pvt. Ltd., featuring thoughtfully designed 1 BHK apartments with modern amenities and smart stack parking.",
     tags: ["1 BHK", "14 Storey Tower", "CIDCO Plot"]
   },
@@ -43,7 +43,7 @@ const projectsData = [
     status: "Delivered",
     category: "Residential",
     location: "Plot 38, Sector 03, Karanjade",
-    images: ["https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=1000&auto=format&fit=crop"],
+    images: ["https://res.cloudinary.com/r11mrpj9/image/upload/v1788267258/neelkant_aspire.png"],
     description: "An elegant G+13 storeyed pure residential masterpiece by Neelkanth Properties. Features spacious 1 & 2 BHK homes with a fitness center, toddler play area, and grand entrance lobby.",
     tags: ["1 & 2 BHK", "G+13 Storey", "Fitness Center", "Clear Title"]
   },

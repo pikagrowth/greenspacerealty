@@ -25,8 +25,8 @@ import {
 // ==========================================
 const BUSINESS_DETAILS = {
   name: "Greenspace Realty",
-  phone: "+91 80970 04111",
-  email: "sales@greenspacerealty.in",
+  phone: "+91 9209278867",
+  email: "info@greenspacerealty.in",
   headOffice: "Office No. 402, 4th Floor, Platinum Techno Park, Sector 30A, Vashi, Navi Mumbai, Maharashtra 400705",
   siteOffice: "Shop No. 5, Shravan Siddhant, Old Panvel, Navi Mumbai, Maharashtra 410206",
   socials: {
@@ -131,8 +131,8 @@ const jsonLd = {
         "@id": "https://greenspacerealty.in/#organization",
         "name": "Greenspace Realty",
         "image": "https://greenspacerealty.in/images/brand/logo-full.png",
-        "telephone": "+91 80970 04111",
-        "email": "sales@greenspacerealty.in",
+        "telephone": "+91 9209278867",
+        "email": "info@greenspacerealty.in",
         "url": "https://greenspacerealty.in",
         "location": [
           {

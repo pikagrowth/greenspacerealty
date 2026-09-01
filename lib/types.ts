@@ -52,3 +52,36 @@ export type FaqItem = { question: string; answer: string; category?: string; };
 export type LocationEntry = { name: string; slug: string; summary: string; highlights: string[]; };
 
 export type FormStep = 1 | 2;
+
+export type BlogCategory = 'Buying Guide' | 'Project Updates' | 'Market Insights' | 'Infrastructure';
+
+export type BlogBlock =
+  | { type: 'paragraph'; text: string }
+  | { type: 'heading'; level: 2 | 3; text: string; id?: string }
+  | { type: 'list'; style: 'bullet' | 'number'; items: string[] }
+  | { type: 'stat'; label: string; value: string; note?: string }
+  | { type: 'image'; src: string; alt: string; caption?: string }
+  | { type: 'quote'; text: string; attribution?: string }
+  | { type: 'cta'; heading: string; body: string; buttonLabel: string; href: string };
+
+export type BlogFaq = { question: string; answer: string };
+
+export type BlogPost = {
+  slug: string;
+  title: string;
+  metaTitle: string;
+  metaDescription: string;
+  excerpt: string;
+  category: BlogCategory;
+  primaryKeyword: string;
+  secondaryKeywords: string[];
+  coverImage: string;
+  coverImageAlt: string;
+  publishedAt: string;
+  updatedAt?: string;
+  readTimeMinutes: number;
+  author: string;
+  content: BlogBlock[];
+  faqs?: BlogFaq[];
+  relatedProjectSlug?: string;
+};

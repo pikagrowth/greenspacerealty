@@ -44,6 +44,7 @@ export const Footer = () => {
             <ul className="space-y-4">
               <li><Link href="/about" className="text-gray-300 dark:text-gray-400 hover:text-white font-medium text-sm transition-colors flex items-center gap-2 hover:translate-x-1 duration-300"><span className="w-1.5 h-1.5 bg-brand-accent rounded-full"></span> About Us</Link></li>
               <li><Link href="/projects" className="text-gray-300 dark:text-gray-400 hover:text-white font-medium text-sm transition-colors flex items-center gap-2 hover:translate-x-1 duration-300"><span className="w-1.5 h-1.5 bg-brand-accent rounded-full"></span> Properties & Projects</Link></li>
+              <li><Link href="/blog" className="text-gray-300 dark:text-gray-400 hover:text-white font-medium text-sm transition-colors flex items-center gap-2 hover:translate-x-1 duration-300"><span className="w-1.5 h-1.5 bg-brand-accent rounded-full"></span> Blog</Link></li>
               <li><Link href="/partner-with-us" className="text-gray-300 dark:text-gray-400 hover:text-white font-medium text-sm transition-colors flex items-center gap-2 hover:translate-x-1 duration-300"><span className="w-1.5 h-1.5 bg-brand-accent rounded-full"></span> Partner With Us (Builders)</Link></li>
               <li><Link href="/tools" className="text-gray-300 dark:text-gray-400 hover:text-white font-medium text-sm transition-colors flex items-center gap-2 hover:translate-x-1 duration-300"><span className="w-1.5 h-1.5 bg-brand-accent rounded-full"></span> Calculators & Tools</Link></li>
               <li><Link href="/why-choose-us" className="text-gray-300 dark:text-gray-400 hover:text-white font-medium text-sm transition-colors flex items-center gap-2 hover:translate-x-1 duration-300"><span className="w-1.5 h-1.5 bg-brand-accent rounded-full"></span> Why Choose Us</Link></li>
@@ -124,13 +125,13 @@ export const Footer = () => {
           
           {/* Premium MahaRERA Badge */}
           <a 
-            href="https://maharera.mahaonline.gov.in/" 
+            href="https://maharerait.maharashtra.gov.in/project/view/66275" 
             target="_blank" 
             rel="noreferrer"
             className="flex items-center gap-3 text-sm text-gray-300 bg-white/5 hover:bg-white/10 backdrop-blur-md transition-all duration-300 px-5 py-3 rounded-xl border border-white/10 hover:border-white/30 shadow-lg group"
           >
             <ShieldCheck size={18} className="text-brand-success" />
-            <span className="font-light">MahaRERA Reg No: <strong className="text-white font-bold tracking-wide">{("mahaReraNumber" in BUSINESS_DETAILS) ? (BUSINESS_DETAILS as any).mahaReraNumber : "A52000017772"}</strong></span>
+            <span className="font-light">MahaRERA Reg No: <strong className="text-white font-bold tracking-wide">{("mahaReraNumber" in BUSINESS_DETAILS) ? (BUSINESS_DETAILS as any).mahaReraNumber : "PM1270002601763"}</strong></span>
             <ExternalLink size={14} className="text-gray-500 group-hover:text-white transition-colors ml-1" />
           </a>
           

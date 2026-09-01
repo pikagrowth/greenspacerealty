@@ -1,7 +1,16 @@
 import { MetadataRoute } from 'next';
+import { getAllPosts } from '@/lib/data/blog';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://greenspacerealty.in';
+
+  // Generate dynamic URLs for all active blog posts
+  const blogUrls = getAllPosts().map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: new Date(post.updatedAt || post.publishedAt),
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }));
 
   return [
     {
@@ -24,6 +33,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${baseUrl}/services`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    // Added Main Blog Page
+    {
+      url: `${baseUrl}/blog`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
@@ -57,6 +73,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.5,
-    }
+    },
+    // Spread all dynamically generated blog post URLs here
+    ...blogUrls,
   ];
 }
