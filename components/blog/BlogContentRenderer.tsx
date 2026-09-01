@@ -63,9 +63,11 @@ export function BlogContentRenderer({ blocks }: { blocks: BlogBlock[] }) {
               <Card key={idx} className="p-8 my-8 bg-brand-primary dark:bg-[#111] text-white shadow-soft rounded-2xl text-center">
                 <h3 className="text-2xl font-heading mb-3">{block.heading}</h3>
                 <p className="text-white/80 mb-6 max-w-xl mx-auto">{block.body}</p>
-<Button asChild variant="secondary" size="lg">
-  <Link href={block.href}>{block.buttonLabel}</Link>
-</Button>
+<Link href={block.href}>
+  <Button variant="secondary" size="lg">
+    {block.buttonLabel}
+  </Button>
+</Link>
               </Card>
             );
           default:
