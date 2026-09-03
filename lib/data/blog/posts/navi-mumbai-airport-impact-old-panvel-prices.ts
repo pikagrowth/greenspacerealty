@@ -9,7 +9,7 @@ export const post: BlogPost = {
   category: 'Infrastructure',
   primaryKeyword: 'Navi Mumbai airport impact on Panvel property prices',
   secondaryKeywords: ['NMIA Panvel real estate', 'property rates Old Panvel 2026', 'best residential project Old Panvel', 'luxury 2 BHK Old Panvel'],
-  coverImage: 'https://res.cloudinary.com/greenspacerealty/image/upload/v1710000006/blog/nmia-airport-panvel.jpg',
+  coverImage: 'https://res.cloudinary.com/r11mrpj9/image/upload/v1788456615/blog_header-02-scaled.jpg',
   coverImageAlt: 'Aerial view representing Navi Mumbai International Airport connectivity',
   publishedAt: '2026-09-08',
   readTimeMinutes: 7,
@@ -26,7 +26,7 @@ export const post: BlogPost = {
       'Rental Yield Surge: The influx of airline crew and ground staff is driving up rental demands for premium 2 and 3 BHK apartments.',
       'Commercial Uplift: Retail and commercial setups are expanding to cater to a more affluent, globally connected demographic.'
     ] },
-    { type: 'image', src: 'https://res.cloudinary.com/greenspacerealty/image/upload/v1710000007/blog/panvel-skyline.jpg', alt: 'The rapidly developing skyline of Old Panvel', caption: 'Infrastructure projects like NMIA and MTHL are reshaping the Old Panvel skyline.' },
+    { type: 'image', src: 'https://res.cloudinary.com/r11mrpj9/image/upload/v1788456615/blog_header-02-scaled.jpg', alt: 'The rapidly developing skyline of Old Panvel', caption: 'Infrastructure projects like NMIA and MTHL are reshaping the Old Panvel skyline.' },
     { type: 'heading', level: 2, text: 'Buy Now or Wait?', id: 'buy-or-wait' },
     { type: 'paragraph', text: 'A common dilemma is whether the "airport premium" is already fully baked into current prices. While a significant price correction occurred leading up to the December 2025 opening, historical data from similar airport cities suggests a second wave of appreciation occurs 3-5 years post-launch as allied commercial hubs (hotels, business parks) fully mature. Securing a home in the best residential project Old Panvel today means you lock in rates before this secondary commercial boom prices out mid-segment buyers.' },
     { type: 'quote', text: 'The airport is no longer a rendering on a billboard; it is a functioning economic engine driving Panvel\'s wealth.', attribution: 'Greenspace Realty Market Insights' },

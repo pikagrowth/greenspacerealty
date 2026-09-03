@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
-import { MapPin, ArrowRight, Clock, Building2, CheckCircle2 } from "lucide-react";
+import { MapPin, ArrowRight, Building2, CheckCircle2, Award } from "lucide-react";
 import { BrochureGateForm } from "@/components/forms/BrochureGateForm";
 
 export const FeaturedProject = () => {
@@ -17,19 +17,19 @@ export const FeaturedProject = () => {
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-brand-alert/10 dark:bg-brand-alertDark/20 border border-brand-alert/20 text-brand-alert dark:text-brand-alertDark rounded-full text-xs font-bold tracking-wider uppercase mb-6 transition-colors shadow-sm">
-              <Clock size={16} /> Fast Selling Project
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-brand-primary/10 dark:bg-brand-primaryDark/20 border border-brand-primary/20 text-brand-primary dark:text-brand-primaryDark rounded-full text-xs font-bold tracking-wider uppercase mb-6 transition-colors shadow-sm">
+              <Award size={16} /> Official Sole Selling Mandate
             </div>
             <h2 className="text-4xl md:text-5xl font-extrabold mb-6 text-gray-900 dark:text-white transition-colors tracking-tight">
-              Spotlight: Shravan Siddhant
+              Shravan Siddhant, Old Panvel
             </h2>
             <p className="text-gray-600 dark:text-gray-400 text-lg transition-colors font-light leading-relaxed">
-              Construction in full swing with plinth level already completed. Limited to just 80 premium units. Bookings are filling up fast for residential and commercial spaces.
+              Access direct-developer pricing and verified inventory for Panvel's premier G+14 mixed-use landmark. Featuring earthquake-resistant RCC construction and 3rd-floor podium luxury amenities.
             </p>
           </div>
           <Link href="/projects/shravan-siddhant" className="shrink-0 z-20">
             <Button className="py-3 px-6 bg-brand-primary hover:bg-brand-primary/90 text-white font-bold rounded-xl shadow-lg shadow-brand-primary/20 transition-all duration-300">
-              View Full Details <ArrowRight size={18} className="ml-2" />
+              View Official Details <ArrowRight size={18} className="ml-2" />
             </Button>
           </Link>
         </div>
@@ -41,14 +41,14 @@ export const FeaturedProject = () => {
           <Link 
             href="/projects/shravan-siddhant" 
             className="absolute inset-0 z-10" 
-            aria-label="View Shravan Siddhant Details"
+            aria-label="View Official Shravan Siddhant Details"
           />
 
           {/* Left: Image Container */}
           <div className="relative h-[300px] sm:h-[400px] lg:h-auto w-full overflow-hidden bg-gray-100 dark:bg-gray-900 z-0">
             <Image
               src="/images/brand/hero-poster.jpeg"
-              alt="Shravan Siddhant Lifestyle"
+              alt="Shravan Siddhant MTNL Road Old Panvel Exterior"
               fill
               className="object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out"
             />
@@ -57,7 +57,7 @@ export const FeaturedProject = () => {
             
             {/* Floating Detail Badge */}
             <div className="absolute bottom-6 left-6 z-0 bg-white/90 dark:bg-black/80 backdrop-blur-md p-4 rounded-2xl shadow-xl border border-white/20">
-              <div className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1">Starting Price</div>
+              <div className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1">Official Starting Price</div>
               <div className="text-2xl font-black text-brand-primary dark:text-brand-primaryDark">₹91 Lacs*</div>
             </div>
           </div>
@@ -69,15 +69,16 @@ export const FeaturedProject = () => {
             
             <div className="relative z-0">
               <div className="inline-flex items-center gap-2 text-sm font-bold text-brand-accent dark:text-brand-accentDark mb-6 transition-colors bg-brand-accent/10 px-4 py-2 rounded-lg">
-                <MapPin size={18} /> Old Panvel, Navi Mumbai
+                <MapPin size={18} /> MTNL Road, Old Panvel
               </div>
               
-              <h3 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white mb-6 transition-colors tracking-tight group-hover:text-brand-primary dark:group-hover:text-brand-primaryDark">
+              <h3 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white mb-2 transition-colors tracking-tight group-hover:text-brand-primary dark:group-hover:text-brand-primaryDark">
                 Shravan Siddhant
               </h3>
+              <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6">MahaRERA: PM1270002601673</div>
               
               <p className="text-gray-600 dark:text-gray-400 mb-10 leading-relaxed text-base sm:text-lg transition-colors font-light">
-                A landmark redevelopment project offering a perfect blend of peaceful residential living and high-visibility commercial spaces right in the heart of Old Panvel. 
+                As the authorized sole-selling partner, we provide exclusive access to precise 2D double-line floor plans, structural elevations, and priority developer-direct bookings with zero brokerage.
               </p>
               
               <div className="grid grid-cols-2 gap-4 sm:gap-8 mb-10 border-t border-gray-100 dark:border-gray-800 pt-8">
@@ -86,14 +87,14 @@ export const FeaturedProject = () => {
                     <Building2 size={16} />
                     <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider">Configuration</span>
                   </div>
-                  <div className="text-base sm:text-lg font-extrabold text-gray-900 dark:text-white transition-colors">2 & 3 BHK, Shops</div>
+                  <div className="text-base sm:text-lg font-extrabold text-gray-900 dark:text-white transition-colors">1, 2, 3 BHK & Retail</div>
                 </div>
                 <div>
                   <div className="flex items-center gap-2 mb-2 text-gray-400">
                     <CheckCircle2 size={16} />
                     <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider">Availability</span>
                   </div>
-                  <div className="text-base sm:text-lg font-extrabold text-brand-alert dark:text-brand-alertDark transition-colors">Limited Units Left</div>
+                  <div className="text-base sm:text-lg font-extrabold text-brand-success dark:text-brand-success transition-colors">Direct Allocation</div>
                 </div>
               </div>
               
@@ -108,7 +109,7 @@ export const FeaturedProject = () => {
                     setIsBrochureOpen(true);
                   }}
                 >
-                  Unlock Floor Plans & Pricing
+                  Unlock Official Floor Plans & Pricing
                 </Button>
               </div>
             </div>

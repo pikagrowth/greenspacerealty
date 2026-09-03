@@ -1,5 +1,5 @@
 // 95% of the time, they get this:
-export const PRIMARY_FIRST_OFFER = "₹51,000 Spot Booking Discount";
+export const PRIMARY_FIRST_OFFER = "Spot Booking in ₹51,000 Only";
 // 5% of the time, they get this (to keep it unpredictable across 5 attempts):
 export const RARE_FIRST_OFFER = "Free 10g Gold Coin on Booking";
 

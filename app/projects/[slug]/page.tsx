@@ -25,39 +25,40 @@ interface ProjectPageProps {
 }
 
 // ==========================================
-// ENTERPRISE PROJECT DATABASE
+// ENTERPRISE PROJECT DATABASE (GEO OPTIMIZED)
 // ==========================================
 const projectDatabase = {
   "shravan-siddhant": {
     title: "Shravan Siddhant",
     status: "Ongoing",
-    badge: "Sole Selling Mandate",
+    badge: "Official Sole Selling Partner",
+    reraId: "MahaRERA: PM1270002601673",
     category: "Residential & Commercial",
-    location: "Old Siddhant Market Chs, Plot No - 224, Panvel: 410206, Navi Mumbai[cite: 3]",
+    location: "Plot No 224A, MTNL Road, Old Panvel: 410206, Navi Mumbai",
     priceRange: "Starting ₹91 Lacs*",
-    configuration: "2 & 3 BHK + Retail[cite: 3]",
+    configuration: "Premium 2 & 3 BHK + Commercial Retail",
     heroImage: "/images/projects/shravan-siddhant/hero-residential.webp",
     gallery: [
       "/images/projects/shravan-siddhant/hero-residential.webp",
       "/images/projects/shravan-siddhant/amenities.jpg",
       "/images/projects/shravan-siddhant/commercial-spaces.jpg"
     ],
-    overview: "Shravan Siddhant by SHREE SAMARTH KRUPA BUILDERS & DEVELOPERS is located in the fast-growing commercial hub of Panvel on MTNL Road[cite: 3]. Thoughtfully designed 1, 2, and 3 BHK residences offer smart layouts that maximize space, comfort, and natural light[cite: 3]. It features prime commercial spaces, shops, offices, and showrooms with high visibility and ample parking space[cite: 3]. The project is perfectly positioned for future business growth and success[cite: 3].",
+    overview: "Shravan Siddhant by SHREE SAMARTH KRUPA BUILDERS & DEVELOPERS is the premier upcoming landmark on MTNL Road, Old Panvel. As the official sole-selling mandate holder, Greenspace Realty offers direct, transparent access to this G+14 earthquake-resistant RCC structure. Going beyond standard portal brochures, our technical team provides buyers with comprehensive 2D double-line floor plans, complete with structural cross-sections and precise elevations, ensuring complete spatial transparency before investment.",
     highlights: [
-      "1, 2 & 3 BHK Homes with optimum space utilization[cite: 3]",
-      "Prime commercial spaces, shops, offices, and showrooms[cite: 3]",
-      "Earthquake Resistant RCC Frame Structure[cite: 3]",
-      "Panvel Railway station and Bus stand - 5 Minutes[cite: 3]",
-      "Navi Mumbai International airport - 5 Minutes[cite: 3]",
-      "Atal setu Bridge Entry - 15 Minutes[cite: 3]"
+      "Exclusive Sole-Selling Mandate – Direct Developer Pricing",
+      "MahaRERA Registered: PM1270002601673",
+      "Technical Layouts: Detailed 2D double-line plans & structural elevations available",
+      "Premium Commercial spaces with high MTNL Road visibility",
+      "5 Minutes to Panvel Railway Station & Transit Hubs",
+      "15 Minutes to Atal Setu Bridge for seamless Mumbai connectivity"
     ],
     amenities: [
-      "Luxury Swimming Pool and Baby pool on the 3rd floor[cite: 3]", 
-      "Modern indoor gymnasium and Outdoor Gym Area[cite: 3]", 
-      "Bbq/party Area and Sky Lounge Deck[cite: 3]", 
-      "Roof Terrace Garden and Zen Garden[cite: 3]", 
-      "CCTV surveillance system and Secure entrance[cite: 3]", 
-      "Jogging Track and Yoga Deck[cite: 3]"
+      "Luxury Swimming Pool and Baby pool on the 3rd floor", 
+      "Modern indoor gymnasium and Outdoor Gym Area", 
+      "Bbq/party Area and Sky Lounge Deck", 
+      "Roof Terrace Garden and Zen Garden", 
+      "CCTV surveillance system and Secure entrance", 
+      "Jogging Track and Yoga Deck"
     ]
   },
   "lk-avanti": {
@@ -131,41 +132,54 @@ export default function ProjectDetailsPage({ params }: ProjectPageProps) {
     notFound();
   }
 
-  // JSON-LD Schema identifying this page as an Apartment Complex / Real Estate Listing
+  // Nested Graph JSON-LD Schema identifying Official Mandate Status
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "ApartmentComplex",
-    "name": project.title,
-    "description": project.overview,
-    "url": `https://greenspacerealty.in/projects/${params.slug}`,
-    "image": `https://greenspacerealty.in${project.heroImage}`,
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": project.location.split(',')[0],
-      "addressRegion": "Maharashtra",
-      "addressCountry": "IN"
-    },
-    "amenityFeature": project.amenities.map(amenity => ({
-      "@type": "LocationFeatureSpecification",
-      "name": amenity,
-      "value": true
-    })),
-    "offers": {
-      "@type": "Offer",
-      "priceCurrency": "INR",
-      "description": project.priceRange,
-      "seller": {
+    "@graph": [
+      {
         "@type": "RealEstateAgent",
+        "@id": "https://greenspacerealty.in/#organization",
         "name": "Greenspace Realty",
-        "url": "https://greenspacerealty.in"
+        "url": "https://greenspacerealty.in",
+        "logo": "https://greenspacerealty.in/images/brand/logo-full.png",
+        "description": "Official Sole Selling Partner for Shravan Siddhant in Old Panvel."
+      },
+      {
+        "@type": "ApartmentComplex",
+        "@id": `https://greenspacerealty.in/projects/${params.slug}#project`,
+        "name": project.title,
+        "description": project.overview,
+        "url": `https://greenspacerealty.in/projects/${params.slug}`,
+        "image": `https://greenspacerealty.in${project.heroImage}`,
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": project.location.split(',')[0],
+          "addressLocality": "Panvel, Navi Mumbai",
+          "addressRegion": "Maharashtra",
+          "addressCountry": "IN"
+        },
+        "amenityFeature": project.amenities.map(amenity => ({
+          "@type": "LocationFeatureSpecification",
+          "name": amenity,
+          "value": true
+        })),
+        "offers": {
+          "@type": "AggregateOffer",
+          "priceCurrency": "INR",
+          "lowPrice": project.priceRange.replace(/\D/g, '') + "00000", // Cleans string to extract base number
+          "offerCount": "80", 
+          "seller": {
+            "@id": "https://greenspacerealty.in/#organization"
+          }
+        }
       }
-    }
+    ]
   };
 
   return (
     <main className="flex flex-col min-h-screen bg-brand-bg dark:bg-brand-bgDark transition-colors duration-300">
       
-      {/* Inject JSON-LD to rank project details, location, and pricing */}
+      {/* Inject Advanced JSON-LD Graph */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -177,9 +191,6 @@ export default function ProjectDetailsPage({ params }: ProjectPageProps) {
         projectName={project.title} 
       />
 
-      {/* ==========================================
-          HERO SECTION
-      ========================================== */}
       <section className="relative w-full h-[60vh] min-h-[500px] md:h-[70vh]">
         <Image src={project.heroImage} alt={project.title} fill className="object-cover" priority />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0c100e] via-[#0c100e]/50 to-transparent" />
@@ -201,6 +212,12 @@ export default function ProjectDetailsPage({ params }: ProjectPageProps) {
               }`}>
                 {project.badge}
               </span>
+              {/* Added RERA ID Tag */}
+              {'reraId' in project && (
+                <span className="px-4 py-1.5 bg-brand-primary/80 backdrop-blur-md text-white border border-brand-primary text-xs font-extrabold uppercase tracking-widest rounded-lg shadow-sm">
+                  {project.reraId}
+                </span>
+              )}
             </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold text-white mb-6 tracking-tight drop-shadow-lg">
@@ -215,14 +232,10 @@ export default function ProjectDetailsPage({ params }: ProjectPageProps) {
         </div>
       </section>
 
-      {/* ==========================================
-          CONTENT SECTION
-      ========================================== */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-16 lg:py-24">
         <div className="flex flex-col lg:flex-row gap-16">
           
           <div className="lg:w-2/3">
-            {/* Quick Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-16">
               <div className="bg-white dark:bg-[#111412] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm">
                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">Price</p>
@@ -246,7 +259,6 @@ export default function ProjectDetailsPage({ params }: ProjectPageProps) {
               </div>
             </div>
 
-            {/* Overview */}
             <div className="mb-16">
               <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white mb-6">Overview</h2>
               <p className="text-gray-600 dark:text-gray-400 font-light leading-relaxed text-lg">
@@ -254,7 +266,6 @@ export default function ProjectDetailsPage({ params }: ProjectPageProps) {
               </p>
             </div>
 
-            {/* Highlights */}
             <div className="mb-16">
               <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white mb-6">Project Highlights</h2>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -269,7 +280,6 @@ export default function ProjectDetailsPage({ params }: ProjectPageProps) {
               </ul>
             </div>
 
-            {/* Amenities */}
             <div className="mb-16">
               <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white mb-8">Amenities</h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
@@ -284,7 +294,6 @@ export default function ProjectDetailsPage({ params }: ProjectPageProps) {
               </div>
             </div>
 
-            {/* Gallery */}
             {project.gallery.length > 1 && (
               <div className="mb-16">
                 <div className="flex justify-between items-end mb-8">
@@ -307,13 +316,8 @@ export default function ProjectDetailsPage({ params }: ProjectPageProps) {
             )}
           </div>
 
-          {/* ==========================================
-              SIDEBAR (Dynamic based on Status)
-          ========================================== */}
           <div className="lg:w-1/3">
             <div className="sticky top-28">
-              
-              {/* Conditional Rendering: Delivered vs Ongoing */}
               {project.status === "Delivered" ? (
                 <div className="bg-white dark:bg-[#161917] p-8 rounded-3xl shadow-soft border border-gray-100 dark:border-gray-800 text-center relative overflow-hidden">
                   <div className="absolute top-0 left-0 w-full h-2 bg-brand-success"></div>
@@ -330,7 +334,6 @@ export default function ProjectDetailsPage({ params }: ProjectPageProps) {
                 <SiteVisitForm projectSlug={params.slug} projectTitle={project.title} />
               )}
 
-              {/* Universal CTA Buttons */}
               <div className="flex flex-col gap-4 mt-6">
                 <button onClick={() => setIsBrochureModalOpen(true)} className="w-full py-4 bg-white dark:bg-[#111412] shadow-sm border border-gray-200 dark:border-gray-800 hover:border-brand-primary text-gray-900 dark:text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2 text-sm group">
                   <Download size={18} className="text-brand-primary group-hover:scale-110 transition-transform" /> 

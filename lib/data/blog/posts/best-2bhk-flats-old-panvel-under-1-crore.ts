@@ -9,7 +9,7 @@ export const post: BlogPost = {
   category: 'Buying Guide',
   primaryKeyword: '2 BHK flats in Old Panvel under 1 crore',
   secondaryKeywords: ['affordable 2 BHK Panvel', '2 BHK flat Panvel price', 'ready to move flats near Panvel railway station', 'RERA registered projects Old Panvel'],
-  coverImage: 'https://res.cloudinary.com/greenspacerealty/image/upload/v1710000005/blog/2bhk-under-1-crore.jpg',
+  coverImage: 'https://res.cloudinary.com/r11mrpj9/image/upload/v1788456543/Under-Construction_Projects__Pros_and_Cons_of_Buying_an_Under-Construction_Property.webp',
   coverImageAlt: 'Interior of a modern 2 BHK apartment in Navi Mumbai',
   publishedAt: '2026-09-05',
   readTimeMinutes: 6,

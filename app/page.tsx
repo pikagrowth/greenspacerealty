@@ -15,33 +15,31 @@ export async function generateMetadata(): Promise<Metadata> {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://greenspacerealty.in";
 
   return {
-    title: "Flats in Panvel | 1, 2 & 3 BHK Properties & Land | Greenspace Realty",
+    title: "Shravan Siddhant Old Panvel | Official Sole Selling Partner",
     description:
-      "Find verified 1, 2 & 3 BHK flats, land & properties in Panvel. Explore Shravan Siddhant in Old Panvel & top real estate deals with Greenspace Realty.",
+      "Official sole-selling partner for Shravan Siddhant in Old Panvel. Get verified 2026 price lists, 1, 2 & 3 BHK floor plans, and direct developer booking access.",
     alternates: {
       canonical: siteUrl,
     },
     keywords: [
-      "Flats in Panvel",
-      "Properties in Panvel",
-      "2 BHK Flat in Panvel",
-      "1 BHK Flat in Panvel",
-      "3 BHK Flat in Panvel",
-      "Land for sale in Panvel",
-      "Plots in Panvel",
-      "Flats in Old Panvel",
       "Shravan Siddhant",
       "Shravan Siddhant Old Panvel",
+      "Shravan Siddhant official booking",
+      "Shravan Siddhant price list",
+      "Shravan Siddhant floor plans",
+      "Shravan NewLnch Panvel",
+      "Flats in Panvel",
+      "Properties in Old Panvel",
+      "2 BHK Flat in Panvel",
+      "3 BHK Flat in Panvel",
       "Commercial space in Panvel",
-      "Karanjade properties",
-      "Navi Mumbai properties",
       "Real estate agent in Panvel",
       "Greenspace Realty"
     ],
     openGraph: {
-      title: "Flats in Panvel | 1, 2 & 3 BHK Properties & Land | Greenspace Realty",
+      title: "Shravan Siddhant Old Panvel | Official Sole Selling Partner",
       description:
-        "Find verified 1, 2 & 3 BHK flats, land & properties in Panvel. Explore Shravan Siddhant in Old Panvel & top real estate deals with Greenspace Realty.",
+        "Official sole-selling partner for Shravan Siddhant in Old Panvel. Get verified 2026 price lists, 1, 2 & 3 BHK floor plans, and direct developer booking access.",
       url: siteUrl,
       siteName: "Greenspace Realty",
       images: [
@@ -49,7 +47,7 @@ export async function generateMetadata(): Promise<Metadata> {
           url: "/images/brand/hero-poster.jpeg",
           width: 1200,
           height: 630,
-          alt: "Greenspace Realty - Premier Properties and Flats in Panvel",
+          alt: "Shravan Siddhant Official Booking - Greenspace Realty",
         },
       ],
       locale: "en_IN",
@@ -57,9 +55,9 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title: "Flats in Panvel | 1, 2 & 3 BHK Properties & Land | Greenspace Realty",
+      title: "Shravan Siddhant Old Panvel | Official Sole Selling Partner",
       description:
-        "Find verified 1, 2 & 3 BHK flats, land & properties in Panvel. Explore Shravan Siddhant in Old Panvel with Greenspace Realty.",
+        "Official sole-selling partner for Shravan Siddhant in Old Panvel. Get verified 2026 price lists, floor plans, and direct developer booking access.",
       images: ["/images/brand/hero-poster.jpeg"],
     },
     robots: {

@@ -9,7 +9,7 @@ export const post: BlogPost = {
   category: 'Buying Guide',
   primaryKeyword: '2 BHK vs 3 BHK flats in Old Panvel',
   secondaryKeywords: ['2 BHK or 3 BHK Panvel which is better', 'carpet area vs built-up area Panvel flats', 'resale value Panvel flats', 'best residential project Old Panvel'],
-  coverImage: 'https://res.cloudinary.com/greenspacerealty/image/upload/v1710000001/blog/2bhk-vs-3bhk-panvel.jpg',
+  coverImage: 'https://res.cloudinary.com/r11mrpj9/image/upload/v1788456484/heroblog44.webp',
   coverImageAlt: 'Modern 2 BHK and 3 BHK apartment interiors in Old Panvel',
   publishedAt: '2026-09-01',
   readTimeMinutes: 6,
@@ -27,7 +27,7 @@ export const post: BlogPost = {
       '3 BHK Ideal for: Upgrading families, multi-generational living, and buyers looking for a "forever home".',
       'Rental Yield: 2 BHKs generally rent out faster, but 3 BHKs attract more stable, long-term corporate tenants.'
     ] },
-    { type: 'image', src: 'https://res.cloudinary.com/greenspacerealty/image/upload/v1710000002/blog/floor-plan-comparison.jpg', alt: 'Comparison of 2 BHK and 3 BHK floor plans in Old Panvel', caption: 'Efficient floor planning can maximize usable carpet area in both 2 and 3 BHK configurations.' },
+    { type: 'image', src: 'https://res.cloudinary.com/r11mrpj9/image/upload/v1788456484/heroblog44.webp', alt: 'Comparison of 2 BHK and 3 BHK floor plans in Old Panvel', caption: 'Efficient floor planning can maximize usable carpet area in both 2 and 3 BHK configurations.' },
     { type: 'heading', level: 2, text: 'Resale Value and Long-Term Appreciation', id: 'resale-value' },
     { type: 'paragraph', text: 'Historically, 2 BHKs were the most traded commodity in Navi Mumbai. However, post-2024, the demand for 3 BHKs has surged. Buyers upgrading from smaller apartments in Mumbai are leveraging the connectivity of the Atal Setu to buy larger spaces in Panvel. Consequently, 3 BHKs in premium RERA registered projects Old Panvel are seeing faster capital appreciation due to limited supply.' },
     { type: 'quote', text: 'Don\'t just buy for today\'s needs. Factor in the next 10 years of your family\'s growth and the infrastructural boom of Navi Mumbai.', attribution: 'Greenspace Realty Market Insights' },

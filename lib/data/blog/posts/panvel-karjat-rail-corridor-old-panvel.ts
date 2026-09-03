@@ -9,7 +9,7 @@ export const post: BlogPost = {
   category: 'Infrastructure',
   primaryKeyword: 'Panvel Karjat rail corridor real estate',
   secondaryKeywords: ['Panvel connectivity 2026 property', 'ready to move flats near Panvel railway station', 'property rates Old Panvel 2026', 'best residential project Old Panvel'],
-  coverImage: 'https://res.cloudinary.com/greenspacerealty/image/upload/v1710000008/blog/panvel-rail-corridor.jpg',
+  coverImage: 'https://res.cloudinary.com/r11mrpj9/image/upload/v1788456659/maxresdefault.jpg',
   coverImageAlt: 'Suburban train network map highlighting the Panvel-Karjat line',
   publishedAt: '2026-09-12',
   readTimeMinutes: 5,
@@ -27,7 +27,7 @@ export const post: BlogPost = {
       'Higher Tenant Demand: Professionals working along the central line can now effortlessly reside in Panvel.',
       'Unmatched Station Access: Old Panvel residents enjoy walkability or short commutes to one of MMR\'s most vital railway junctions.'
     ] },
-    { type: 'image', src: 'https://res.cloudinary.com/greenspacerealty/image/upload/v1710000009/blog/train-station-panvel.jpg', alt: 'Commuters at a modern train station', caption: 'Panvel Junction is set to become one of the busiest and best-connected stations in Maharashtra.' },
+    { type: 'image', src: 'https://res.cloudinary.com/r11mrpj9/image/upload/v1788456659/maxresdefault.jpg', alt: 'Commuters at a modern train station', caption: 'Panvel Junction is set to become one of the busiest and best-connected stations in Maharashtra.' },
     { type: 'heading', level: 2, text: 'Capitalizing on the Connectivity', id: 'investing' },
     { type: 'paragraph', text: 'Because of this upcoming rail link, demand for ready to move flats near Panvel railway station has skyrocketed. However, buyers looking for modern amenities and transparent deals are increasingly pivoting to new constructions situated just minutes from the station, avoiding the congestion while reaping all transit benefits.' },
     { type: 'cta', heading: 'Live 5 Minutes from Panvel Station', body: 'Shravan Siddhant offers premium living on MTNL Road, exceptionally close to the upcoming mega-transit hubs of Panvel.', buttonLabel: 'View Project Details', href: '/projects/shravan-siddhant' }
