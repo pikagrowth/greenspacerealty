@@ -7,6 +7,7 @@ import { ChatWidget } from "@/components/chat/ChatWidget";
 import { QuickPopupForm } from "@/components/home/QuickPopupForm";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
+import { HideOnGanpati } from "@/components/layout/HideOnGanpati"; // NEW: Imported the wrapper
 import "./globals.css";
 
 const inter = Inter({ 
@@ -120,15 +121,23 @@ export default function RootLayout({
       <body className={`${inter.variable} ${playfair.variable} font-body bg-brand-bg dark:bg-brand-bgDark text-gray-900 dark:text-gray-100 antialiased flex flex-col min-h-screen transition-colors duration-300`}>
         <ThemeProvider>
           <JsonLd />
-          <Header />
+          
+          {/* NEW: Safely hidden on /ganpati */}
+          <HideOnGanpati>
+            <Header />
+          </HideOnGanpati>
+          
           <main className="flex-1 flex flex-col pt-20">
             {children}
           </main>
-          <Footer />
-          <ChatWidget />
           
-          {/* Global High-Conversion Popup Form */}
-          <QuickPopupForm />
+          {/* NEW: Safely hidden on /ganpati */}
+          <HideOnGanpati>
+            <Footer />
+            <ChatWidget />
+            <QuickPopupForm />
+          </HideOnGanpati>
+          
         </ThemeProvider>
       </body>
     </html>

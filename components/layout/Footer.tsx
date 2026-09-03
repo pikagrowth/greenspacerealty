@@ -115,12 +115,17 @@ export const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-white/10 pt-8 flex flex-col lg:flex-row justify-between items-center gap-6">
           
-          <div className="flex flex-col md:flex-row items-center gap-3 md:gap-6 text-sm text-gray-400 font-light">
-            <p>© {new Date().getFullYear()} {BUSINESS_DETAILS.name}. All rights reserved.</p>
-            <div className="hidden md:block w-1 h-1 bg-gray-600 rounded-full"></div>
-            <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
-            <div className="hidden md:block w-1 h-1 bg-gray-600 rounded-full"></div>
-            <Link href="/terms-conditions" className="hover:text-white transition-colors">Terms & Conditions</Link>
+          <div className="flex flex-col items-center lg:items-start gap-2">
+            <div className="flex flex-col md:flex-row items-center gap-3 md:gap-6 text-sm text-gray-400 font-light">
+              <p>© {new Date().getFullYear()} {BUSINESS_DETAILS.name}. All rights reserved.</p>
+              <div className="hidden md:block w-1 h-1 bg-gray-600 rounded-full"></div>
+              <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
+              <div className="hidden md:block w-1 h-1 bg-gray-600 rounded-full"></div>
+              <Link href="/terms-conditions" className="hover:text-white transition-colors">Terms & Conditions</Link>
+            </div>
+            <p className="text-xs text-gray-500 font-light mt-1">
+              Designed & Managed by <a href="https://pikagrowth.in" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-brand-accent transition-colors font-medium">Pika Growth</a>
+            </p>
           </div>
           
           {/* Premium MahaRERA Badge */}
