@@ -14,7 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     return {
       url: `${baseUrl}/blog/${post.slug}`,
       lastModified: new Date(post.updatedAt || post.publishedAt),
-      changeFrequency: (isShravanSiddhantCluster ? 'weekly' : 'monthly') as const,
+      changeFrequency: (isShravanSiddhantCluster ? 'weekly' : 'monthly') as 'weekly' | 'monthly',
       priority: isShravanSiddhantCluster ? 0.85 : 0.7,
     };
   });
